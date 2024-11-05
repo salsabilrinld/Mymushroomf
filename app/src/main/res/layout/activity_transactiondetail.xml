@@ -14,12 +14,13 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:padding="16dp">
+            >
 
             <ImageButton
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/back_arrow"
+                android:paddingLeft="35dp"
                 android:backgroundTint="@color/white"/>
 
             <TextView
@@ -29,7 +30,8 @@
                 android:text="Rincian Pemesanan"
                 android:fontFamily="@font/inter_bold"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:padding="16dp"/>
         </LinearLayout>
 
         <View
@@ -45,12 +47,14 @@
             android:text="TukangJamur123"
             android:fontFamily="@font/inter_bold"
             android:textStyle="bold"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black"
+            android:paddingLeft="16dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="16dp">
 
             <ImageView
                 android:layout_width="80dp"
@@ -128,7 +132,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="16dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -160,7 +165,9 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -189,7 +196,9 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="10dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -225,7 +234,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="10dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -235,6 +247,7 @@
             android:textColor="@android:color/black" />
 
         <LinearLayout
+            android:id="@+id/shipping_method"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -245,15 +258,31 @@
                 android:layout_height="24dp"
                 android:src="@drawable/ic_delivery" />
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/inter_reguler"
-                android:text="Reguler\nEstimasi tiba 30 - 31 Oktober"
+                android:text="Reguler"
                 android:textSize="12dp"
                 android:layout_marginStart="8dp"
                 android:paddingRight="115dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/inter_reguler"
+                android:text="Estimasi tiba 30 - 31 Oktober"
+                android:textSize="12dp"
+                android:layout_marginStart="8dp"
+                android:paddingRight="115dp"/>
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -277,7 +306,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_marginTop="10dp"
-    android:layout_marginBottom="10dp">
+    android:layout_marginBottom="10dp"
+    android:paddingLeft="16dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -342,7 +372,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="16dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -377,7 +408,7 @@
         android:padding="16dp">
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Rp15.000"
@@ -394,8 +425,8 @@
             android:fontFamily="@font/inter_bold"
             android:backgroundTint="@color/black"
             android:textColor="@color/white"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp"/>
+            android:paddingStart="35dp"
+            android:paddingEnd="35dp"/>
     </LinearLayout>
 
     </LinearLayout>
