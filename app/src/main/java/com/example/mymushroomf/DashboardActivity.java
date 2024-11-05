@@ -54,6 +54,7 @@ public class DashboardActivity extends AppCompatActivity implements ProductAdapt
         // Initialize product list
         productList = new ArrayList<>();
         productList.add(new Product("Jamur Tiram", "Deskripsi produk 1", "Rp. 15,000", R.drawable.jamur_tiram));
+
         productList.add(new Product("Jamur Tiram", "Deskripsi produk 2", "Rp. 15,000", R.drawable.jamur_tiram));
         productList.add(new Product("Jamur Tiram", "Deskripsi produk 3", "Rp. 15,000", R.drawable.jamur_tiram));
 
@@ -67,6 +68,7 @@ public class DashboardActivity extends AppCompatActivity implements ProductAdapt
             Intent intent = new Intent(DashboardActivity.this, AddProductActivity.class);
             startActivity(intent);
         });
+
 
         // Set up BottomNavigationView
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -96,8 +98,8 @@ public class DashboardActivity extends AppCompatActivity implements ProductAdapt
 
         // Initialize second RecyclerView for additional data if needed
         // Assuming you have a second RecyclerView (if intended)
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        List<String> myData = Arrays.asList("Item 1", "Item 2", "Item 3");
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        List<String> myData = Arrays.asList("Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6");
         myAdapter = new MyAdapter(myData);
         recyclerView.setAdapter(myAdapter);
 

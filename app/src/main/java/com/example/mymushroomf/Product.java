@@ -5,14 +5,14 @@ import android.os.Parcelable;
 
 public class Product implements Parcelable {
     private String name;
-    private String description;
+    private String type;
     private String price;
-    private int imageResource;
+    private String imageResource;
 
     // Constructor
-    public Product(String name, String description, String price, int imageResource) {
+    public Product(String name, String description, String price, String imageResource) {
         this.name = name;
-        this.description = description;
+        this.type = type;
         this.price = price;
         this.imageResource = imageResource;
     }
@@ -20,17 +20,17 @@ public class Product implements Parcelable {
     // Parcelable constructor
     protected Product(Parcel in) {
         name = in.readString();
-        description = in.readString();
+        type = in.readString();
         price = in.readString();
-        imageResource = in.readInt();
+        imageResource = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
-        dest.writeString(description);
+        dest.writeString(type);
         dest.writeString(price);
-        dest.writeInt(imageResource);
+        dest.writeString(imageResource);
     }
 
     @Override
@@ -56,15 +56,15 @@ public class Product implements Parcelable {
         return name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getType() {
+        return type;
     }
 
     public String getPrice() {
         return price;
     }
 
-    public int getImageResId() {
+    public String getImageResId() {
         return imageResource;
     }
 }
