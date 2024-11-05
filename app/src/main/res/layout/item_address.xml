@@ -1,0 +1,64 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/addressType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rumah"
+            android:fontFamily="@font/inter_bold"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/addressName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Indira S"
+            android:fontFamily="@font/inter_bold"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/addressNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="087882025909"
+            android:fontFamily="@font/inter_reguler"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Perumahan Bogor, Bogor Utara - Kota Bogor - Jawa Barat , ID 16151"
+            android:textSize="14sp"
+            android:fontFamily="@font/inter_reguler"
+            android:layout_marginTop="4dp" />
+
+        <Button
+            android:id="@+id/editButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ubah Alamat"
+            android:fontFamily="@font/inter_bold"
+            android:background="@drawable/border_button"
+            android:backgroundTint="@color/grey"
+            android:textColor="@color/black"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="center"
+            />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

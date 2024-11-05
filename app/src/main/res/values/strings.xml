@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Mymushroomf</string>
+    <string name="review_image">Gambar ulasan pembeli</string>
+    <string name="jamur_tiram">Gambar jamur tiram</string>
+    <string name="profile">Gambar profile</string>
+    <string name="ulasan">Ulasan pembeli</string>
+
+</resources>

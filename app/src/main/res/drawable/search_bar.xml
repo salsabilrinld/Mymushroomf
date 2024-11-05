@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Layer untuk background tabung -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/white" />
+            <corners android:radius="30dp" />
+            <padding android:left="10dp" android:right="10dp"/>
+            <size android:width="0dp" android:height="50dp" />
+            <stroke android:width="2dp" android:color="@color/cokmud"/> <!-- Ganti dengan warna yang diinginkan -->
+        </shape>
+    </item>
+    <!-- Layer untuk ikon -->
+    <item android:drawable="@drawable/ic_search"
+            android:gravity="center_horizontal|start"
+            android:paddingStart="16dp"
+        />
+</layer-list>

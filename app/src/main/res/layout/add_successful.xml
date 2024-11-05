@@ -1,0 +1,41 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@color/cokmud">
+
+    <LinearLayout
+        android:id="@+id/success_dialog"
+        android:layout_width="320dp"
+        android:layout_height="300dp"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:background="@drawable/rounded_form"
+        android:backgroundTint="@color/semiorange"
+        android:layout_gravity="center"
+        android:elevation="4dp">
+
+        <TextView
+            android:id="@+id/success_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Product Successfully"
+            android:textColor="@color/white"
+            android:textSize="35sp"
+            android:fontFamily="@font/inter_bold"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_gravity="center"/>
+
+        <ImageView
+            android:layout_width="180dp"
+            android:layout_height="150dp"
+            android:src="@drawable/ic_check"
+            app:tint="@color/white"
+            android:padding="10dp"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+</LinearLayout>

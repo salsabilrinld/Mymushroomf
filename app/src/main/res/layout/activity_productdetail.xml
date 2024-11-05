@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- View untuk warna atas -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/cokmud" />
+
+    <!-- View untuk warna bawah -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+        android:background="@color/white" />
+
+    <!-- ScrollView di atas background -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:layout_gravity="bottom">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/back_arrow"
+                android:backgroundTint="@color/cokmud"/>
+
+            <ImageView
+                android:id="@+id/product_image"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:layout_gravity="center"
+                android:src="@drawable/jamur_tiram"
+                android:contentDescription="@string/jamur_tiram"/>
+
+            <TextView
+                android:id="@+id/product_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rp. 12.000"
+                android:textSize="35sp"
+                android:fontFamily="@font/inter_bold"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/product_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jamur Tiram"
+                android:fontFamily="@font/inter_bold"
+                android:textSize="25sp"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/black" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/product_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Terjual 1.807"
+                    android:fontFamily="@font/inter_reguler"
+                    android:textSize="14sp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="16dp"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/product_rate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rate: ★ 5.0"
+                    android:fontFamily="@font/inter_reguler"
+                    android:textSize="14sp"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/black" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/ulasan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ulasan Pembeli"
+                android:fontFamily="@font/inter_bold"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/reviewRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Deskripsi Produk"
+                android:fontFamily="@font/inter_bold"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/product_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
+                android:textSize="14sp"
+                android:fontFamily="@font/inter_reguler"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_profile"
+                    android:contentDescription="@string/profile"/>
+
+                <LinearLayout
+                    android:id="@+id/seller_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingRight="35dp">
+
+                    <TextView
+                        android:id="@+id/seller_username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="TukangJamur123"
+                        android:fontFamily="@font/inter_bold"
+                        android:textStyle="bold"
+                        android:textSize="14sp"
+                        android:layout_marginStart="8dp"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/seller_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Aktif 5 menit lalu"
+                        android:fontFamily="@font/inter_reguler"
+                        android:textSize="10sp"
+                        android:layout_marginStart="8dp"
+                        android:textColor="@color/grey" />
+
+                    <TextView
+                        android:id="@+id/seller_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Kota Bogor"
+                        android:fontFamily="@font/inter_reguler"
+                        android:textSize="14sp"
+                        android:layout_marginStart="8dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/visit_seller_button"
+                    android:layout_width="150dp"
+                    android:layout_height="40dp"
+                    android:text="Kunjungi Penjual"
+                    android:fontFamily="@font/inter_bold"
+                    android:textSize="10dp"
+                    android:backgroundTint="@color/orange"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp">
+
+                <Button
+                    android:id="@+id/add_to_cart_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="#B0B0B0"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="Add to cart"
+                    android:textColor="@color/white" />
+
+                <Button
+                    android:id="@+id/buy_now_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/orange"
+                    android:text="Beli Sekarang"
+                    android:fontFamily="@font/inter_bold"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>
