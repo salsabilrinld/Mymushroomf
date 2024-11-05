@@ -68,30 +68,12 @@ public class DashboardActivity extends AppCompatActivity implements ProductAdapt
             startActivity(intent);
         });
 
-        // Set up BottomNavigationView
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.menu_store:
-                    return true; // Do nothing, stay on current activity
-                case R.id.menu_transaction:
-                    Intent transactionIntent = new Intent(DashboardActivity.this, TransactionListActivity.class);
-                    startActivity(transactionIntent);
-                    finish(); // Optional: finish current activity
-                    return true;
-                default:
-                    return false;
-            }
-        });
 
-        // Initialize second RecyclerView for additional data if needed
-        // Assuming you have a second RecyclerView (if intended)
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         List<String> myData = Arrays.asList("Item 1", "Item 2", "Item 3");
         myAdapter = new MyAdapter(myData);
         recyclerView.setAdapter(myAdapter);
 
-        // Set up the search view
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -100,8 +82,6 @@ public class DashboardActivity extends AppCompatActivity implements ProductAdapt
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                // Assuming myAdapter is initialized for the search function
-                // myAdapter.filter(newText);
                 return true;
             }
         });
