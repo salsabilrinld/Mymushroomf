@@ -68,12 +68,40 @@ public class DashboardActivity extends AppCompatActivity implements ProductAdapt
             startActivity(intent);
         });
 
+        // Set up BottomNavigationView
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if (item.getItemId() == R.id.menu_store) {
+                    Toast.makeText(DashboardActivity.this, "Store selected", Toast.LENGTH_SHORT).show();
+//                    bottomNavigationView.setSelectedItemId(R.id.menu_store);
+                    return true;
+                } else if (item.getItemId() == R.id.menu_transaction) {
+                    Intent intent = new Intent(DashboardActivity.this, TransactionListActivity.class);
+
+                    startActivity(intent);
+                    return true;
+                } else if (item.getItemId() == R.id.menu_profile) {
+                    Intent intent = new Intent(DashboardActivity.this, ProfileActivity.class);
+                    startActivity(intent);
+//                    bottomNavigationView.setSelectedItemId(R.id.menu_profile);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
+
+        // Initialize second RecyclerView for additional data if needed
+        // Assuming you have a second RecyclerView (if intended)
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         List<String> myData = Arrays.asList("Item 1", "Item 2", "Item 3");
         myAdapter = new MyAdapter(myData);
         recyclerView.setAdapter(myAdapter);
 
+        // Set up the search view
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -82,6 +110,8 @@ public class DashboardActivity extends AppCompatActivity implements ProductAdapt
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                // Assuming myAdapter is initialized for the search function
+                // myAdapter.filter(newText);
                 return true;
             }
         });

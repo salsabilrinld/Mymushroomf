@@ -41,9 +41,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.textItem.setText(mData.get(position));
         holder.textItem.setText(filteredList.get(position));
-        holder.addButton.setOnClickListener(view -> {
-
-        });
+//        holder.addButton.setOnClickListener(view -> {
+//
+//        });
     }
 
     @Override

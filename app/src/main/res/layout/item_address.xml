@@ -39,7 +39,7 @@
             android:layout_marginTop="4dp" />
 
         <TextView
-            android:id="@+id/address"
+            android:id="@+id/addressLine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Perumahan Bogor, Bogor Utara - Kota Bogor - Jawa Barat , ID 16151"

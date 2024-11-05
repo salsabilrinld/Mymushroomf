@@ -52,7 +52,7 @@ public class AddProductActivity extends AppCompatActivity {
         cancelButton = findViewById(R.id.cancel_button);
         uploadPhotoButton = findViewById(R.id.upload_photo_button);
 
-        String[] fungiTypes = {"Tipe A", "Tipe B", "Tipe C"};
+        String[] fungiTypes = {"Organik", "Nonorganik", "Terserah"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, fungiTypes);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         fungiTypeSpinner.setAdapter(adapter);
@@ -62,8 +62,17 @@ public class AddProductActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 saveProduct();
+
+                Toast.makeText(AddProductActivity.this, "Product added successfully", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(AddProductActivity.this, DashboardActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
+                finish();
             }
         });
+
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override

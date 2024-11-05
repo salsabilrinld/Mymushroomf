@@ -1,8 +1,24 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="18dp"
-    android:background="@color/cokmud">
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/cokmud" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+        android:background="@color/white" />
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="18dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -10,6 +26,7 @@
         android:orientation="vertical"
         android:layout_gravity="center"
         android:background="@drawable/rounded_form"
+        android:backgroundTint="@color/white"
         android:padding="27dp">
 
         <TextView
@@ -17,6 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Add New Product"
+            android:fontFamily="@font/inter_bold"
             android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="@color/black"
@@ -27,6 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Name of Fungi"
+            android:fontFamily="@font/inter_reguler"
             android:textSize="16sp"
             android:textColor="@color/black" />
 
@@ -37,27 +56,32 @@
             android:background="@drawable/add_form"
             android:backgroundTint="@color/cokmud"
             android:padding="12dp"
+            android:fontFamily="@font/inter_reguler"
+            android:textColor="@color/black"
             android:layout_marginBottom="12dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Type of Fungi"
+            android:fontFamily="@font/inter_reguler"
             android:textSize="16sp"
-            android:textColor="#000000" />
+            android:textColor="@color/black" />
 
         <Spinner
             android:id="@+id/fungi_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/cokmud"
             android:padding="12dp"
+            android:background="@drawable/add_form"
+            android:backgroundTint="@color/cokmud"
             android:layout_marginBottom="12dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Price"
+            android:fontFamily="@font/inter_reguler"
             android:textSize="16sp"
             android:textColor="#000000" />
 
@@ -66,6 +90,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/add_form"
+            android:fontFamily="@font/inter_reguler"
             android:backgroundTint="@color/cokmud"
             android:padding="12dp"
             android:layout_marginBottom="12dp"/>
@@ -74,6 +99,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Description"
+            android:fontFamily="@font/inter_reguler"
             android:textSize="16sp"
             android:textColor="#000000" />
 
@@ -83,6 +109,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/add_form"
             android:backgroundTint="@color/cokmud"
+            android:fontFamily="@font/inter_reguler"
             android:padding="12dp"
             android:layout_marginBottom="12dp"/>
 
@@ -91,7 +118,8 @@
             android:layout_height="wrap_content"
             android:text="Upload Photo"
             android:textSize="16sp"
-            android:textColor="#000000" />
+            android:fontFamily="@font/inter_reguler"
+            android:textColor="@color/black" />
 
         <Button
             android:id="@+id/upload_photo_button"
@@ -99,6 +127,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/orange"
             android:text="Choose File"
+            android:fontFamily="@font/inter_bold"
             android:textColor="@color/white"
             android:layout_marginBottom="24dp" />
 
@@ -115,6 +144,7 @@
                 android:layout_weight="1"
                 android:backgroundTint="#B0B0B0"
                 android:text="Cancel"
+                android:fontFamily="@font/inter_bold"
                 android:textColor="@color/white"
                 android:layout_marginEnd="8dp" />
 
@@ -125,6 +155,7 @@
                 android:layout_weight="1"
                 android:backgroundTint="@color/orange"
                 android:text="Save"
+                android:fontFamily="@font/inter_bold"
                 android:textColor="@color/white"
                 android:layout_marginStart="8dp" />
         </LinearLayout>
@@ -132,3 +163,4 @@
     </LinearLayout>
 
 </ScrollView>
+</FrameLayout>

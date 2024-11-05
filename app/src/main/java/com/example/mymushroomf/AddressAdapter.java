@@ -5,51 +5,69 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
-public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHolder> {
-
+public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressViewHolder> {
     private List<Address> addressList;
+    private int selectedPosition = -1; // No item selected initially
 
-    public AddressAdapter(List<Address> addressList) {
-        this.addressList = addressList;
-    }
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView nameTextView;
-        TextView phoneNumberTextView;
-        TextView addressTextView;
-        TextView typeTextView;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            nameTextView = itemView.findViewById(R.id.addressName);
-            phoneNumberTextView = itemView.findViewById(R.id.addressNumber);
-            addressTextView = itemView.findViewById(R.id.address);
-            typeTextView = itemView.findViewById(R.id.addressType);
-        }
+    public AddressAdapter(List<Address> addresses) {
+        this.addressList = addresses;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AddressViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_address, parent, false);
-        return new ViewHolder(view);
+        return new AddressViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AddressViewHolder holder, int position) {
         Address address = addressList.get(position);
-        holder.nameTextView.setText(address.getName());
-        holder.phoneNumberTextView.setText(address.getPhoneNumber());
-        holder.addressTextView.setText(address.getAddress());
-        holder.typeTextView.setText(address.getType());
+        holder.bind(address);
+
+        if (selectedPosition == position) {
+            holder.cardView.setCardBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.card_selected));
+        } else {
+            holder.cardView.setCardBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.card_default));
+        }
+
+        holder.itemView.setOnClickListener(v -> {
+            int previousPosition = selectedPosition;
+            selectedPosition = position;
+
+            // Notify item changes to update the background color
+            notifyItemChanged(previousPosition);
+            notifyItemChanged(selectedPosition);
+        });
     }
 
     @Override
     public int getItemCount() {
         return addressList.size();
     }
-}
 
+    static class AddressViewHolder extends RecyclerView.ViewHolder {
+        TextView name, phone, addressLine, type;
+        CardView cardView;
+
+        public AddressViewHolder(View itemView) {
+            super(itemView);
+            cardView = itemView.findViewById(R.id.recyclerView); // Ensure this ID is correct
+            name = itemView.findViewById(R.id.addressName);
+            phone = itemView.findViewById(R.id.addressNumber);
+            addressLine = itemView.findViewById(R.id.addressLine);
+            type = itemView.findViewById(R.id.addressType);
+        }
+
+        public void bind(Address address) {
+            name.setText(address.getName());
+            phone.setText(address.getPhoneNumber());
+            addressLine.setText(address.getAddress());
+            type.setText(address.getType());
+        }
+    }
+}
