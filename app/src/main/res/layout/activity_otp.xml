@@ -1,0 +1,160 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cokmud"
+    tools:context=".formlogin">
+
+    <LinearLayout
+        android:id="@+id/whiteBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_corners"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.994">
+
+
+        <!-- activity_otp.xml -->
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Insert OTP Code"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/inter_reguler"
+                android:layout_gravity="left"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="16dp">
+
+                <EditText
+                    android:id="@+id/otpDigit1"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/otp_text"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textSize="18sp"/>
+
+                <EditText
+                    android:id="@+id/otpDigit2"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/otp_text"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textSize="18sp"/>
+
+                <EditText
+                    android:id="@+id/otpDigit3"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/otp_text"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textSize="18sp"/>
+
+                <EditText
+                    android:id="@+id/otpDigit4"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/otp_text"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textSize="18sp"/>
+
+                <EditText
+                    android:id="@+id/otpDigit5"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/otp_text"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textSize="18sp"/>
+
+                <EditText
+                    android:id="@+id/otpDigit6"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/otp_text"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textSize="18sp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/nextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/cokmud"
+            android:text="Next"
+            android:fontFamily="@font/inter_bold"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:padding="16dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Doesn't receive message?"
+            android:textSize="12sp"
+            android:fontFamily="@font/inter_reguler"
+            android:paddingRight="5dp"/>
+        <TextView
+            android:id="@+id/tvResendCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Resend Code"
+            android:textColor="@color/black"
+            android:fontFamily="@font/inter_bold"
+            android:textSize="12sp"
+            android:clickable="true"
+            android:textStyle="bold"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

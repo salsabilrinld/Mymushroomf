@@ -20,10 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,9 +30,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class AddProductActivity extends AppCompatActivity {
 
     private EditText fungiNameEditText, fungiPriceEditText, fungiDescriptionEditText;
@@ -44,10 +37,6 @@ public class AddProductActivity extends AppCompatActivity {
     private Button saveButton, cancelButton, uploadPhotoButton;
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final int STORAGE_PERMISSION_CODE = 100;
-
-    public static List<Product> productList = new ArrayList<>();
-
-    ActivityResultLauncher<Intent> resultLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,35 +52,18 @@ public class AddProductActivity extends AppCompatActivity {
         cancelButton = findViewById(R.id.cancel_button);
         uploadPhotoButton = findViewById(R.id.upload_photo_button);
 
-        String[] fungiTypes = {"Organik", "Nonorganik", "Terserah"};
+        String[] fungiTypes = {"Tipe A", "Tipe B", "Tipe C"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, fungiTypes);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         fungiTypeSpinner.setAdapter(adapter);
 
 
-
-
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name =  fungiNameEditText.getText().toString().trim();
-                String description = fungiDescriptionEditText.getText().toString().trim();
-                String price = fungiPriceEditText.getText().toString().trim();
-                String selectedType = fungiTypeSpinner.getSelectedItem().toString();
-
-                Product newProduct = new Product(name, description, price, selectedType);
-                AddProductActivity.productList.add(newProduct);
-
-                Toast.makeText(AddProductActivity.this, "Product added successfully", Toast.LENGTH_SHORT).show();
-
-                Intent intent = new Intent(AddProductActivity.this, DashboardActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-
-                finish();
+                saveProduct();
             }
         });
-
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,27 +72,20 @@ public class AddProductActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    protected void registerResult() {
-        resultLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        try {
-                            Uri imageUri = result.getData().getData();
-
-                            String imageResource = imageUri.toString();
-
-                            Product newProduct = new Product(fungiNameEditText, fungiTypeSpinner, fungiPriceEditText, imageResource);
-                            productList.add(newProduct);
-
-
-                        }
-                    }
+        uploadPhotoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (ContextCompat.checkSelfPermission(AddProductActivity.this,
+                        Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED) {
+                    openFileManager();
+                } else {
+                    ActivityCompat.requestPermissions(AddProductActivity.this,
+                            new String[]{Manifest.permission.READ_MEDIA_IMAGES}, STORAGE_PERMISSION_CODE);
                 }
-        );
+            }
+        });
+
+
     }
 
     @Override

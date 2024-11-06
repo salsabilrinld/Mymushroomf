@@ -2,6 +2,7 @@ package com.example.mymushroomf;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -53,10 +54,10 @@ public class DashboardActivity extends AppCompatActivity implements ProductAdapt
 
         // Initialize product list
         productList = new ArrayList<>();
-        productList.add(new Product("Jamur Tiram", "Deskripsi produk 1", "Rp. 15,000", R.drawable.jamur_tiram));
+        productList.add(new Product("Jamur Tiram", "Deskripsi produk 1", "Rp. 15,000", Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.jamur_tiram).toString()));
 
-        productList.add(new Product("Jamur Tiram", "Deskripsi produk 2", "Rp. 15,000", R.drawable.jamur_tiram));
-        productList.add(new Product("Jamur Tiram", "Deskripsi produk 3", "Rp. 15,000", R.drawable.jamur_tiram));
+        productList.add(new Product("Jamur Tiram", "Deskripsi produk 2", "Rp. 15,000", Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.jamur_tiram).toString()));
+        productList.add(new Product("Jamur Tiram", "Deskripsi produk 3", "Rp. 15,000", Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.jamur_tiram).toString()));
 
         // Set up RecyclerView
         adapter = new ProductAdapter(this, productList, this);

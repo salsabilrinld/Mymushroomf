@@ -9,19 +9,6 @@
     android:background="@color/cokmud"
     tools:context=".RegisterActivity">
 
-    <ImageView
-        android:id="@+id/splash_logo"
-        android:layout_width="334dp"
-        android:layout_height="248dp"
-        android:contentDescription="Logo Splash Screen"
-        android:src="@drawable/mushroom"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.07" />
-
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -33,72 +20,72 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:gravity="center"
-        android:text="REGISTER"
-        android:fontFamily="@font/inter_bold"
-        android:textColor="@color/black"
-        android:textSize="24sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:text="REGISTER"
+            android:fontFamily="@font/inter_bold"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
 
-    <EditText
-        android:id="@+id/nameEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:fontFamily="@font/inter_reguler"
-        android:hint="Nama"
-        android:padding="12dp" />
+        <EditText
+            android:id="@+id/nameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/inter_reguler"
+            android:hint="Nama"
+            android:padding="12dp" />
 
-    <EditText
-        android:id="@+id/emailEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:fontFamily="@font/inter_reguler"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:padding="12dp" />
+        <EditText
+            android:id="@+id/emailEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/inter_reguler"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:padding="12dp" />
 
-    <EditText
-        android:id="@+id/phoneEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:hint="No. Telepon"
-        android:fontFamily="@font/inter_reguler"
-        android:inputType="phone"
-        android:padding="12dp" />
+        <EditText
+            android:id="@+id/phoneEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:hint="No. Telepon"
+            android:fontFamily="@font/inter_reguler"
+            android:inputType="phone"
+            android:padding="12dp" />
 
-    <EditText
-        android:id="@+id/locationEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:fontFamily="@font/inter_reguler"
-        android:hint="Lokasi"
-        android:padding="12dp" />
+        <EditText
+            android:id="@+id/locationEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/inter_reguler"
+            android:hint="Lokasi"
+            android:padding="12dp" />
 
-    <EditText
-        android:id="@+id/passwordEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:hint="Password"
-        android:fontFamily="@font/inter_reguler"
-        android:inputType="textPassword"
-        android:padding="12dp" />
+        <EditText
+            android:id="@+id/passwordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:hint="Password"
+            android:fontFamily="@font/inter_reguler"
+            android:inputType="textPassword"
+            android:padding="12dp" />
 
-    <Button
-        android:id="@+id/registerButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/cokmud"
-        android:text="Daftar"
-        android:fontFamily="@font/inter_bold"
-        android:textColor="@color/black"
-        android:textSize="18sp" />
-</LinearLayout>
+        <Button
+            android:id="@+id/registerButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/cokmud"
+            android:text="Daftar"
+            android:fontFamily="@font/inter_bold"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
