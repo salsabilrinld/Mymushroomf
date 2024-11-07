@@ -4,74 +4,67 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.SearchView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class DashboardActivity extends AppCompatActivity implements ProductAdapter.OnProductClickListener {
+public class DashboardActivity extends AppCompatActivity {
+
     private RecyclerView recyclerView;
-    private ProductAdapter adapter;
+    private ProductAdapter productAdapter;
     private List<Product> productList;
     private MyAdapter myAdapter;
-
-    @Override
-    public void onProductClick(Product product) {
-        // Handle product click event
-        Intent intent = new Intent(this, ProductDetailActivity.class);
-        intent.putExtra("PRODUCT_KEY", product); // Ensure Product implements Parcelable
-        startActivity(intent);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        // Initialize views
         Button addProductButton = findViewById(R.id.button_addproduct);
         TextView welcomeText = findViewById(R.id.welcome_text);
-        SearchView searchView = findViewById(R.id.searchEditText);
-        recyclerView = findViewById(R.id.recycler_view); // Correctly initializing recyclerView
+        recyclerView = findViewById(R.id.recycler_viewproduct);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Set up welcome message
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         String name = sharedPreferences.getString("name", "User");
-        welcomeText.setText("Hey, " + name + "!");
+        welcomeText.setText("Welcome, " + name + "!");
 
-        // Initialize product list
         productList = new ArrayList<>();
-        productList.add(new Product("Jamur Tiram", "Deskripsi produk 1", "Rp. 15,000", Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.jamur_tiram).toString()));
+        productAdapter = new ProductAdapter(this, productList);
+        recyclerView.setAdapter(productAdapter);
 
-        productList.add(new Product("Jamur Tiram", "Deskripsi produk 2", "Rp. 15,000", Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.jamur_tiram).toString()));
-        productList.add(new Product("Jamur Tiram", "Deskripsi produk 3", "Rp. 15,000", Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.jamur_tiram).toString()));
+        // Ambil data produk dari database atau dari Intent
+        // Misalnya menambahkan produk statis untuk contoh
+        productList.add(new Product("Jamur Tiram", "Deskripsi produk 1", 15.000, Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.jamur_tiram).toString()));
+        // null untuk gambar
+        productAdapter.notifyDataSetChanged();
 
-        // Set up RecyclerView
-        adapter = new ProductAdapter(this, productList, this);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        recyclerView.setAdapter(adapter);
+        addProductButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showAddProductDialog();
+            }
+    });
 
-        // Set up the button to add products
-        addProductButton.setOnClickListener(view -> {
-            Intent intent = new Intent(DashboardActivity.this, AddProductActivity.class);
-            startActivity(intent);
-        });
-
-
-        // Set up BottomNavigationView
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -96,32 +89,75 @@ public class DashboardActivity extends AppCompatActivity implements ProductAdapt
                 }
             }
         });
-
-        // Initialize second RecyclerView for additional data if needed
-        // Assuming you have a second RecyclerView (if intended)
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         List<String> myData = Arrays.asList("Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6");
         myAdapter = new MyAdapter(myData);
         recyclerView.setAdapter(myAdapter);
 
-        // Set up the search view
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
+    }
 
+    private void showAddProductDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.add_product, null);
+        builder.setView(dialogView);
+
+        final AlertDialog dialog = builder.create();
+
+        EditText fungiName = dialogView.findViewById(R.id.fungi_name);
+        Spinner fungiTypeSpinner = dialogView.findViewById(R.id.fungi_type);
+        EditText fungiPrice = dialogView.findViewById(R.id.fungi_price);
+        EditText fungiDesc = dialogView.findViewById(R.id.fungi_description);
+        Button imageButton = dialogView.findViewById(R.id.upload_photo_button);
+        Button saveButton = dialogView.findViewById(R.id.save_button);
+        Button cancelButton = dialogView.findViewById(R.id.cancel_button);
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onQueryTextChange(String newText) {
-                // Assuming myAdapter is initialized for the search function
-                // myAdapter.filter(newText);
-                return true;
+            public void onClick(View view) {
+                String fungiName = ((EditText) findViewById(R.id.fungi_name)).getText().toString();
+                String fungiType = fungiTypeSpinner.getSelectedItem().toString(); // Ambil tipe dari Spinner
+                String fungiPrice = ((EditText) findViewById(R.id.fungi_price)).getText().toString();
+                String fungiDesc = ((EditText) findViewById(R.id.fungi_description)).getText().toString();
+                String imageUrl = "https://example.com/jamur_tiram.jpg";
+
+                // Buat objek produk dengan tipe yang dipilih
+                Product product = new Product(fungiName, fungiType, Double.parseDouble(fungiPrice), imageUrl);
+                productList.add(new Product(fungiName, fungiType, Double.parseDouble(fungiPrice), imageUrl));
+
+                updateDashboard();
+
+                dialog.dismiss();
             }
         });
+            cancelButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
 
-        // Load and display product data from SharedPreferences
-        SharedPreferences sharedPreferences1 = getSharedPreferences("MyMushroomF", MODE_PRIVATE);
-        String fungiName = sharedPreferences1.getString("fungiName", "No Name");
-        Toast.makeText(this, "Saved Product: " + fungiName, Toast.LENGTH_SHORT).show();
+            dialog.show();
+            }
+
+            private void updateDashboard() {
+        productAdapter.notifyDataSetChanged();
     }
+
+//    @Override
+//    public void onEditClick(int position) {
+//        // Logika untuk mengedit produk
+//    }
+//
+//    @Override
+//    public void onDeleteClick(int position) {
+//        // Logika untuk menghapus produk
+//        productList.remove(position);
+//        productAdapter.notifyItemRemoved(position);
+//    }
+//
+//    public void updateProductList(Product product) {
+//        productList.add(product);
+//        productAdapter.notifyItemInserted(productList.size() - 1);
+//    }
 }

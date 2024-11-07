@@ -2,8 +2,6 @@ package com.example.mymushroomf;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -16,19 +14,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.PackageManagerCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class AddProductActivity extends AppCompatActivity {
 
@@ -41,7 +33,7 @@ public class AddProductActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_addproduct);
+        setContentView(R.layout.add_product);
 
 
         fungiNameEditText = findViewById(R.id.fungi_name);
@@ -52,7 +44,7 @@ public class AddProductActivity extends AppCompatActivity {
         cancelButton = findViewById(R.id.cancel_button);
         uploadPhotoButton = findViewById(R.id.upload_photo_button);
 
-        String[] fungiTypes = {"Tipe A", "Tipe B", "Tipe C"};
+        String[] fungiTypes = {"Organik", "Nonorganik", "Inorganik"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, fungiTypes);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         fungiTypeSpinner.setAdapter(adapter);
@@ -61,7 +53,19 @@ public class AddProductActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveProduct();
+                String fungiName = ((EditText) findViewById(R.id.fungi_name)).getText().toString();
+                String fungiType = fungiTypeSpinner.getSelectedItem().toString(); // Ambil tipe dari Spinner
+                String fungiPrice = ((EditText) findViewById(R.id.fungi_price)).getText().toString();
+                String fungiDesc = ((EditText) findViewById(R.id.fungi_description)).getText().toString();
+
+                // Buat objek produk dengan tipe yang dipilih
+                Product product = new Product(fungiName, fungiType, Double.parseDouble(fungiPrice), fungiDesc);
+
+                // Kirim produk baru ke DashboardActivity
+                Intent intent = new Intent(AddProductActivity.this, DashboardActivity.class);
+                intent.putExtra("newProduct", product);
+                startActivity(intent);
+                finish(); // Kembali ke DashboardActivity
             }
         });
 

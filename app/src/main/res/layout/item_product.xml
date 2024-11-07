@@ -51,10 +51,22 @@
                 android:layout_height="wrap_content"
                 android:text="Rp. 9.500"
                 android:textSize="14sp"
-                android:fontFamily="@font/inter_reguler"
+                android:textColor="@color/black"
+                android:fontFamily="@font/manrope_bold"
                 android:layout_marginTop="4dp"
                 android:layout_marginRight="10dp"
+                android:paddingTop="8dp"
                 android:layout_gravity="center_horizontal"/>
+
+            <ImageButton
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/ic_edit"/>
+
+            <ImageButton
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/ic_delete"/>
 
         </LinearLayout>
     </LinearLayout>

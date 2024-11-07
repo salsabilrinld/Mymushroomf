@@ -1,33 +1,11 @@
-<FrameLayout
-    android:layout_width="match_parent"
+<LinearLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:background="@drawable/rounded_form"
+    android:backgroundTint="@color/white"
+    android:padding="27dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@color/cokmud" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="bottom"
-        android:layout_weight="1"
-        android:background="@color/white" />
-
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="18dp">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_gravity="center"
-        android:background="@drawable/rounded_form"
-        android:backgroundTint="@color/white"
-        android:padding="27dp">
 
         <TextView
             android:id="@+id/title"
@@ -162,5 +140,3 @@
 
     </LinearLayout>
 
-</ScrollView>
-</FrameLayout>

@@ -28,8 +28,9 @@
             android:orientation="vertical">
 
             <ImageButton
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
                 android:src="@drawable/back_arrow"
                 android:backgroundTint="@color/cokmud"/>
 

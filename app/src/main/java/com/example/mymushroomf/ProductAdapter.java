@@ -19,16 +19,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     private Context context;
     private List<Product> productList;
-    private OnProductClickListener listener;
 
-    public ProductAdapter(Context context, List<Product> productList, OnProductClickListener listener) {
+    public ProductAdapter(Context context, List<Product> productList) {
         this.context = context;
         this.productList = productList;
-        this.listener = listener;
-    }
-
-    public interface OnProductClickListener {
-        void onProductClick(Product product);
     }
 
     @NonNull
@@ -58,9 +52,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView productImageView;
-        TextView productNameTextView;
-        TextView productPriceTextView;
-        TextView productTypeTextView;
+        TextView productNameTextView, productPriceTextView, productTypeTextView;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -70,13 +62,5 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             productPriceTextView = itemView.findViewById(R.id.product_price);
         }
 
-        public void bind(Product product, OnProductClickListener listener) {
-            productNameTextView.setText(product.getName()); // Assuming you have a getName() method in Product
-            productTypeTextView.setText(product.getType()); // Assuming you have a getDescription() method
-            Uri ImageUriConverted = Uri.parse(product.getImageResId());
-            productImageView.setImageURI(ImageUriConverted); // Assuming you have an appropriate method for getting the image resource ID
-
-            itemView.setOnClickListener(v -> listener.onProductClick(product));
-        }
     }
 }

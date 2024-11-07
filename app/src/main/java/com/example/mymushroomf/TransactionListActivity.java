@@ -8,15 +8,34 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TransactionListActivity extends AppCompatActivity {
+
+    private RecyclerView recyclerView;
+    private TransactionAdapter transactionAdapter;
+    private List<Transaction> transactionList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.transaction_list);
+
+        recyclerView = findViewById(R.id.recycler_viewtransaction);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        transactionList = new ArrayList<>();
+        transactionAdapter = new TransactionAdapter(this, transactionList);
+        recyclerView.setAdapter(transactionAdapter);
+
+        // Tambahkan transaksi ke list dan update adapter
+        loadTransactionData();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.menu_transaction);
@@ -41,6 +60,12 @@ public class TransactionListActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void loadTransactionData() {
+        // Isi data transaksi ke dalam transactionList
+        transactionList.add(new Transaction("Jamur Tiram", "Type A", "Selesai", "Rp. 12.000", "https://example.com/jamur_tiram.jpg"));
+        transactionAdapter.notifyDataSetChanged();
     }
 
 }

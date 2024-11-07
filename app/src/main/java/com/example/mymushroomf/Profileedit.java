@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Profileu extends AppCompatActivity {
+public class Profileedit extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
     private ImageView profileImage;
@@ -24,7 +24,7 @@ public class Profileu extends AppCompatActivity {
 
         // Inisialisasi komponen UI
         profileImage = findViewById(R.id.profile_image);
-        nameTextView = findViewById(R.id.name_input); // Pastikan `name_input` ada di layout
+        nameTextView = findViewById(R.id.username_label); // Pastikan `name_input` ada di layout
 
         // Ambil nama pengguna dari SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
@@ -40,10 +40,11 @@ public class Profileu extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
+}
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
-            Uri imageUri = data.g
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
+//            Uri imageUri = data.g

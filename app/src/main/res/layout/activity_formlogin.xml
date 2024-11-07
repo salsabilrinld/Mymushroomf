@@ -20,37 +20,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="22dp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="67dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/inter_bold"
-            android:gravity="center"
-            android:text="Login"
-            android:textColor="@color/black"
-            android:textSize="30sp"
-            tools:layout_editor_absoluteX="24dp"
-            tools:layout_editor_absoluteY="94dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/inter_bold"
-            android:gravity="left"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-            android:textColor="@color/black"
-            android:textSize="12sp"
-            tools:layout_editor_absoluteX="24dp"
-            tools:layout_editor_absoluteY="145dp" />
-
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/whiteBox"
@@ -107,6 +76,7 @@
             android:background="@drawable/tabung_miring"
             android:backgroundTint="@color/lightgrey"
             android:inputType="textPassword"
+            android:hint="********"
             android:fontFamily="@font/inter_reguler"
             android:padding="12dp" />
 
