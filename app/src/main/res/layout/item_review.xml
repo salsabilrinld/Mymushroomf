@@ -51,6 +51,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/review_comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit..."
@@ -74,6 +75,13 @@
                 android:layout_marginTop="4dp" />
         </LinearLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reply"
+            android:textColor="@android:color/holo_orange_dark"
+            android:padding="8dp"
+            android:layout_gravity="center" />
     </LinearLayout>
 
 

@@ -27,8 +27,8 @@ public class AddProductActivity extends AppCompatActivity {
     private EditText fungiNameEditText, fungiPriceEditText, fungiDescriptionEditText;
     private Spinner fungiTypeSpinner;
     private Button saveButton, cancelButton, uploadPhotoButton;
-    private static final int PICK_IMAGE_REQUEST = 1;
-    private static final int STORAGE_PERMISSION_CODE = 100;
+    public static final int PICK_IMAGE_REQUEST = 1;
+    public static final int STORAGE_PERMISSION_CODE = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

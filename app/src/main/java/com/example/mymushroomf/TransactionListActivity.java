@@ -1,6 +1,7 @@
 package com.example.mymushroomf;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.SurfaceControl;
@@ -33,7 +34,7 @@ public class TransactionListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         transactionList = new ArrayList<>();
-        transactionList.add(new Transaction("Jamur Tiram", "Type A", "Selesai", "Rp. 12.000", "https://example.com/jamur_tiram.jpg"));
+        transactionList.add(new Transaction("Jamur Tiram", "Type A", "Selesai", "Rp. 12.000", Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.jamur_tiram).toString()));
 
 
         transactionAdapter = new TransactionAdapter(this, transactionList);

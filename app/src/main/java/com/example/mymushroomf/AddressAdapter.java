@@ -26,10 +26,15 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
 
     @Override
     public void onBindViewHolder(@NonNull AddressViewHolder holder, int position) {
-        Address address = addressList.get(position);
-        holder.bind(address);
+        Address address = addressList.get(holder.getAdapterPosition()); // Use getAdapterPosition() here
 
-        if (selectedPosition == position) {
+        holder.name.setText(address.getName());
+        holder.type.setText(address.getType());
+        holder.phone.setText(address.getPhoneNumber());
+        holder.addressLine.setText(address.getAddress());
+
+        // Check if this is the selected item and set the background color accordingly
+        if (selectedPosition == holder.getAdapterPosition()) {
             holder.cardView.setCardBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.card_selected));
         } else {
             holder.cardView.setCardBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.card_default));
@@ -37,7 +42,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
 
         holder.itemView.setOnClickListener(v -> {
             int previousPosition = selectedPosition;
-            selectedPosition = position;
+            selectedPosition = holder.getAdapterPosition(); // Use getAdapterPosition() here as well
 
             // Notify item changes to update the background color
             notifyItemChanged(previousPosition);
@@ -56,7 +61,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
 
         public AddressViewHolder(View itemView) {
             super(itemView);
-            cardView = itemView.findViewById(R.id.recyclerView); // Ensure this ID is correct
+            cardView = itemView.findViewById(R.id.recycler_viewaddress); // Ensure this ID is correct
             name = itemView.findViewById(R.id.addressName);
             phone = itemView.findViewById(R.id.addressNumber);
             addressLine = itemView.findViewById(R.id.addressLine);

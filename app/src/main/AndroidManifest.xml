@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+
 
     <application
         android:allowBackup="true"
@@ -13,6 +16,9 @@
         android:theme="@style/Theme.Mymushroomf"
         tools:targetApi="31">
         <activity
+            android:name=".MyProductsActivity"
+            android:exported="false" />
+        <activity
             android:name=".RatingActivity"
             android:exported="false" />
         <activity
@@ -20,9 +26,6 @@
             android:exported="false"
             android:label="@string/title_activity_order_detail"
             android:theme="@style/Theme.Mymushroomf.NoActionBar" />
-        <activity
-            android:name=".Dashboard2Activity"
-            android:exported="false" />
         <activity
             android:name=".ProfileActivity"
             android:exported="false" />
@@ -33,8 +36,11 @@
             android:name=".AddProductActivity"
             android:exported="false" />
         <activity
+            android:name=".EditProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".RegisterActivity"
-            android:exported="false" /> <!-- SplashActivity sebagai layar pertama -->
+            android:exported="false" />
         <activity
             android:name=".SplashActivity"
             android:exported="true"
