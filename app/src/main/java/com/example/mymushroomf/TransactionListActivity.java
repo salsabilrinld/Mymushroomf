@@ -8,12 +8,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TransactionListActivity extends AppCompatActivity {
@@ -31,8 +33,12 @@ public class TransactionListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         transactionList = new ArrayList<>();
+        transactionList.add(new Transaction("Jamur Tiram", "Type A", "Selesai", "Rp. 12.000", "https://example.com/jamur_tiram.jpg"));
+
+
         transactionAdapter = new TransactionAdapter(this, transactionList);
         recyclerView.setAdapter(transactionAdapter);
+
 
         // Tambahkan transaksi ke list dan update adapter
         loadTransactionData();

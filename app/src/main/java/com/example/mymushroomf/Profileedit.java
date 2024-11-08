@@ -23,8 +23,8 @@ public class Profileedit extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         // Inisialisasi komponen UI
-        profileImage = findViewById(R.id.profile_image);
-        nameTextView = findViewById(R.id.username_label); // Pastikan `name_input` ada di layout
+        profileImage = findViewById(R.id.profileImage);
+        nameTextView = findViewById(R.id.username); // Pastikan `name_input` ada di layout
 
         // Ambil nama pengguna dari SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
@@ -32,7 +32,7 @@ public class Profileedit extends AppCompatActivity {
         nameTextView.setText(userName); // Tampilkan nama pengguna
 
         // Mengatur aksi klik untuk mengubah gambar
-        TextView changePictureLabel = findViewById(R.id.change_picture_label);
+        TextView changePictureLabel = findViewById(R.id.change_picture);
         changePictureLabel.setOnClickListener(v -> openGallery());
     }
 

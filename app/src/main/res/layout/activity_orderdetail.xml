@@ -1,0 +1,278 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        >
+
+        <ImageButton
+            android:id="@+id/back_order"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/back_arrow"
+            android:paddingLeft="35dp"
+            android:backgroundTint="@color/white"
+            android:contentDescription="@string/desc_image"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Rincian Pemesanan"
+            android:fontFamily="@font/inter_bold"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:padding="16dp"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/divider"
+        android:layout_marginVertical="8dp" />
+
+    <include layout="@layout/order_status"
+        android:id="@+id/status_order"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Info Pengiriman"
+            android:fontFamily="@font/manrope_bold"
+            android:textColor="@color/black"
+            android:textSize="14dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Detail Pengiriman"
+            android:fontFamily="@font/manrope_regular"
+            android:textColor="@color/black"
+            android:textSize="10dp"
+            android:paddingTop="5dp"/>
+    </LinearLayout>
+
+        <include layout="@layout/product_info" />
+
+        <LinearLayout
+            android:id="@+id/kurir_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvkurir_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kurir"
+                android:fontFamily="@font/manrope_regular"
+                android:textColor="@color/black"
+                android:layout_marginRight="65dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reguler"
+                android:fontFamily="@font/manrope_regular"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/resi_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp">
+
+            <TextView
+                android:id="@+id/tvresi_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No. Resi"
+                android:fontFamily="@font/manrope_regular"
+                android:textColor="@color/black"
+                android:layout_marginRight="45dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TKP01-W5JEM982"
+                android:fontFamily="@font/manrope_regular"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/alamat_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:id="@+id/tvalamat_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Alamat"
+                android:fontFamily="@font/manrope_regular"
+                android:textColor="@color/black"
+                android:layout_marginRight="45dp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Indira S"
+                android:fontFamily="@font/manrope_bold"
+                android:textColor="@color/black" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0878-8202-5909"
+                    android:fontFamily="@font/manrope_regular"
+                    android:textColor="@color/black" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Perumahan Bogor, Bogor Utara -Kota Bogor - Jawa Barat, ID 16151"
+                    android:fontFamily="@font/manrope_regular"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/divider"
+            android:layout_marginVertical="8dp"
+            android:layout_marginTop="12dp"/>
+
+        <LinearLayout
+            android:id="@+id/metode_pembayaran"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:id="@+id/tvmetode_pembayaran"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Metode Pembayaran"
+                android:fontFamily="@font/manrope_regular"
+                android:textColor="@color/black"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BNI Virtual Account"
+                android:fontFamily="@font/manrope_regular"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/divider"
+            android:layout_marginVertical="8dp"
+            />
+
+        <LinearLayout
+            android:id="@+id/biaya_produk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvbiaya_produk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Biaya Produk"
+                android:fontFamily="@font/manrope_regular"
+                android:textColor="@color/black"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rp. 12.000"
+                android:fontFamily="@font/manrope_regular"
+                android:textColor="@color/black"
+                android:foregroundGravity="right"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/biaya_kirim"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp" >
+
+            <TextView
+                android:id="@+id/tvbiaya_kirim"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Biaya Pengiriman"
+                android:fontFamily="@font/manrope_regular"
+                android:textColor="@color/black"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rp. 7.000"
+                android:fontFamily="@font/manrope_regular"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/total_biaya"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp">
+
+        <TextView
+            android:id="@+id/tvtotal_biaya"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Pembayaran"
+            android:fontFamily="@font/manrope_bold"
+            android:textColor="@color/black"
+            android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rp. 19.000"
+                android:fontFamily="@font/manrope_bold"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+    </ScrollView>

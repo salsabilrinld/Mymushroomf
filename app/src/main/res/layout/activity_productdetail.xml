@@ -32,7 +32,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:src="@drawable/back_arrow"
-                android:backgroundTint="@color/cokmud"/>
+                android:backgroundTint="@color/cokmud"
+                />
 
             <ImageView
                 android:id="@+id/product_image"

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="filter_options">
+        <item>All</item>
+        <item>Fungi Type 1</item>
+        <item>Fungi Type 2</item>
+    </string-array>
+
+    <string-array name="sort_options">
+        <item>Sort by Name</item>
+        <item>Sort by Price</item>
+    </string-array>
+</resources>
