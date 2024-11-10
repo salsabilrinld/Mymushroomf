@@ -2,7 +2,8 @@ package com.example.mymushroomf;
 
 import static com.example.mymushroomf.AddProductActivity.PICK_IMAGE_REQUEST;
 import static com.example.mymushroomf.AddProductActivity.STORAGE_PERMISSION_CODE;
-import static com.example.mymushroomf.Manifest.*;
+import android.Manifest;
+
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -43,7 +44,7 @@ public class EditProfileActivity extends AppCompatActivity {
         updateButton = findViewById(R.id.update_profile);
         cancelButton = findViewById(R.id.cancel_profile); // Initialize cancel button
 
-        SharedPreferences sharedPreferences = getSharedPreferences("UserProfile", MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
         String savedName = sharedPreferences.getString("name", ""); // Default to empty string if not found
         String savedEmail = sharedPreferences.getString("email", "");
         String savedNumber = sharedPreferences.getString("number", "");
@@ -69,8 +70,34 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
-        // Update profile information
-        updateButton.setOnClickListener(v -> updateProfile());
+
+        updateButton.setOnClickListener(view -> {
+            String updatedName = nameEditText.getText().toString();
+            String updatedEmail = emailEditText.getText().toString();
+            String updatedPassword = passwordEditText.getText().toString();
+
+            // Memastikan semua input terisi sebelum memperbarui data
+            if (!updatedName.isEmpty() && !updatedEmail.isEmpty() && !updatedPassword.isEmpty()) {
+                SharedPreferences UserSharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+                SharedPreferences.Editor editor = UserSharedPreferences.edit();
+
+                // Menyimpan data terbaru ke SharedPreferences
+                editor.putString("name", updatedName);
+                editor.putString("email", updatedEmail);
+                editor.putString("password", updatedPassword);
+                editor.apply();
+
+                Toast.makeText(EditProfileActivity.this, "Profile updated", Toast.LENGTH_SHORT).show();
+
+                // Kembali ke ProfileActivity setelah pembaruan berhasil
+                Intent intent = new Intent(EditProfileActivity.this, ProfileActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(EditProfileActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         // Cancel editing and close the activity without saving
         cancelButton.setOnClickListener(v -> finish());
@@ -103,7 +130,7 @@ public class EditProfileActivity extends AppCompatActivity {
             return;
         }
 
-        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putString("name", name);

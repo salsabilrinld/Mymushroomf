@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,7 +15,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class formlogin extends AppCompatActivity { // Menggunakan formlogin seperti yang diinginkan
+public class formlogin extends AppCompatActivity { // Menggunakan FormLogin seperti yang diinginkan
 
     private EditText emailEditText;
     private EditText passwordEditText;
@@ -47,7 +46,6 @@ public class formlogin extends AppCompatActivity { // Menggunakan formlogin sepe
 
         // Logika untuk teks pendaftaran
         createAccountText.setOnClickListener(v -> {
-            // Arahkan ke aktivitas pendaftaran
             Intent intent = new Intent(formlogin.this, RegisterActivity.class);
             startActivity(intent);
         });
@@ -56,7 +54,6 @@ public class formlogin extends AppCompatActivity { // Menggunakan formlogin sepe
     private void loginUser() {
         String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
-
 
         // Periksa apakah email dan password diisi
         if (email.isEmpty() || password.isEmpty()) {
@@ -68,28 +65,31 @@ public class formlogin extends AppCompatActivity { // Menggunakan formlogin sepe
         SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
         String storedEmail = sharedPreferences.getString("email", null);
         String storedPassword = sharedPreferences.getString("password", null);
-        String storedName = sharedPreferences.getString("name", ""); // Ambil nama pengguna
-
+        String storedName = sharedPreferences.getString("name", "");
 
         Log.d("LoginDebug", "Stored Email: " + storedEmail + ", Stored Password: " + storedPassword);
         Log.d("LoginDebug", "Input Email: " + email + ", Input Password: " + password);
-
 
         // Memeriksa apakah email dan password yang dimasukkan sama dengan yang tersimpan
         if (email.equals(storedEmail) && password.equals(storedPassword)) {
             // Login berhasil
             Toast.makeText(this, "Login berhasil", Toast.LENGTH_SHORT).show();
 
-            // Simpan nama pengguna untuk digunakan di DashboardActivity
-            SharedPreferences myPrefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-            SharedPreferences.Editor editor = myPrefs.edit();
-            editor.putString("name", storedName); // Menyimpan nama pengguna
+            // Simpan status login
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("isLoggedIn", true);
             editor.apply();
+
+            // Menyimpan nama pengguna untuk digunakan di aktivitas lain
+            SharedPreferences myPrefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+            SharedPreferences.Editor myPrefsEditor = myPrefs.edit();
+            myPrefsEditor.putString("name", storedName);
+            myPrefsEditor.apply();
 
             // Pindah ke DashboardActivity
             Intent intent = new Intent(formlogin.this, DashboardActivity.class);
             startActivity(intent);
-            finish(); // Mengakhiri formlogin
+            finish(); // Mengakhiri FormLogin
         } else {
             Toast.makeText(this, "Login gagal, cek email dan password", Toast.LENGTH_SHORT).show();
         }

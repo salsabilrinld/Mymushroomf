@@ -71,7 +71,6 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Total Transactions -->
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -128,10 +127,12 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/ic_rating" />
+                <ImageButton
+                    android:id="@+id/rating_pembeli"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/ic_rating"
+                    android:contentDescription="Ulasan Pembeli"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -139,6 +140,7 @@
                     android:layout_marginTop="8dp"
                     android:text="Ulasan Pembeli"
                     android:textColor="@color/black"
+                    android:fontFamily="@font/manrope_regular"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -150,16 +152,19 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/ic_produk" />
+                <ImageButton
+                    android:id="@+id/produk_saya"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/ic_produk"
+                    android:contentDescription="Daftar Produk"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="Daftar Produk"
+                    android:fontFamily="@font/manrope_regular"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -172,17 +177,20 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/ic_settings" />
+                <ImageButton
+                    android:id="@+id/logout"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/ic_logout"
+                    android:contentDescription="Logout"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Settings"
+                    android:text="Keluar"
                     android:textColor="@color/black"
+                    android:fontFamily="@font/manrope_regular"
                     android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
@@ -208,10 +216,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
-            android:layout_width="19dp"
-            android:layout_height="28dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="27dp"
+            android:layout_marginRight="12dp"
             android:background="@drawable/ic_bell"
             android:contentDescription="@string/bell_image" />
 
@@ -231,7 +239,7 @@
                 android:src="@drawable/profile_orange" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:orientation="vertical">
@@ -246,23 +254,40 @@
                     android:text="TukangJamur123"
                     android:textColor="@color/black"
                     android:textSize="16sp"
+                    android:fontFamily="@font/manrope_bold"
                     android:textStyle="bold" />
 
-                <!-- Followers and Following -->
-                <TextView
+                <LinearLayout
                     android:id="@+id/followInfo"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                <TextView
+                    android:id="@+id/followersInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:layout_below="@id/username"
                     android:layout_centerHorizontal="true"
-                    android:text="2 Pengikut   67 Mengikuti"
+                    android:text="122 Pengikut"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/followingInfo"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_below="@id/username"
+                    android:layout_weight="1"
+                    android:layout_centerHorizontal="true"
+                    android:text="67 Mengikuti"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                </LinearLayout>
+
 
                     <Button
                         android:id="@+id/editProfileButton"
@@ -276,18 +301,6 @@
                         android:text="Edit Profile"
                         android:textColor="@color/white" />
 
-                    <!-- Logout Button -->
-                    <Button
-                        android:id="@+id/logoutButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/followInfo"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginTop="12dp"
-                        android:backgroundTint="@color/black"
-                        android:text="Logout"
-                        android:textColor="@color/white" />
-                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
