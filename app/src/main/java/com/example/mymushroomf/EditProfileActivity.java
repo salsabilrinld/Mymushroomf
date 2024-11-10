@@ -1,9 +1,6 @@
 package com.example.mymushroomf;
 
-import static com.example.mymushroomf.AddProductActivity.PICK_IMAGE_REQUEST;
-import static com.example.mymushroomf.AddProductActivity.STORAGE_PERMISSION_CODE;
-import static com.example.mymushroomf.Manifest.*;
-
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -41,38 +38,31 @@ public class EditProfileActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.change_password);
         changeProfilePicButton = findViewById(R.id.change_picture);
         updateButton = findViewById(R.id.update_profile);
-        cancelButton = findViewById(R.id.cancel_profile); // Initialize cancel button
+        cancelButton = findViewById(R.id.cancel_profile);
 
         SharedPreferences sharedPreferences = getSharedPreferences("UserProfile", MODE_PRIVATE);
-        String savedName = sharedPreferences.getString("name", ""); // Default to empty string if not found
+        String savedName = sharedPreferences.getString("name", "");
         String savedEmail = sharedPreferences.getString("email", "");
         String savedNumber = sharedPreferences.getString("number", "");
         String savedPassword = sharedPreferences.getString("password", "");
 
-        // Set the retrieved values in the EditText fields
         nameEditText.setText(savedName);
         emailEditText.setText(savedEmail);
         numberEditText.setText(savedNumber);
         passwordEditText.setText(savedPassword);
 
-        // Change profile picture
         changeProfilePicButton.setOnClickListener(v -> {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED) {
-                // Permission is already granted, proceed with your logic
                 openGallery();
             } else {
-                // Request permission if not granted
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                         STORAGE_PERMISSION_CODE);
             }
         });
 
-        // Update profile information
         updateButton.setOnClickListener(v -> updateProfile());
-
-        // Cancel editing and close the activity without saving
         cancelButton.setOnClickListener(v -> finish());
     }
 
@@ -87,7 +77,7 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imageUri = data.getData();
-            profileImageView.setImageURI(imageUri); // Display selected image in ImageView
+            profileImageView.setImageURI(imageUri);
         }
     }
 
@@ -97,22 +87,20 @@ public class EditProfileActivity extends AppCompatActivity {
         String number = numberEditText.getText().toString();
         String password = passwordEditText.getText().toString();
 
-        // Validate inputs
         if (name.isEmpty() || email.isEmpty() || number.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "Please fill out all fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("UserProfile", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putString("name", name);
         editor.putString("email", email);
         editor.putString("number", number);
         editor.putString("password", password);
-        editor.apply(); // Apply changes asynchronously
+        editor.apply();
 
-        // Notify the user and close the activity
         Toast.makeText(this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
         finish();
     }
@@ -122,13 +110,10 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == STORAGE_PERMISSION_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission granted, proceed with the logic
                 openGallery();
             } else {
-                // Permission denied, show a message to the user
                 Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
             }
         }
     }
-
 }

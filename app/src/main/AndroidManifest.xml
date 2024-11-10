@@ -5,8 +5,6 @@
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -15,6 +13,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Mymushroomf"
         tools:targetApi="31">
+
+        <!-- Aktivitas SettingsActivity1 -->
+        <activity
+            android:name=".SettingsActivity1"
+        android:exported="true"
+        android:label="@string/title_activity_settings1" />
+
+
+
+        <!-- Aktivitas lainnya -->
         <activity
             android:name=".MyProductsActivity"
             android:exported="false" />
@@ -37,7 +45,8 @@
             android:exported="false" />
         <activity
             android:name=".EditProfileActivity"
-            android:exported="false" />
+            android:exported="true" />
+
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
@@ -47,10 +56,9 @@
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- FormLoginActivity setelah SplashActivity -->
+        </activity>
         <activity
             android:name=".formlogin"
             android:exported="false" />
@@ -60,6 +68,7 @@
         <activity
             android:name=".TransactionListActivity"
             android:exported="false" />
+
     </application>
 
 </manifest>

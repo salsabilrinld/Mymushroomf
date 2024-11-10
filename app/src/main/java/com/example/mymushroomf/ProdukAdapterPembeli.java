@@ -15,12 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
+public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPembeli.ProductViewHolder> {
 
     private List<Produk1> productList;
     private Context context;
 
-    public ProductAdapter(Context context, List<Produk1> productList) {
+    public ProdukAdapterPembeli(Context context, List<Produk1> productList) {
         this.context = context;
         this.productList = productList;
     }
@@ -28,7 +28,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Pastikan file item_produk1.xml ada di res/layout
+        // Inflate the layout for each item
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_produk1, parent, false);
         return new ProductViewHolder(view);
     }
@@ -46,11 +46,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         );
 
         holder.deleteButton.setOnClickListener(v -> {
-            int currentPosition = holder.getAbsoluteAdapterPosition();
-            productList.remove(currentPosition);
-            notifyItemRemoved(currentPosition);
-            notifyItemRangeChanged(currentPosition, productList.size());
-            Toast.makeText(context, "Produk " + product.getName() + " dihapus dari favorit", Toast.LENGTH_SHORT).show();
+            int currentPosition = holder.getAdapterPosition();
+            if (currentPosition != RecyclerView.NO_POSITION) { // Ensure valid position
+                productList.remove(currentPosition);
+                notifyItemRemoved(currentPosition);
+                Toast.makeText(context, "Produk " + product.getName() + " dihapus dari favorit", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
@@ -61,7 +62,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
         ImageView productImage;
-        TextView productName, productWeight, productPrice;
+        TextView productName;
+        TextView productWeight;
+        TextView productPrice;
         Button buyButton;
         ImageButton deleteButton;
 
