@@ -1,12 +1,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <SwitchPreferenceCompat
-        android:key="example_switch"
-        android:title="Aktifkan Mode Gelap"
-        android:defaultValue="false" />
-
     <Preference
         android:key="logout"
-        android:title="Logout" />
-
+        android:title="Logout"
+        android:summary="Klik untuk keluar"
+        android:defaultValue="false" />
 </PreferenceScreen>

@@ -105,7 +105,7 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_settings1">SettingsActivity1</string>
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
