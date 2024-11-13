@@ -1,18 +1,28 @@
 package com.example.mymushroomf;
 
 public class Transaction {
+        private String Id;
         private String fungiName;
         private String fungiQuantity;
         private String transactionStatus;
         private String fungiPrice;
         private String fungiImageUrl;
 
-    public Transaction(String fungiName, String fungiQuantity, String transactionStatus, String fungiPrice, String fungiImageUrl) {
+    public Transaction(String Id, String fungiName, String fungiQuantity, String transactionStatus, String fungiPrice, String fungiImageUrl) {
+        this.Id = Id;
         this.fungiName = fungiName;
         this.fungiQuantity = fungiQuantity;
         this.transactionStatus = transactionStatus;
         this.fungiPrice = fungiPrice;
         this.fungiImageUrl = fungiImageUrl;
+    }
+
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String id) {
+        Id = id;
     }
 
     public String getFungiName() {

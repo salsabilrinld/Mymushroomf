@@ -10,4 +10,5 @@
     <color name="card_selected">#D58D43</color>
     <color name="card_default">#FFFFFFFF</color>
     <color name="lightgrey">#F5F5F7</color>
+    <color name="cokmud_trans">#5EE9CD9D</color>
 </resources>

@@ -12,7 +12,7 @@ public class TransactionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_transactiondetail);
+        setContentView(R.layout.activity_transaction_detail);
 
         TextView shippingMethodButton = findViewById(R.id.shipping_method);
         shippingMethodButton.setOnClickListener(v -> showBottomSheetDialog());

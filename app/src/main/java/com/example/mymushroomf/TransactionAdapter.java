@@ -1,10 +1,11 @@
 package com.example.mymushroomf;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
-import android.view.SurfaceControl;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,12 +18,17 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
     private Context context;
     private List<Transaction> transactionList;
+    private OnItemClickListener onItemClickListener;
 
-    public TransactionAdapter(Context context, List<Transaction> transactionList) {
-        this.context = context;
-        this.transactionList = transactionList;
+    public interface OnItemClickListener {
+        void onItemClick(int position);
     }
 
+    public TransactionAdapter(Context context, List<Transaction> transactionList, OnItemClickListener listener) {
+        this.context = context;
+        this.transactionList = transactionList;
+        this.onItemClickListener = listener;
+    }
 
     @NonNull
     @Override
@@ -41,14 +47,22 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         holder.productTotal.setText("Total Belanja");
         holder.productPrice.setText(transaction.getFungiPrice());
 
-        // Jika Anda menggunakan Glide untuk menampilkan gambar produk
         Glide.with(context)
-                .load(transaction.getFungiImageUrl()) // URL gambar produk
+                .load(transaction.getFungiImageUrl())
                 .into(holder.productImage);
+
+
+        holder.itemView.setOnClickListener(v -> {
+            if (onItemClickListener != null) {
+                onItemClickListener.onItemClick(position);
+            }
+        });
+
     }
 
     @Override
     public int getItemCount() {
+
         return transactionList.size();
     }
 
@@ -65,7 +79,8 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             productTotal = itemView.findViewById(R.id.product_total);
             productPrice = itemView.findViewById(R.id.product_price);
             productImage = itemView.findViewById(R.id.product_image);
+
+
         }
     }
 }
-

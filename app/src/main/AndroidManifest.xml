@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -13,27 +14,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Mymushroomf"
         tools:targetApi="31">
-
-        <!-- Aktivitas SettingsActivity1 -->
+        <activity
+            android:name=".OrderListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TransactionDetailActivity"
+            android:exported="false" />
         <activity
             android:name=".SettingsActivity1"
-        android:exported="true"
-        android:label="@string/title_activity_settings1" />
-
-
-
-        <!-- Aktivitas lainnya -->
-        <activity
-            android:name=".MyProductsActivity"
-            android:exported="false" />
+            android:exported="true"
+            android:label="@string/title_activity_settings1" />
+        <activity android:name=".MyProductsActivity" />
         <activity
             android:name=".RatingActivity"
             android:exported="false" />
         <activity
             android:name=".OrderDetailActivity"
-            android:exported="false"
-            android:label="@string/title_activity_order_detail"
-            android:theme="@style/Theme.Mymushroomf.NoActionBar" />
+            android:exported="false"/>
+<!--            android:label="@string/title_activity_order_detail"-->
+<!--            android:theme="@style/Theme.Mymushroomf.NoActionBar" />-->
         <activity
             android:name=".ProfileActivity"
             android:exported="false" />
@@ -46,7 +45,6 @@
         <activity
             android:name=".EditProfileActivity"
             android:exported="true" />
-
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
@@ -56,6 +54,7 @@
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -68,7 +67,6 @@
         <activity
             android:name=".TransactionListActivity"
             android:exported="false" />
-
     </application>
 
 </manifest>

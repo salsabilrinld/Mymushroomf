@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -41,25 +42,32 @@ public class ProfileActivity extends AppCompatActivity {
         ImageButton ratingButton = findViewById(R.id.rating_pembeli);
         ImageButton productButton = findViewById(R.id.produk_saya);
         ImageButton logoutButton = findViewById(R.id.logout);
+        ImageButton notificationsButton = findViewById(R.id.notifications_button);
         Button editButton = findViewById(R.id.editProfileButton);
         logoutButton.setOnClickListener(v -> logoutUser());
 
 
 
         ratingButton.setOnClickListener(view -> {
-            Intent intent = new Intent(ProfileActivity.this, RatingActivity.class);
-            startActivity(intent);
+            Intent ratingIntent = new Intent(ProfileActivity.this, RatingActivity.class);
+            startActivity(ratingIntent);
         });
 
-        productButton.setOnClickListener(view -> {
-            Intent intent = new Intent(ProfileActivity.this, MyProductsActivity.class);
-            startActivity(intent);
+        productButton.setOnClickListener(v -> {
+            Intent productIntent = new Intent(ProfileActivity.this, MyProductsActivity.class);
+            startActivity(productIntent);
+            Log.d("ProfileActivity", "Navigating to MyProductsActivity");
         });
 
 
         editButton.setOnClickListener(view -> {
-            Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
-            startActivity(intent);
+            Intent editIntent = new Intent(ProfileActivity.this, EditProfileActivity.class);
+            startActivity(editIntent);
+        });
+
+        notificationsButton.setOnClickListener(view -> {
+            Intent notifIntent = new Intent(ProfileActivity.this, NotificationsActivity.class);
+            startActivity(notifIntent);
         });
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -72,7 +80,7 @@ public class ProfileActivity extends AppCompatActivity {
                     startActivity(intent);
                     return true;
                 } else if (item.getItemId() == R.id.menu_transaction) {
-                    Intent intent = new Intent(ProfileActivity.this, TransactionListActivity.class);
+                    Intent intent = new Intent(ProfileActivity.this, OrderListActivity.class);
                     startActivity(intent);
                     return true;
                 } else if (item.getItemId() == R.id.menu_profile) {

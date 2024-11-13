@@ -12,8 +12,10 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,43 +31,53 @@ public class AddProductActivity extends AppCompatActivity {
     private Button saveButton, cancelButton, uploadPhotoButton;
     public static final int PICK_IMAGE_REQUEST = 1;
     public static final int STORAGE_PERMISSION_CODE = 100;
+    private TextView quantityTextView;
+    private int stockQuantity = 1;
+    private Uri imageUri; // To store the selected image URI
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_product);
 
-
         fungiNameEditText = findViewById(R.id.fungi_name);
         fungiPriceEditText = findViewById(R.id.fungi_price);
         fungiDescriptionEditText = findViewById(R.id.fungi_description);
         fungiTypeSpinner = findViewById(R.id.fungi_type);
-        saveButton = findViewById(R.id.save_button);
-        cancelButton = findViewById(R.id.cancel_button);
         uploadPhotoButton = findViewById(R.id.upload_photo_button);
+        quantityTextView = findViewById(R.id.tv_quantity);
 
         String[] fungiTypes = {"Organik", "Nonorganik", "Inorganik"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, fungiTypes);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         fungiTypeSpinner.setAdapter(adapter);
 
+        quantityTextView.setText(String.valueOf(stockQuantity));
+
+        findViewById(R.id.btn_plus).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stockQuantity++;
+                quantityTextView.setText(String.valueOf(stockQuantity));
+            }
+        });
+
+        findViewById(R.id.btn_minus).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (stockQuantity > 1) { // Prevent stock quantity from going below 1
+                    stockQuantity--;
+                    quantityTextView.setText(String.valueOf(stockQuantity));
+                } else {
+                    Toast.makeText(AddProductActivity.this, "Stok tidak bisa kurang dari 1", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String fungiName = ((EditText) findViewById(R.id.fungi_name)).getText().toString();
-                String fungiType = fungiTypeSpinner.getSelectedItem().toString(); // Ambil tipe dari Spinner
-                String fungiPrice = ((EditText) findViewById(R.id.fungi_price)).getText().toString();
-                String fungiDesc = ((EditText) findViewById(R.id.fungi_description)).getText().toString();
-
-                // Buat objek produk dengan tipe yang dipilih
-                Product product = new Product(fungiName, fungiType, Double.parseDouble(fungiPrice), fungiDesc);
-
-                // Kirim produk baru ke DashboardActivity
-                Intent intent = new Intent(AddProductActivity.this, DashboardActivity.class);
-                intent.putExtra("newProduct", product);
-                startActivity(intent);
-                finish(); // Kembali ke DashboardActivity
+                saveProduct();
             }
         });
 
@@ -80,16 +92,14 @@ public class AddProductActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (ContextCompat.checkSelfPermission(AddProductActivity.this,
-                        Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED) {
+                        Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                     openFileManager();
                 } else {
                     ActivityCompat.requestPermissions(AddProductActivity.this,
-                            new String[]{Manifest.permission.READ_MEDIA_IMAGES}, STORAGE_PERMISSION_CODE);
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
                 }
             }
         });
-
-
     }
 
     @Override
@@ -97,10 +107,8 @@ public class AddProductActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == STORAGE_PERMISSION_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
                 openFileManager();
             } else {
-
                 Toast.makeText(this, "Permission denied to access storage", Toast.LENGTH_SHORT).show();
             }
         }
@@ -108,7 +116,7 @@ public class AddProductActivity extends AppCompatActivity {
 
     private void openFileManager() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*"); // Membatasi pada file gambar
+        intent.setType("image/*"); // Restrict to image files
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
 
@@ -116,33 +124,36 @@ public class AddProductActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            Uri imageUri = data.getData();
-            // Lakukan sesuatu dengan URI gambar yang dipilih
-            // Misalnya, tampilkan gambar di ImageView atau simpan URI ini untuk proses selanjutnya
+            imageUri = data.getData(); // Save the selected image URI
+            ImageView imageView = findViewById(R.id.fungi_image);
+            imageView.setImageURI(imageUri); // Display the selected image
         }
     }
 
-
     private void saveProduct() {
-
         String fungiName = fungiNameEditText.getText().toString().trim();
         String fungiPrice = fungiPriceEditText.getText().toString().trim();
         String fungiDescription = fungiDescriptionEditText.getText().toString().trim();
         String fungiType = fungiTypeSpinner.getSelectedItem().toString();
-
 
         if (fungiName.isEmpty() || fungiPrice.isEmpty() || fungiDescription.isEmpty()) {
             Toast.makeText(this, "Semua field harus diisi!", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        SharedPreferences sharedPreferences1 = getSharedPreferences("MyMushroomF", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences1.edit();
+        if (imageUri == null) {
+            Toast.makeText(this, "Harap pilih gambar!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        SharedPreferences sharedPreferences = getSharedPreferences("MyMushroomF", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putString("fungiName", fungiName);
         editor.putString("fungiPrice", fungiPrice);
         editor.putString("fungiDescription", fungiDescription);
         editor.putString("fungiType", fungiType);
+        editor.putString("imageUri", imageUri.toString()); // Save the image URI as a string
         editor.apply();
 
         String message = "Nama: " + fungiName + "\nTipe: " + fungiType + "\nHarga: " + fungiPrice + "\nDeskripsi: " + fungiDescription;
@@ -152,7 +163,6 @@ public class AddProductActivity extends AppCompatActivity {
     }
 
     private void showSuccessDialog() {
-
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.add_successful, null);
 
@@ -174,12 +184,13 @@ public class AddProductActivity extends AppCompatActivity {
         dialog.show();
     }
 
-
     private void clearForm() {
         fungiNameEditText.setText("");
         fungiPriceEditText.setText("");
         fungiDescriptionEditText.setText("");
         fungiTypeSpinner.setSelection(0);
+        ((ImageView) findViewById(R.id.fungi_image)).setImageURI(null); // Clear the image
+        imageUri = null; // Clear the URI
         Toast.makeText(this, "Form direset", Toast.LENGTH_SHORT).show();
     }
 }

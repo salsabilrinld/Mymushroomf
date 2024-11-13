@@ -1,66 +1,57 @@
 package com.example.mymushroomf;
 
 import android.os.Bundle;
-
-import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.view.View;
-
-import com.example.mymushroomf.databinding.ActivityOrderdetailBinding;
-
-import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class OrderDetailActivity extends AppCompatActivity {
 
-    private LinearLayout layoutOrderStatus,layoutCourier, layoutTrackingNumber, layoutAddress, layoutProductCost, layoutDeliveryCost, layoutTotalPayment;
-    private ImageButton btnBack;
+    private LinearLayout statusOrderLayout, productInfoLayout, courierDetailLayout, resiDetailLayout,
+            addressDetailLayout, paymentMethodLayout, productCostLayout, deliveryCostLayout, totalCostLayout;
+
+    private TextView tvStatusOrder, tvProductInfo, tvCourierDetail, tvResiDetail, tvAddressDetail,
+            tvPaymentMethod, tvProductCost, tvDeliveryCost, tvTotalCost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_orderdetail);  // Assuming your layout file name is 'activity_transaction_detail.xml'
+        setContentView(R.layout.activity_orderdetail);
 
-        // Initialize views
-        layoutOrderStatus = findViewById(R.id.status_order);  // Example, replace with actual IDs
-        layoutCourier = findViewById(R.id.kurir_detail);
-        layoutTrackingNumber = findViewById(R.id.resi_detail);
-        layoutAddress = findViewById(R.id.alamat_detail);
-        layoutProductCost = findViewById(R.id.biaya_produk);
-        layoutDeliveryCost = findViewById(R.id.biaya_kirim);
-        layoutTotalPayment = findViewById(R.id.total_biaya);
-        btnBack = findViewById(R.id.back_order);
+        statusOrderLayout = findViewById(R.id.status_order);
+        productInfoLayout = findViewById(R.id.info_product);
+        courierDetailLayout = findViewById(R.id.kurir_detail);
+        resiDetailLayout = findViewById(R.id.resi_detail);
+        addressDetailLayout = findViewById(R.id.alamat_detail);
+        paymentMethodLayout = findViewById(R.id.metode_pembayaran);
+        productCostLayout = findViewById(R.id.biaya_produk);
+        deliveryCostLayout = findViewById(R.id.biaya_kirim);
+        totalCostLayout = findViewById(R.id.total_biaya);
 
-        TextView txtOrderStatus = layoutOrderStatus.findViewById(R.id.tvstatus_order);  // TextView inside status_order layout
-        TextView txtCourier = layoutCourier.findViewById(R.id.tvkurir_detail);  // TextView inside kurir_detail layout
-        TextView txtTrackingNumber = layoutTrackingNumber.findViewById(R.id.tvresi_detail);
-        TextView txtAddress = layoutAddress.findViewById(R.id.tvalamat_detail);
-        TextView txtProductCost = layoutProductCost.findViewById(R.id.tvbiaya_produk);
-        TextView txtDeliveryCost = layoutDeliveryCost.findViewById(R.id.tvbiaya_kirim);
-        TextView txtTotalPayment = layoutTotalPayment.findViewById(R.id.tvtotal_biaya);
+        tvStatusOrder = statusOrderLayout.findViewById(R.id.tvstatus_order);
+        tvProductInfo = productInfoLayout.findViewById(R.id.product_name);
+        tvCourierDetail = courierDetailLayout.findViewById(R.id.tvkurir_detail);
+        tvResiDetail = resiDetailLayout.findViewById(R.id.tvresi_detail);
+        tvAddressDetail = addressDetailLayout.findViewById(R.id.tvalamat_detail);
+        tvPaymentMethod = paymentMethodLayout.findViewById(R.id.tvmetode_pembayaran);
+        tvProductCost = productCostLayout.findViewById(R.id.tvbiaya_produk);
+        tvDeliveryCost = deliveryCostLayout.findViewById(R.id.tvbiaya_kirim);
+        tvTotalCost = totalCostLayout.findViewById(R.id.tvtotal_biaya);
 
-        // Set data dynamically (replace these with your actual data)
-        txtOrderStatus.setText("Selesai");  // Set based on your data
-        txtCourier.setText("Reguler");
-        txtTrackingNumber.setText("TKP01-W5JEM982");
-        txtAddress.setText("Indira S\n0878-8202-5909\nPerumahan Bogor, Bogor Utara - Kota Bogor - Jawa Barat, ID 16151");
-        txtProductCost.setText("Rp. 12.000");
-        txtDeliveryCost.setText("Rp. 7.000");
-        txtTotalPayment.setText("Rp. 19.000");
+        // Get the OrderDetail object passed via Intent
+        Order order = (Order) getIntent().getSerializableExtra("orderDetail");
 
-        // Set onClickListener for back button
-        btnBack.setOnClickListener(v -> {
-            // Handle the back button logic (e.g., finish activity)
-            onBackPressed();  // Go back to previous screen
-        });
+        // Set data from OrderDetail to TextViews
+        if (order != null) {
+            tvStatusOrder.setText(order.getOrderStatus());
+            tvProductInfo.setText(order.getProductInfo());
+            tvCourierDetail.setText(order.getOrderCourier());
+            tvResiDetail.setText(order.getOrderResi());
+            tvAddressDetail.setText(order.getOrderAddress());
+            tvPaymentMethod.setText(order.getOrderMethod());
+            tvProductCost.setText(order.getOrderCostProduct());
+            tvDeliveryCost.setText(order.getOrderCostDelivery());
+            tvTotalCost.setText(order.getOrderTotal());
+        }
     }
 }

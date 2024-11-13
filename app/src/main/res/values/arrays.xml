@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="filter_options">
+    <string-array name="fungi_types">
+        <item>Filter</item>
         <item>All</item>
-        <item>Fungi Type 1</item>
-        <item>Fungi Type 2</item>
+        <item>Organik</item>
+        <item>Nonorganik</item>
+        <item>Inorganik</item>
     </string-array>
 
     <string-array name="sort_options">
-        <item>Sort by Name</item>
-        <item>Sort by Price</item>
+        <item>Sort</item>
+        <item>Price: Low to High</item>
+        <item>Price: High to Low</item>
+        <item>Name: A to Z</item>
+        <item>Name: Z to A</item>
     </string-array>
-    <!-- Reply Preference -->
+
     <string-array name="reply_entries">
         <item>Reply</item>
         <item>Reply to all</item>

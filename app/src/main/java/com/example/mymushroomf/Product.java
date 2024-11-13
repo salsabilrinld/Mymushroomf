@@ -4,14 +4,25 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Product implements Parcelable {
+    private String id;
     private String name;
+    private String desc;
     private String type;
-    private double price;
+    private String price;
     private String imageResource;
 
     // Constructor
-    public Product(String name, String description, double price, String imageResource) {
+    public Product(String name, String desc, String price, String imageResource) {
         this.name = name;
+        this.type = type;
+        this.price = price;
+        this.imageResource = imageResource;
+    }
+
+    public Product(String id, String name, String desc, String price, String imageResource) {
+        this.id = id;
+        this.name = name;
+        this.desc = desc;
         this.type = type;
         this.price = price;
         this.imageResource = imageResource;
@@ -19,17 +30,21 @@ public class Product implements Parcelable {
 
     // Parcelable constructor
     protected Product(Parcel in) {
+        id = in.readString();
         name = in.readString();
+        desc = in.readString();
         type = in.readString();
-        price = in.readDouble();
+        price = in.readString();
         imageResource = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
         dest.writeString(name);
+        dest.writeString(desc);
         dest.writeString(type);
-        dest.writeDouble(price);
+        dest.writeString(price);
         dest.writeString(imageResource);
     }
 
@@ -51,20 +66,51 @@ public class Product implements Parcelable {
         }
     };
 
-    // Getters (if needed)
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
     public String getType() {
         return type;
     }
 
-    public double getPrice() {
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getPrice() {
         return price;
     }
 
-    public String getImageResId() {
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getImageResource() {
         return imageResource;
+    }
+
+    public void setImageResource(String imageResource) {
+        this.imageResource = imageResource;
     }
 }

@@ -4,26 +4,25 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.SurfaceControl;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class TransactionListActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private TransactionAdapter transactionAdapter;
+    private OrderDetailAdapter orderDetailAdapter;
     private List<Transaction> transactionList;
+    private List<Order> orderList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,14 +33,25 @@ public class TransactionListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         transactionList = new ArrayList<>();
-        transactionList.add(new Transaction("Jamur Tiram", "Type A", "Selesai", "Rp. 12.000", Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.jamur_tiram).toString()));
+        transactionList.add(new Transaction("1", "Jamur Tiram", "1 Produk", "Selesai", "Rp. 12.000", Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.jamur_tiram).toString()));
+
+        orderList = new ArrayList<>();
+        orderList.add(new Order("1", "Selesai", "Jamur Tiram", "Reguler", "123", "Perumahan Bogor", "BCA", "Rp. 12.000", "Rp. 7.000", "Rp. 19.000"));
 
 
-        transactionAdapter = new TransactionAdapter(this, transactionList);
+        transactionAdapter = new TransactionAdapter(this, transactionList, new TransactionAdapter.OnItemClickListener() {
+            public void onItemClick(int position) {
+                // Pindah ke OrderDetailActivity saat item diklik
+                Intent intent = new Intent(TransactionListActivity.this, OrderDetailActivity.class);
+                // Kirim detail pesanan dari orderList berdasarkan posisi item yang diklik
+                intent.putExtra("order_detail", orderList.get(position));
+                startActivity(intent);
+            }
+        });
+
         recyclerView.setAdapter(transactionAdapter);
 
 
-        // Tambahkan transaksi ke list dan update adapter
         loadTransactionData();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -71,7 +81,8 @@ public class TransactionListActivity extends AppCompatActivity {
 
     private void loadTransactionData() {
         // Isi data transaksi ke dalam transactionList
-        transactionList.add(new Transaction("Jamur Tiram", "Type A", "Selesai", "Rp. 12.000", "https://example.com/jamur_tiram.jpg"));
+        transactionList.add(new Transaction("2", "Jamur Kuping", "1 Produk", "Selesai", "Rp. 12.000", Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.jamur_kuping).toString()));
+        orderList.add(new Order("1", "Selesai", "Jamur Tiram", "Reguler", "123", "Perumahan Bogor", "BCA", "Rp. 12.000", "Rp. 7.000", "Rp. 19.000"));
         transactionAdapter.notifyDataSetChanged();
     }
 

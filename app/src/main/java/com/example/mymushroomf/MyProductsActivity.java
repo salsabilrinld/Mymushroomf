@@ -4,15 +4,21 @@ import android.content.Intent;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.AdapterView;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,20 +33,31 @@ public class MyProductsActivity extends AppCompatActivity {
     private ProductAdapter productAdapter;
     private List<Product> productList;
     private List<Product> filteredList;
+    private Spinner filterSpinner, sortSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_myproducts);
+        Log.d("MyProductsActivity", "Activity opened successfully");
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main_product), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
-        productRecyclerView = findViewById(R.id.recyler_myproduct);
+        filterSpinner = findViewById(R.id.button_filter);
+        sortSpinner = findViewById(R.id.button_sort);
+
+        productRecyclerView = findViewById(R.id.recycler_myproduct);
         productRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
         productList = new ArrayList<>();
         filteredList = new ArrayList<>(productList);
-        productList.add(new Product("Jamur Tiram", "Organic", 9.500, Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.jamur_tiram).toString()));
-        productList.add(new Product("Jamur Kuping", "Organic", 12.000, Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.jamur_kuping).toString()));
-        productList.add(new Product("Jamur Kancing", "Organic", 7.000, Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.jamur_kancing).toString()));
+        productList.add(new Product("Jamur Tiram", "Organic", "Rp. 9.500", Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.jamur_tiram).toString()));
+        productList.add(new Product("Jamur Kuping", "Organic", "Rp. 12.000", Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.jamur_kuping).toString()));
+        productList.add(new Product("Jamur Kancing", "Organic", "Rp. 7.000", Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.jamur_kancing).toString()));
 
 
         productAdapter = new ProductAdapter(this, productList);
@@ -49,11 +66,11 @@ public class MyProductsActivity extends AppCompatActivity {
         ImageButton backButton = findViewById(R.id.back_myproducts);
         Button newButton = findViewById(R.id.button_addproduct);
 
+        setupFilterSpinner();
+        setupSortSpinner();
 
-        backButton.setOnClickListener(view -> {
-            Intent intent = new Intent(MyProductsActivity.this, ProfileActivity.class);
-            startActivity(intent);
-        });
+
+        backButton.setOnClickListener(view -> finish());
 
         newButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +80,53 @@ public class MyProductsActivity extends AppCompatActivity {
         });
 
     }
+
+    private void setupFilterSpinner() {
+        filterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedType = filterSpinner.getSelectedItem().toString();
+                productAdapter.filterByType(selectedType);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+    }
+
+    private void setupSortSpinner() {
+        sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        productAdapter.sortByPrice(true);
+                        break;
+                    case 1:
+                        productAdapter.sortByPrice(false);
+                        break;
+                    case 2:
+                        productAdapter.sortByName(true);
+                        break;
+                    case 3:
+                        productAdapter.sortByName(false);
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+    }
+
+    private List<Product> getProductList() {
+        // Fetch or create your list of products here
+        return new ArrayList<>();
+    }
+
+
+
+
     private void showAddProductDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
@@ -76,22 +140,20 @@ public class MyProductsActivity extends AppCompatActivity {
         EditText fungiPrice = dialogView.findViewById(R.id.fungi_price);
         EditText fungiDesc = dialogView.findViewById(R.id.fungi_description);
         Button imageButton = dialogView.findViewById(R.id.upload_photo_button);
-        Button saveButton = dialogView.findViewById(R.id.save_button);
-        Button cancelButton = dialogView.findViewById(R.id.cancel_button);
+
 
         builder.setPositiveButton("Save", (alertDialog, which) -> {
             String jamurName = fungiName.getText().toString();
             String jamurType = fungiTypeSpinner.getSelectedItem().toString(); // Ambil tipe dari Spinner
-            double jamurPrice = Double.parseDouble(fungiPrice.getText().toString());
-            String jamurDesc = ((EditText) findViewById(R.id.fungi_description)).getText().toString();
+            String jamurPrice = fungiPrice.getText().toString();
+            String jamurDesc = fungiDesc.getText().toString();
             String imageUrl = "https://example.com/jamur_tiram.jpg";
 
             // Buat objek produk dengan tipe yang dipilih
             Product newProduct = new Product(jamurName, jamurType, jamurPrice, imageUrl);
             addProductToList(newProduct);
 
-            filterAndSortProducts();
-        });
+        }).setIcon(R.drawable.border_button);
 
         builder.setNegativeButton("Cancel", (alertDialog, which) -> alertDialog.dismiss());
         builder.create().show();
@@ -103,66 +165,4 @@ public class MyProductsActivity extends AppCompatActivity {
     }
 
 
-    private void showFilterDialog() {
-        String[] filterOptions = {"All", "Organik", "Nonorganik"};
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select Filter")
-                .setItems(filterOptions, (dialog, which) -> {
-                    String selectedFilter = filterOptions[which];
-                    filterProducts(selectedFilter);
-                })
-                .create()
-                .show();
-    }
-
-    private void filterProducts(String filter) {
-        filteredList.clear(); // Kosongkan daftar produk yang sedang ditampilkan
-
-        if (filter.equals("All")) {
-            filteredList.addAll(productList); // Menambahkan semua produk
-        } else {
-            // Menambahkan produk yang sesuai dengan filter
-            for (Product product : productList) {
-                if (product.getType().equals(filter)) {
-                    filteredList.add(product);
-                }
-            }
-        }
-
-        // Memperbarui tampilan RecyclerView setelah filter diterapkan
-        productAdapter.notifyDataSetChanged();
-    }
-
-
-    private void showSortDialog() {
-        String[] sortOptions = {"Sort by Name", "Sort by Price"};
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select Sort Option")
-                .setItems(sortOptions, (dialog, which) -> {
-                    String selectedSort = sortOptions[which];
-                    sortProducts(selectedSort);
-                })
-                .create()
-                .show();
-    }
-
-    private void sortProducts(String sortOption) {
-        if (sortOption.equals("Sort by Name")) {
-            // Mengurutkan berdasarkan nama produk
-            Collections.sort(filteredList, Comparator.comparing(Product::getName));
-        } else if (sortOption.equals("Sort by Price")) {
-            // Mengurutkan berdasarkan harga produk
-            Collections.sort(filteredList, Comparator.comparingDouble(Product::getPrice));
-        }
-
-        // Memperbarui tampilan RecyclerView setelah produk diurutkan
-        productAdapter.notifyDataSetChanged();
-    }
-
-    private void filterAndSortProducts() {
-        filterProducts("All");
-        sortProducts("Sort by Name");
-    }
 }

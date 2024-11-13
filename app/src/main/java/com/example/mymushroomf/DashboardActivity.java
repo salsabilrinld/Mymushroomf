@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.Spinner;
@@ -38,34 +40,49 @@ public class DashboardActivity extends AppCompatActivity {
     private MyAdapter myAdapter;
     private LinearLayout layoutFilter, layoutSort;
     private List<Product> filteredList;
+    private Spinner filterSpinner, sortSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        layoutFilter = findViewById(R.id.filter_button);
-        layoutSort = findViewById(R.id.sort_button);
         Button addProductButton = findViewById(R.id.button_addproduct);
         TextView welcomeText = findViewById(R.id.welcome_text);
-        recyclerView = findViewById(R.id.recycler_viewproduct);
+        recyclerView = findViewById(R.id.recycler_myproduct);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        ImageButton notificationsButton = findViewById(R.id.notifications_button);
+        filterSpinner = findViewById(R.id.button_filter);
+        sortSpinner = findViewById(R.id.button_sort);
 
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         String name = sharedPreferences.getString("name", "User");
         welcomeText.setText("Welcome, " + name + "!");
 
-        layoutFilter.setOnClickListener(v -> showFilterDialog());
+        notificationsButton.setOnClickListener(view -> {
+            Intent notifIntent = new Intent(DashboardActivity.this, NotificationsActivity.class);
+            startActivity(notifIntent);
+        });
 
-        layoutSort.setOnClickListener(v -> showSortDialog());
+        recyclerView = findViewById(R.id.recycler_myproduct);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
         productList = new ArrayList<>();
         filteredList = new ArrayList<>(productList);
-        productAdapter = new ProductAdapter(this, filteredList);
+        productList.add(new Product("Jamur Tiram", "Organic", "Rp. 9.500", Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.jamur_tiram).toString()));
+        productList.add(new Product("Jamur Kuping", "Organic", "Rp. 12.000", Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.jamur_kuping).toString()));
+        productList.add(new Product("Jamur Kancing", "Organic", "Rp. 7.000", Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.jamur_kancing).toString()));
+        productList.add(new Product("Jamur Tiram", "Organic", "Rp. 9.500", Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.jamur_tiram).toString()));
+        productList.add(new Product("Jamur Kuping", "Organic", "Rp. 12.000", Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.jamur_kuping).toString()));
+        productList.add(new Product("Jamur Kancing", "Organic", "Rp. 7.000", Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.jamur_kancing).toString()));
+        productList.add(new Product("Jamur Tiram", "Organic", "Rp. 9.500", Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.jamur_tiram).toString()));
+        productList.add(new Product("Jamur Kuping", "Organic", "Rp. 12.000", Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.jamur_kuping).toString()));
+        productList.add(new Product("Jamur Kancing", "Organic", "Rp. 7.000", Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.jamur_kancing).toString()));
+
+
+        productAdapter = new ProductAdapter(this, productList);
         recyclerView.setAdapter(productAdapter);
 
-        productList.add(new Product("Jamur Tiram", "Deskripsi produk 1", 15.000, Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.jamur_tiram).toString()));
-        // null untuk gambar
         productAdapter.notifyDataSetChanged();
 
         addProductButton.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +102,7 @@ public class DashboardActivity extends AppCompatActivity {
 //                    bottomNavigationView.setSelectedItemId(R.id.menu_store);
                     return true;
                 } else if (item.getItemId() == R.id.menu_transaction) {
-                    Intent intent = new Intent(DashboardActivity.this, TransactionListActivity.class);
+                    Intent intent = new Intent(DashboardActivity.this, OrderListActivity.class);
 
                     startActivity(intent);
                     return true;
@@ -100,14 +117,51 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
 
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        List<String> myData = Arrays.asList("Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6");
-        myAdapter = new MyAdapter(myData);
-        recyclerView.setAdapter(myAdapter);
 
     }
 
+    private void setupFilterSpinner() {
+        filterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedType = filterSpinner.getSelectedItem().toString();
+                productAdapter.filterByType(selectedType);
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+    }
+
+    private void setupSortSpinner() {
+        sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        productAdapter.sortByPrice(true);
+                        break;
+                    case 1:
+                        productAdapter.sortByPrice(false);
+                        break;
+                    case 2:
+                        productAdapter.sortByName(true);
+                        break;
+                    case 3:
+                        productAdapter.sortByName(false);
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+    }
+
+    private List<Product> getProductList() {
+        // Fetch or create your list of products here
+        return new ArrayList<>();
+    }
 
     private void showAddProductDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -122,21 +176,17 @@ public class DashboardActivity extends AppCompatActivity {
         EditText fungiPrice = dialogView.findViewById(R.id.fungi_price);
         EditText fungiDesc = dialogView.findViewById(R.id.fungi_description);
         Button imageButton = dialogView.findViewById(R.id.upload_photo_button);
-        Button saveButton = dialogView.findViewById(R.id.save_button);
-        Button cancelButton = dialogView.findViewById(R.id.cancel_button);
 
         builder.setPositiveButton("Save", (alertDialog, which) -> {
             String jamurName = fungiName.getText().toString();
             String jamurType = fungiTypeSpinner.getSelectedItem().toString(); // Ambil tipe dari Spinner
-            double jamurPrice = Double.parseDouble(fungiPrice.getText().toString());
+            String jamurPrice = fungiPrice.getText().toString();
             String jamurDesc = ((EditText) findViewById(R.id.fungi_description)).getText().toString();
             String imageUrl = "https://example.com/jamur_tiram.jpg";
 
             // Buat objek produk dengan tipe yang dipilih
             Product newProduct = new Product(jamurName, jamurType, jamurPrice, imageUrl);
             addProductToList(newProduct);
-
-            filterAndSortProducts();
         });
 
         builder.setNegativeButton("Cancel", (alertDialog, which) -> alertDialog.dismiss());
@@ -200,7 +250,7 @@ public class DashboardActivity extends AppCompatActivity {
             Collections.sort(filteredList, Comparator.comparing(Product::getName));
         } else if (sortOption.equals("Sort by Price")) {
             // Mengurutkan berdasarkan harga produk
-            Collections.sort(filteredList, Comparator.comparingDouble(Product::getPrice));
+            Collections.sort(filteredList, Comparator.comparing(Product::getPrice));
         }
 
         // Memperbarui tampilan RecyclerView setelah produk diurutkan
