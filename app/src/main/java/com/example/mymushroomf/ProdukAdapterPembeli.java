@@ -38,12 +38,21 @@ public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPemb
         Produk1 product = productList.get(position);
         holder.productImage.setImageResource(product.getImageResId());
         holder.productName.setText(product.getName());
-        holder.productCategory.setText(product.getWeight());
+        holder.productWeight.setText(product.getWeight());
         holder.productPrice.setText(product.getPrice());
 
-        holder.addButton.setOnClickListener(v ->
+        holder.buyButton.setOnClickListener(v ->
                 Toast.makeText(context, "Membeli " + product.getName(), Toast.LENGTH_SHORT).show()
         );
+
+        holder.deleteButton.setOnClickListener(v -> {
+            int currentPosition = holder.getAdapterPosition();
+            if (currentPosition != RecyclerView.NO_POSITION) { // Ensure valid position
+                productList.remove(currentPosition);
+                notifyItemRemoved(currentPosition);
+                Toast.makeText(context, "Produk " + product.getName() + " dihapus dari favorit", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -54,17 +63,19 @@ public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPemb
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
         ImageView productImage;
         TextView productName;
-        TextView productCategory;
+        TextView productWeight;
         TextView productPrice;
-        ImageButton addButton;
+        Button buyButton;
+        ImageButton deleteButton;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
-            productImage = itemView.findViewById(R.id.productImage);
-            productName = itemView.findViewById(R.id.productName);
-            productPrice = itemView.findViewById(R.id.productPrice);
-            productCategory = itemView.findViewById(R.id.productCategory);
-            addButton = itemView.findViewById(R.id.addToCartButton);
+            productImage = itemView.findViewById(R.id.product_image);
+            productName = itemView.findViewById(R.id.product_name);
+
+            productPrice = itemView.findViewById(R.id.product_price);
+
+
         }
     }
 }

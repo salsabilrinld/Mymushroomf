@@ -11,5 +11,5 @@
     <color name="card_default">#FFFFFFFF</color>
     <color name="lightgrey">#F5F5F7</color>
     <color name="blue">#0D00A5</color>
-    <color name="cokmud_trans">#5EE9CD9D</color>
+    <color name ="cokmud_trans">#5EE9CD9D</color>
 </resources>
