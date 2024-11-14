@@ -65,10 +65,6 @@ public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPemb
             productPrice = itemView.findViewById(R.id.productPrice);
             productCategory = itemView.findViewById(R.id.productCategory);
             addButton = itemView.findViewById(R.id.addToCartButton);
-            productImage = itemView.findViewById(R.id.product_image);
-            productName = itemView.findViewById(R.id.product_name);
-
-            productPrice = itemView.findViewById(R.id.product_price);
 
 
         }
