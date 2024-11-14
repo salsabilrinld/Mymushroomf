@@ -29,7 +29,7 @@ public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPemb
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Inflate the layout for each item
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_produk1, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.produk1, parent, false);
         return new ProductViewHolder(view);
     }
 
@@ -38,21 +38,12 @@ public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPemb
         Produk1 product = productList.get(position);
         holder.productImage.setImageResource(product.getImageResId());
         holder.productName.setText(product.getName());
-        holder.productWeight.setText(product.getWeight());
+        holder.productCategory.setText(product.getWeight());
         holder.productPrice.setText(product.getPrice());
 
-        holder.buyButton.setOnClickListener(v ->
+        holder.addButton.setOnClickListener(v ->
                 Toast.makeText(context, "Membeli " + product.getName(), Toast.LENGTH_SHORT).show()
         );
-
-        holder.deleteButton.setOnClickListener(v -> {
-            int currentPosition = holder.getAdapterPosition();
-            if (currentPosition != RecyclerView.NO_POSITION) { // Ensure valid position
-                productList.remove(currentPosition);
-                notifyItemRemoved(currentPosition);
-                Toast.makeText(context, "Produk " + product.getName() + " dihapus dari favorit", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override
@@ -63,19 +54,17 @@ public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPemb
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
         ImageView productImage;
         TextView productName;
-        TextView productWeight;
+        TextView productCategory;
         TextView productPrice;
-        Button buyButton;
-        ImageButton deleteButton;
+        ImageButton addButton;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
-            productImage = itemView.findViewById(R.id.product_image);
-            productName = itemView.findViewById(R.id.product_name);
-            productWeight = itemView.findViewById(R.id.product_weight);
-            productPrice = itemView.findViewById(R.id.product_price);
-            buyButton = itemView.findViewById(R.id.button_buy);
-            deleteButton = itemView.findViewById(R.id.button_delete);
+            productImage = itemView.findViewById(R.id.productImage);
+            productName = itemView.findViewById(R.id.productName);
+            productPrice = itemView.findViewById(R.id.productPrice);
+            productCategory = itemView.findViewById(R.id.productCategory);
+            addButton = itemView.findViewById(R.id.addToCartButton);
         }
     }
 }

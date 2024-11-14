@@ -2,6 +2,7 @@ package com.example.mymushroomf;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.SearchView;
@@ -35,10 +36,13 @@ public class Dashboard1Activity extends AppCompatActivity {
 
         // Initialize SharedPreferences
         sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
-        String role = sharedPreferences.getString("role", ""); // Retrieve the user's role
-        String username = sharedPreferences.getString("username", "User"); // Retrieve username
         welcomeTextLine1 = findViewById(R.id.welcome_text_line1);
         welcomeTextLine2 = findViewById(R.id.welcome_text_line2);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        String name = sharedPreferences.getString("name", "User");
+        welcomeTextLine1.setText("Hey, " + name + "!");
+        welcomeTextLine2.setText("Let's go shopping!");
 
         // Handle Bottom Navigation Selection
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -62,37 +66,27 @@ public class Dashboard1Activity extends AppCompatActivity {
             }
         });
 
-        if (role.equals("Pembeli")) {
-            // If role is Pembeli (Buyer), setup buyer dashboard
-            setupDashboardPembeli();
-        } else if (role.equals("Penjual")) {
-            // If role is Penjual (Seller), redirect to seller dashboard
-            navigateToSellerDashboard();
-        } else {
-            // Handle case where the role is undefined (if any)
-            Toast.makeText(this, "Invalid role", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void setupDashboardPembeli() {
-        // Set up UI elements for the buyer's dashboard
         TextView welcomeTextLine1 = findViewById(R.id.welcome_text_line1);
         TextView welcomeTextLine2 = findViewById(R.id.welcome_text_line2);
         searchView = findViewById(R.id.searchEditText);
-        recyclerView = findViewById(R.id.recycler_viewproduct);
 
-        // Set RecyclerView to use GridLayout with 2 columns
+        recyclerView = findViewById(R.id.recycler_viewproduct);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
-        // Prepare product list for display
         productList = new ArrayList<>();
-        productList.add(new Produk1("Jamur Tiram", "500g", "15,000", R.drawable.jamur_tiram)); // Example product
-
-        // Create a filtered product list (initially the same as the product list)
         filteredProductList = new ArrayList<>(productList);
+        productList.add(new Produk1("Jamur Tiram", "Organic", "Rp. 9.500", R.drawable.jamur_tiram));
+        productList.add(new Produk1("Jamur Kuping", "Organic", "Rp. 12.000", R.drawable.jamur_kuping));
+        productList.add(new Produk1("Jamur Kancing", "Organic", "Rp. 7.000", R.drawable.jamur_kancing));
+        productList.add(new Produk1("Jamur Tiram", "Organic", "Rp. 9.500", R.drawable.jamur_tiram));
+        productList.add(new Produk1("Jamur Kuping", "Organic", "Rp. 12.000", R.drawable.jamur_kuping));
+        productList.add(new Produk1("Jamur Kancing", "Organic", "Rp. 7.000", R.drawable.jamur_kancing));
+        productList.add(new Produk1("Jamur Tiram", "Organic", "Rp. 9.500", R.drawable.jamur_tiram));
+        productList.add(new Produk1("Jamur Kuping", "Organic", "Rp. 12.000", R.drawable.jamur_kuping));
+        productList.add(new Produk1("Jamur Kancing", "Organic", "Rp. 7.000", R.drawable.jamur_kancing));
 
-        // Initialize the adapter and set it to RecyclerView
-        produkAdapterPembeli = new ProdukAdapterPembeli(this, filteredProductList);
+
+        produkAdapterPembeli = new ProdukAdapterPembeli(this, productList);
         recyclerView.setAdapter(produkAdapterPembeli);
 
         // Set SearchView listener to filter products based on user input
@@ -110,10 +104,6 @@ public class Dashboard1Activity extends AppCompatActivity {
             }
         });
 
-        // Display a personalized welcome message
-        String userName = sharedPreferences.getString("username", "User");
-        welcomeTextLine1.setText("Hey, " + userName);
-        welcomeTextLine2.setText("Let's Go Shopping!");
     }
 
     private void filterProducts(String query) {

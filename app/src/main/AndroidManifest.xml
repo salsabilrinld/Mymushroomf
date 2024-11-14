@@ -64,6 +64,8 @@
         <activity
             android:name=".DashboardActivity"
             android:exported="false" />
+        <activity android:name=".Dashboard1Activity"
+            android:exported="false" />
         <activity
             android:name=".TransactionListActivity"
             android:exported="false" />

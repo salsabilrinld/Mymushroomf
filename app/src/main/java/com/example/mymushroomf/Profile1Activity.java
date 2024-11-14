@@ -2,10 +2,12 @@ package com.example.mymushroomf;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -31,11 +33,10 @@ public class Profile1Activity extends AppCompatActivity {
         username = findViewById(R.id.username);
         followInfo = findViewById(R.id.followInfo);
         editProfileButton = findViewById(R.id.editProfileButton);
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
-        LinearLayout transaksiButton = findViewById(R.id.dtransaksi);
-        LinearLayout penilaianButton = findViewById(R.id.bpenilaian);
-        LinearLayout logoutButton = findViewById(R.id.logout1);
+        ImageButton transaksiButton = findViewById(R.id.button_transaction);
+        ImageButton penilaianButton = findViewById(R.id.button_rating);
+        ImageButton logoutButton = findViewById(R.id.button_logout);
 
         editProfileButton.setOnClickListener(v -> {
             Intent intent = new Intent(Profile1Activity.this, EditProfile1Activity.class);
@@ -60,6 +61,7 @@ public class Profile1Activity extends AppCompatActivity {
             finish();
         });
 
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.menu_profile);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

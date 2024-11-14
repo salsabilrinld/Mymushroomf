@@ -87,7 +87,7 @@ public class formlogin extends AppCompatActivity { // Menggunakan FormLogin sepe
             myPrefsEditor.apply();
 
             // Pindah ke DashboardActivity
-            Intent intent = new Intent(formlogin.this, DashboardActivity.class);
+            Intent intent = new Intent(formlogin.this, Dashboard1Activity.class);
             startActivity(intent);
             finish(); // Mengakhiri FormLogin
         } else {
