@@ -45,7 +45,8 @@
         android:layout_below="@id/titleLayout"
         android:layout_marginTop="16dp"
         android:iconifiedByDefault="false"
-        android:queryHint="Cari Alamat" />
+        android:queryHint="Cari Alamat"
+        android:background="@color/orange"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_viewaddress"
