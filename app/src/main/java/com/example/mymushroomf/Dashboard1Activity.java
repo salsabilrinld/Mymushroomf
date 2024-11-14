@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -69,21 +70,23 @@ public class Dashboard1Activity extends AppCompatActivity {
         TextView welcomeTextLine1 = findViewById(R.id.welcome_text_line1);
         TextView welcomeTextLine2 = findViewById(R.id.welcome_text_line2);
         searchView = findViewById(R.id.searchEditText);
+        ImageButton notificationsButton = findViewById(R.id.notifications_button);
+        ImageButton keranjangButton = findViewById(R.id.keranjang_button);
 
         recyclerView = findViewById(R.id.recycler_viewproduct);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
         productList = new ArrayList<>();
         filteredProductList = new ArrayList<>(productList);
-        productList.add(new Produk1("Jamur Tiram", "Organic", "Rp. 9.500", R.drawable.jamur_tiram));
-        productList.add(new Produk1("Jamur Kuping", "Organic", "Rp. 12.000", R.drawable.jamur_kuping));
-        productList.add(new Produk1("Jamur Kancing", "Organic", "Rp. 7.000", R.drawable.jamur_kancing));
-        productList.add(new Produk1("Jamur Tiram", "Organic", "Rp. 9.500", R.drawable.jamur_tiram));
-        productList.add(new Produk1("Jamur Kuping", "Organic", "Rp. 12.000", R.drawable.jamur_kuping));
-        productList.add(new Produk1("Jamur Kancing", "Organic", "Rp. 7.000", R.drawable.jamur_kancing));
-        productList.add(new Produk1("Jamur Tiram", "Organic", "Rp. 9.500", R.drawable.jamur_tiram));
-        productList.add(new Produk1("Jamur Kuping", "Organic", "Rp. 12.000", R.drawable.jamur_kuping));
-        productList.add(new Produk1("Jamur Kancing", "Organic", "Rp. 7.000", R.drawable.jamur_kancing));
+        productList.add(new Produk1("Jamur Tiram", null,"Organic", "Rp. 9.500", R.drawable.jamur_tiram));
+        productList.add(new Produk1("Jamur Kuping", null, "Organic", "Rp. 12.000", R.drawable.jamur_kuping));
+        productList.add(new Produk1("Jamur Kancing", null, "Organic", "Rp. 7.000", R.drawable.jamur_kancing));
+        productList.add(new Produk1("Jamur Tiram", null,"Organic", "Rp. 9.500", R.drawable.jamur_tiram));
+        productList.add(new Produk1("Jamur Kuping", null,"Organic", "Rp. 12.000", R.drawable.jamur_kuping));
+        productList.add(new Produk1("Jamur Kancing", null,"Organic", "Rp. 7.000", R.drawable.jamur_kancing));
+        productList.add(new Produk1("Jamur Tiram", null,"Organic", "Rp. 9.500", R.drawable.jamur_tiram));
+        productList.add(new Produk1("Jamur Kuping", null,"Organic", "Rp. 12.000", R.drawable.jamur_kuping));
+        productList.add(new Produk1("Jamur Kancing", null,"Organic", "Rp. 7.000", R.drawable.jamur_kancing));
 
 
         produkAdapterPembeli = new ProdukAdapterPembeli(this, productList);
@@ -104,7 +107,18 @@ public class Dashboard1Activity extends AppCompatActivity {
             }
         });
 
-    }
+        notificationsButton.setOnClickListener(view -> {
+            Intent notifIntent = new Intent(Dashboard1Activity.this, NotificationsActivity.class);
+            startActivity(notifIntent);
+        });
+
+        keranjangButton.setOnClickListener(view -> {
+            Intent keranjangIntent = new Intent(Dashboard1Activity.this, Keranjang1Activity.class);
+            startActivity(keranjangIntent);
+        });
+
+
+        }
 
     private void filterProducts(String query) {
         // Clear the filtered product list before refilling it

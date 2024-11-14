@@ -45,10 +45,7 @@ public class NotificationsActivity extends AppCompatActivity {
 
             ImageButton backButton = findViewById(R.id.back_notifications);
 
-            backButton.setOnClickListener(view -> {
-            Intent intent = new Intent(NotificationsActivity.this, Profile1Activity.class);
-            startActivity(intent);
-             });
+            backButton.setOnClickListener(view -> finish());
             }
 
             private void loadNotifications() {
