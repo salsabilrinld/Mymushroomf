@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/cokmud">
+
+    <!-- Title TextView -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:gravity="center"
+        android:text="Pilih peran anda"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <!-- Grid Layout for Logo Section -->
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="1"
+        android:padding="8dp"
+        android:layout_marginBottom="16dp">
+
+        <!-- Logo Section with Background and Padding -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_edit_text_background"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="24dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="Logo Icon"
+                android:maxWidth="300dp"
+                android:maxHeight="250dp"
+                android:src="@drawable/mushroom" />
+        </LinearLayout>
+    </GridLayout>
+
+    <!-- Spacer to push the bottom section down -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- Bottom GridLayout for Penjual and Pembeli -->
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:padding="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp">
+
+        <!-- Penjual Layout -->
+        <LinearLayout
+            android:id="@+id/penjual_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/gradient"
+            android:padding="16dp"
+            android:layout_columnWeight="1"
+            android:gravity="center"
+            android:layout_marginEnd="8dp"
+            android:elevation="4dp">
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_penjual"
+                android:contentDescription="Penjual Icon" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Penjual"
+                android:textSize="16sp"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <!-- Pembeli Layout -->
+        <LinearLayout
+            android:id="@+id/pembeli_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/gradient"
+            android:padding="16dp"
+            android:layout_columnWeight="1"
+            android:gravity="center"
+            android:layout_marginStart="8dp"
+            android:elevation="4dp">
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_pembeli"
+                android:contentDescription="Pembeli Icon" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pembeli"
+                android:textSize="16sp"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+    </GridLayout>
+
+</LinearLayout>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".MainActivity">
+
+    <!-- Header Layout with Welcome Text -->
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@color/cokmud"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Welcome TextView - First Line -->
+        <TextView
+            android:id="@+id/welcome_text_line1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:text="Hey, User"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+
+        <!-- Welcome TextView - Second Line -->
+        <TextView
+            android:id="@+id/welcome_text_line2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:text="Let's Go Shopping!"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <!-- SearchView for Searching Products or Store -->
+        <SearchView
+            android:id="@+id/searchEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:queryHint="Search Products or Store"
+            android:background="@drawable/tabung_miring"
+            android:padding="8dp"
+            android:iconifiedByDefault="false"
+            android:layout_marginTop="8dp" />
+
+    </LinearLayout>
+
+    <!-- Shopping Section Title -->
+    <TextView
+        android:id="@+id/myproducts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="Shopping"
+        android:fontFamily="@font/inter_bold"
+        android:textColor="@android:color/black"
+        android:padding="16dp"
+        android:textSize="32dp"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- RecyclerView for Product List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_viewproduct"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintTop_toBottomOf="@id/myproducts"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView" />
+
+    <!-- Bottom Navigation View -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        app:itemIconTint="@color/orange"
+        app:itemTextColor="@color/orange"
+        app:menu="@menu/bottom_navigation_menu"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
