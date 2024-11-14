@@ -34,7 +34,8 @@ public class OrderListActivity extends AppCompatActivity {
 
         // Set up the adapter and RecyclerView
         orderList = new ArrayList<>();
-        orderList.add(new Order("Jamur Tiram", "salsabilrinld", Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.jamur_kuping).toString(), "1 Produk", "Selesai", "Rp. 12.000"));
+        orderList.add(new Order("Jamur Tiram", "salsabilrinld", R.drawable.jamur_tiram, "1 Produk", "Selesai", "Rp. 12.000"));
+
 
         orderAdapter = new OrderAdapter(orderList, new OrderAdapter.OnOrderClickListener() {
             @Override

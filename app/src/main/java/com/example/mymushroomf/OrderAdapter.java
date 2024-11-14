@@ -38,7 +38,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         holder.tvPaymentMethod.setText(order.getOrderMethod());
         holder.tvProductCost.setText(order.getOrderCostProduct());
         holder.tvDeliveryCost.setText(order.getOrderCostDelivery());
-        holder.tvTotalCost.setText(order.getOrderTotal());
+        holder.tvTotalCost.setText(String.valueOf(order.getOrderTotal()));
+
 
 //        // Optional: handle click events to open OrderDetailActivity with details of a selected order
 //        holder.itemView.setOnClickListener(v -> {

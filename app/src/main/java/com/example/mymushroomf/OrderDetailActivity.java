@@ -52,7 +52,8 @@ public class OrderDetailActivity extends AppCompatActivity {
             tvPaymentMethod.setText(order.getOrderMethod());
             tvProductCost.setText(order.getOrderCostProduct());
             tvDeliveryCost.setText(order.getOrderCostDelivery());
-            tvTotalCost.setText(order.getOrderTotal());
+            tvTotalCost.setText(String.valueOf(order.getOrderTotal()));
+
         } else {
             // Get data passed as individual extras from Intent
             String productName = getIntent().getStringExtra("productName");

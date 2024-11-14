@@ -43,15 +43,15 @@ public class Popup {
 
         // Handle Buy Now action
         buyNowButton.setOnClickListener(v -> {
-            // Navigate to OrderDetailActivity
-            Intent intent = new Intent(context, OrderDetailActivity.class);
-            // Optional: Pass data to OrderDetailActivity
+            // Navigasi ke PemesananDetailActivity
+            Intent intent = new Intent(context, PemesananDetailActivity.class);
+            // Pass data ke PemesananDetailActivity
             intent.putExtra("productName", "Jamur Tiram");
             intent.putExtra("quantity", quantity);
             intent.putExtra("totalPrice", quantity * pricePerItem);
             context.startActivity(intent);
 
-            dialog.dismiss(); // Close the dialog after action
+            dialog.dismiss(); // Menutup dialog setelah aksi
         });
 
         // Show the dialog

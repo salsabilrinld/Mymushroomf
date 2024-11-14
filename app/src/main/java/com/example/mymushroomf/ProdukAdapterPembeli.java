@@ -39,7 +39,7 @@ public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPemb
         Produk1 product = productList.get(position);
         holder.productImage.setImageResource(product.getImageResId());
         holder.productName.setText(product.getName());
-        holder.productCategory.setText(product.getWeight());
+        holder.productCategory.setText(product.getType());
         holder.productPrice.setText(product.getPrice());
 
         holder.addButton.setOnClickListener(v ->
