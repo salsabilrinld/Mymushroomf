@@ -43,40 +43,23 @@ public class TransactionListActivity1 extends AppCompatActivity {
 
         // Set up BottomNavigationView and handle item selection
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setSelectedItemId(R.id.menu_transaction);
-
-        // Setting listener for bottom navigation items
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                // Access role from SharedPreferences each time an item is selected
-                SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS_NAME, MODE_PRIVATE);
-                String role = sharedPreferences.getString("role", ""); // Retrieve role
-
+            public boolean onNavigationItemSelected(MenuItem item) {
                 if (item.getItemId() == R.id.menu_store) {
-                    // Handle store menu item click
-                    Toast.makeText(TransactionListActivity1.this, "Store selected", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(TransactionListActivity1.this, Dashboard1Activity.class));
+                    // Store menu item clicked
                     return true;
                 } else if (item.getItemId() == R.id.menu_transaction) {
-                    // Handle transaction menu item click, check the role
-                    if ("Pembeli".equals(role)) {
-                        // If role is "Pembeli", allow access to TransactionListActivity
-                        Intent intent = new Intent(TransactionListActivity1.this, TransactionListActivity1.class);
-                        startActivity(intent);
-                        return true;
-                    } else {
-                        // If role is not "Pembeli", show access denied message
-                        Toast.makeText(TransactionListActivity1.this, "Akses ditolak: hanya Pembeli", Toast.LENGTH_SHORT).show();
-                        return false;
-                    }
+                    // Transaction menu item clicked
+                    Toast.makeText(TransactionListActivity1.this, "Transaction selected", Toast.LENGTH_SHORT).show();
+                    return true;
                 } else if (item.getItemId() == R.id.menu_profile) {
-                    // Handle profile menu item click
-                    Intent intent = new Intent(TransactionListActivity1.this, Profile1Activity.class);
-                    startActivity(intent);
+                    // Profile menu item clicked
+                    startActivity(new Intent(TransactionListActivity1.this, Profile1Activity.class));
                     return true;
                 }
-
-                return false;
+                return false; // Default return when no item matches
             }
         });
     }

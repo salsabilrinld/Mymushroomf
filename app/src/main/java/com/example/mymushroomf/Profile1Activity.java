@@ -3,67 +3,80 @@ package com.example.mymushroomf;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.Image;
-import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Profile1Activity extends AppCompatActivity {
 
-    private ImageView profileImage;
-    private TextView username, followInfo;
-    private Button editProfileButton;
+    private TextView nameTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_profile1);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main_profile), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
-        profileImage = findViewById(R.id.profileImage);
-        username = findViewById(R.id.username);
-        followInfo = findViewById(R.id.followInfo);
-        editProfileButton = findViewById(R.id.editProfileButton);
+        nameTextView = findViewById(R.id.username);
 
-        ImageButton transaksiButton = findViewById(R.id.button_transaction);
-        ImageButton penilaianButton = findViewById(R.id.button_rating);
+        loadProfileData();
+
+        ImageButton ratingButton = findViewById(R.id.button_rating);
+        ImageButton transactionButton = findViewById(R.id.button_transaction);
         ImageButton logoutButton = findViewById(R.id.button_logout);
+        ImageButton notificationsButton = findViewById(R.id.button_notifications);
+        ImageButton keranjangButton = findViewById(R.id.button_keranjang);
+        Button editButton = findViewById(R.id.editProfileButton);
+        logoutButton.setOnClickListener(v -> logoutUser());
 
-        editProfileButton.setOnClickListener(v -> {
-            Intent intent = new Intent(Profile1Activity.this, EditProfile1Activity.class);
-            startActivity(intent);
+
+
+        ratingButton.setOnClickListener(view -> {
+            Intent ratingIntent = new Intent(Profile1Activity.this, ReviewActivity.class);
+            startActivity(ratingIntent);
         });
 
-        transaksiButton.setOnClickListener(v -> {
-            Intent intent = new Intent(Profile1Activity.this, TransactionListActivity1.class);
-            startActivity(intent);
+        transactionButton.setOnClickListener(v -> {
+            Intent transactionIntent = new Intent(Profile1Activity.this, TransactionListActivity1.class);
+            startActivity(transactionIntent);
         });
 
-        penilaianButton.setOnClickListener(v -> {
-            Intent intent = new Intent(Profile1Activity.this, ReviewActivity.class);
-            startActivity(intent);
+
+        editButton.setOnClickListener(view -> {
+            Intent editIntent = new Intent(Profile1Activity.this, EditProfile1Activity.class);
+            startActivity(editIntent);
         });
 
-        logoutButton.setOnClickListener(v -> {
-            Toast.makeText(Profile1Activity.this, "Logging out...", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(Profile1Activity.this, formlogin.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            finish();
+        notificationsButton.setOnClickListener(view -> {
+            Intent notifIntent = new Intent(Profile1Activity.this, NotificationsActivity.class);
+            startActivity(notifIntent);
+        });
+
+        keranjangButton.setOnClickListener(view -> {
+            Intent keranjangIntent = new Intent(Profile1Activity.this, Keranjang1Activity.class);
+            startActivity(keranjangIntent);
         });
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.menu_profile);
-
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -83,44 +96,35 @@ public class Profile1Activity extends AppCompatActivity {
                 }
             }
         });
-
-        SharedPreferences sharedPreferences = getSharedPreferences("UserProfile", MODE_PRIVATE);
-        String role = sharedPreferences.getString("role", "");
-
-        if ("Pembeli".equals(role)) {
-            setupPembeliProfile();
-        } else if ("Penjual".equals(role)) {
-            setupPenjualProfile();
-        }
     }
 
-    private void setupPembeliProfile() {
-        SharedPreferences sharedPreferences = getSharedPreferences("UserProfile", MODE_PRIVATE);
-        String imageUriString = sharedPreferences.getString("profileImageUri", null);
-
-        if (imageUriString != null) {
-            Uri profileImageUri = Uri.parse(imageUriString);
-            profileImage.setImageURI(profileImageUri);
-        } else {
-            profileImage.setImageResource(R.drawable.ic_profile);
-        }
-
-        username.setText("Username Pembeli");
-        followInfo.setText("Followers: 100");
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Reload profile information every time the activity is resumed
+        loadProfileData();
     }
 
-    private void setupPenjualProfile() {
-        SharedPreferences sharedPreferences = getSharedPreferences("UserProfile", MODE_PRIVATE);
-        String imageUriString = sharedPreferences.getString("profileImageUri", null);
+    private void loadProfileData() {
+        // Load updated profile info from SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        String name = sharedPreferences.getString("name", "Default Name");
 
-        if (imageUriString != null) {
-            Uri profileImageUri = Uri.parse(imageUriString);
-            profileImage.setImageURI(profileImageUri);
-        } else {
-            profileImage.setImageResource(R.drawable.ic_profile);
-        }
+        nameTextView.setText(name);
+    }
 
-        username.setText("Username Penjual");
-        followInfo.setText("Followers: 200");
+    private void logoutUser() {
+
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove("isLoggedIn");
+        editor.apply();
+
+        Toast.makeText(Profile1Activity.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
+
+
+        Intent intent = new Intent(Profile1Activity.this, formlogin.class);
+        startActivity(intent);
+        finish(); //
     }
 }

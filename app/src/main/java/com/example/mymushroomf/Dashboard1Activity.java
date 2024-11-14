@@ -126,9 +126,4 @@ public class Dashboard1Activity extends AppCompatActivity {
         produkAdapterPembeli.notifyDataSetChanged();
     }
 
-    private void navigateToSellerDashboard() {
-        // Redirect to the seller's dashboard activity
-        startActivity(new Intent(Dashboard1Activity.this, DashboardActivity.class));
-        finish(); // Close the current activity (dashboard for buyer)
-    }
 }

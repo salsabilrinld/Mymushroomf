@@ -17,15 +17,26 @@
 
 
     <TextView
+        android:id="@+id/notifications_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Pesanan"
         android:fontFamily="@font/manrope_regular"/>
 
     <TextView
+        android:id="@+id/notifications_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Pesanan baru untuk “Jamur Enoki” telah diterima"
         android:fontFamily="@font/manrope_bold"/>
+
+        <TextView
+            android:id="@+id/notifications_timestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="1 days ago"
+            android:fontFamily="@font/manrope_regular"
+            android:textSize="10dp"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

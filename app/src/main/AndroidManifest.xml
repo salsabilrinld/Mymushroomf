@@ -17,8 +17,12 @@
         <activity
             android:name=".OrderListActivity"
             android:exported="false" />
+        <activity android:name=".NotificationsActivity"
+            android:exported="false" />
         <activity
             android:name=".TransactionDetailActivity"
+            android:exported="false" />
+        <activity android:name=".ReviewActivity"
             android:exported="false" />
         <activity
             android:name=".SettingsActivity1"
@@ -65,6 +69,12 @@
             android:name=".DashboardActivity"
             android:exported="false" />
         <activity android:name=".Dashboard1Activity"
+            android:exported="false" />
+        <activity android:name=".Profile1Activity"
+            android:exported="false" />
+        <activity android:name=".TransactionListActivity1"
+            android:exported="false" />
+        <activity android:name=".EditProfile1Activity"
             android:exported="false" />
         <activity
             android:name=".TransactionListActivity"

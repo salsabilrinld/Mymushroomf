@@ -18,7 +18,11 @@
         android:background="@color/cokmud"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!-- Welcome TextView - First Line -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
         <TextView
             android:id="@+id/welcome_text_line1"
             android:layout_width="wrap_content"
@@ -27,8 +31,27 @@
             android:textSize="20sp"
             android:text="Hey, User"
             android:textStyle="bold"
-            android:layout_marginBottom="4dp" />
+            android:layout_marginBottom="4dp"
+            android:layout_weight="1"/>
 
+            <ImageButton
+                android:id="@+id/notifications_button"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="end"
+                android:background="@drawable/ic_bell"
+                android:contentDescription="@string/title_notifications"/>
+
+            <ImageButton
+                android:id="@+id/keranjang_button"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="end"
+                android:background="@drawable/ic_keranjang"
+                android:layout_marginLeft="12dp"
+                android:contentDescription="Keranjang"/>
+
+        </LinearLayout>
         <!-- Welcome TextView - Second Line -->
         <TextView
             android:id="@+id/welcome_text_line2"
@@ -47,6 +70,7 @@
             android:layout_height="wrap_content"
             android:queryHint="Search Products or Store"
             android:background="@drawable/tabung_miring"
+            android:backgroundTint="@color/orange"
             android:padding="8dp"
             android:iconifiedByDefault="false"
             android:layout_marginTop="8dp" />
@@ -55,17 +79,49 @@
 
     <!-- Shopping Section Title -->
     <TextView
-        android:id="@+id/myproducts"
+        android:id="@+id/productlist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="Shopping"
         android:fontFamily="@font/inter_bold"
         android:textColor="@android:color/black"
-        android:padding="16dp"
         android:textSize="32dp"
         app:layout_constraintTop_toBottomOf="@id/header"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/button_product"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/productlist"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="12dp">
+
+        <Spinner
+            android:id="@+id/button_filter"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:textAlignment="center"
+            android:backgroundTint="@color/orange"
+            android:background="@drawable/rounded_form"
+            android:entries="@array/fungi_types"
+            android:textColor="@color/white"/>
+
+        <Spinner
+            android:id="@+id/button_sort"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:textAlignment="center"
+            android:backgroundTint="@color/orange"
+            android:background="@drawable/rounded_form"
+            android:entries="@array/sort_options"
+            android:textColor="@color/white"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
 
     <!-- RecyclerView for Product List -->
     <androidx.recyclerview.widget.RecyclerView
@@ -73,7 +129,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintTop_toBottomOf="@id/myproducts"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@id/button_product"
         app:layout_constraintBottom_toTopOf="@id/bottomNavigationView" />
 
     <!-- Bottom Navigation View -->
