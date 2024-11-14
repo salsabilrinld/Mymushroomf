@@ -18,6 +18,7 @@ public class OrderDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_orderdetail);
 
+        // Initialize views
         statusOrderLayout = findViewById(R.id.status_order);
         productInfoLayout = findViewById(R.id.info_product);
         courierDetailLayout = findViewById(R.id.kurir_detail);
@@ -38,11 +39,11 @@ public class OrderDetailActivity extends AppCompatActivity {
         tvDeliveryCost = deliveryCostLayout.findViewById(R.id.tvbiaya_kirim);
         tvTotalCost = totalCostLayout.findViewById(R.id.tvtotal_biaya);
 
-        // Get the OrderDetail object passed via Intent
+        // Check if an Order object or intent extras are passed
         Order order = (Order) getIntent().getSerializableExtra("orderDetail");
 
-        // Set data from OrderDetail to TextViews
         if (order != null) {
+            // Populate fields using Order object
             tvStatusOrder.setText(order.getOrderStatus());
             tvProductInfo.setText(order.getProductInfo());
             tvCourierDetail.setText(order.getOrderCourier());
@@ -52,6 +53,19 @@ public class OrderDetailActivity extends AppCompatActivity {
             tvProductCost.setText(order.getOrderCostProduct());
             tvDeliveryCost.setText(order.getOrderCostDelivery());
             tvTotalCost.setText(order.getOrderTotal());
+        } else {
+            // Get data passed as individual extras from Intent
+            String productName = getIntent().getStringExtra("productName");
+            int quantity = getIntent().getIntExtra("quantity", 1);
+            int totalPrice = getIntent().getIntExtra("totalPrice", 0);
+
+            // Set data to TextViews
+            if (productName != null) {
+                tvProductInfo.setText(productName);
+            }
+            tvProductCost.setText("Rp. " + (totalPrice / quantity));
+            tvDeliveryCost.setText("Rp. 0"); // Set delivery cost if applicable
+            tvTotalCost.setText("Rp. " + totalPrice);
         }
     }
 }
