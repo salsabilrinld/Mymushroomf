@@ -30,6 +30,7 @@
                 android:layout_weight="1"
                 android:queryHint="Search Products or store"
                 android:background="@drawable/tabung_miring"
+                android:backgroundTint="@color/orange"
                 android:padding="8dp"
                 android:iconifiedByDefault="false" />
 
@@ -38,7 +39,8 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="8dp"
-                android:src="@drawable/ic_bag"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_keranjang"
                 android:contentDescription="Cart Icon" />
         </LinearLayout>
 

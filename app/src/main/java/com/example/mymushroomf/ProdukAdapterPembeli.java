@@ -1,6 +1,7 @@
 package com.example.mymushroomf;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,15 @@ public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPemb
         holder.addButton.setOnClickListener(v ->
                 Toast.makeText(context, "Membeli " + product.getName(), Toast.LENGTH_SHORT).show()
         );
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, ProductDetailActivity.class);
+            // Pass necessary data to ProductDetailActivity
+            intent.putExtra("productName", product.getName());
+            intent.putExtra("productPrice", product.getPrice());
+            intent.putExtra("productImage", product.getImageResId());
+            context.startActivity(intent);
+        });
     }
 
     @Override

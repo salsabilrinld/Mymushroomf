@@ -2,6 +2,7 @@ package com.example.mymushroomf;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,5 +62,9 @@ public class ProductDetailActivity extends AppCompatActivity {
         productDescriptionTextView.setText(productDescription);
         productPriceTextView.setText(productPrice);
         productImageView.setImageResource(productImageResId);
+
+        ImageButton backButton = findViewById(R.id.back_dashboard);
+        backButton.setOnClickListener(view -> finish());
         }
+
     }

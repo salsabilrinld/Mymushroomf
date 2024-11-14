@@ -56,6 +56,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
         public ReviewViewHolder(View itemView) {
             super(itemView);
             ratingBar = itemView.findViewById(R.id.ratingBar);
+            reviewComment = itemView.findViewById(R.id.review_comment);
             reviewImage = itemView.findViewById(R.id.review_image);
 
         }
