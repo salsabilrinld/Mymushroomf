@@ -81,7 +81,7 @@ public class Popup {
     private void updateQuantityAndPrice() {
         if (quantityText != null && priceText != null) {
             totalPrice = pricePerItem * quantity; // Calculate the new total price
-            quantityText.setText("Rp. " + totalPrice); // Show the updated price in quantityText
+            quantityText.setText(String.valueOf(quantity)); // Show the updated price in quantityText
             priceText.setText("Rp. " + totalPrice);    // Update the product cost
         }
     }
