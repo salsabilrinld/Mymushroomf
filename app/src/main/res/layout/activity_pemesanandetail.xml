@@ -116,6 +116,7 @@
                     android:text="Jamur Tiram" />
 
                 <TextView
+                    android:id="@+id/quantityText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Rp. 12.000"
@@ -172,12 +173,14 @@
 
         <!-- Price Summary -->
         <TextView
+            android:id="@+id/tv_product_cost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Biaya Produk: Rp. 12.000" />
 
         <TextView
+            android:id="@+id/tv_shipping_cost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Biaya Pengiriman: Rp. 7.000" />

@@ -1,4 +1,4 @@
-package com.example.mymushroomf;
+package com.example.mymushroomf.PembeliActivity;
 
 import android.os.Bundle;
 import android.view.View;

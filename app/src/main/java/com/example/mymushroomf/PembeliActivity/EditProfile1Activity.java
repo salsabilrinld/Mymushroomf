@@ -1,7 +1,5 @@
-package com.example.mymushroomf;
+package com.example.mymushroomf.PembeliActivity;
 
-import static com.example.mymushroomf.AddProductActivity.PICK_IMAGE_REQUEST;
-import static com.example.mymushroomf.AddProductActivity.STORAGE_PERMISSION_CODE;
 import android.Manifest;
 
 
@@ -21,6 +19,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import com.example.mymushroomf.R;
 
 public class EditProfile1Activity extends AppCompatActivity {
     private ImageView profileImageView;

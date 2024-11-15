@@ -1,10 +1,8 @@
-package com.example.mymushroomf;
+package com.example.mymushroomf.PembeliActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.Image;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -18,6 +16,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.mymushroomf.R;
+import com.example.mymushroomf.formlogin;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Profile1Activity extends AppCompatActivity {
@@ -50,7 +50,7 @@ public class Profile1Activity extends AppCompatActivity {
 
 
         ratingButton.setOnClickListener(view -> {
-            Intent ratingIntent = new Intent(Profile1Activity.this, ReviewActivity.class);
+            Intent ratingIntent = new Intent(Profile1Activity.this, ReviewListActivity.class);
             startActivity(ratingIntent);
         });
 

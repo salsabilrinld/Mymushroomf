@@ -1,4 +1,4 @@
-package com.example.mymushroomf;
+package com.example.mymushroomf.PembeliActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mymushroomf.Popup;
+import com.example.mymushroomf.R;
+import com.example.mymushroomf.Review;
+import com.example.mymushroomf.ReviewAdapter;
+import com.example.mymushroomf.ReviewRepository;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,11 +24,13 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     private RecyclerView reviewRecyclerView;
     private ReviewAdapter reviewAdapter;
+    private ReviewRepository reviewRepository;
     private List<Review> reviewList;
     private TextView productNameTextView;
     private TextView productDescriptionTextView;
     private TextView productPriceTextView;
     private ImageView productImageView;
+    private String productId = "product_123";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +40,12 @@ public class ProductDetailActivity extends AppCompatActivity {
         reviewRecyclerView = findViewById(R.id.reviewRecyclerView);
         reviewRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        reviewList = new ArrayList<>();
-        reviewList.add(new Review(4.5f, "https://example.com/image1.jpg", "Produk bagus dan sesuai harapan!"));
-        reviewList.add(new Review(5.0f, "https://example.com/image2.jpg", "Sangat puas dengan kualitasnya."));
+        reviewRepository = new ReviewRepository();
+        reviewList = reviewRepository.getReviewsForProduct(productId);
+
+//        reviewList = new ArrayList<>();
+//        reviewList.add(new Review("salsabilrinld", 4.5f,  "Produk bagus dan sesuai harapan!"));
+//        reviewList.add(new Review("yoasourbi", 5.0f,  "Sangat puas dengan kualitasnya."));
 
         reviewAdapter = new ReviewAdapter(this, reviewList);
         reviewRecyclerView.setAdapter(reviewAdapter);
@@ -46,7 +57,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         // Mendapatkan data dari Intent
         Intent intent = getIntent();
-        String productName = ((Intent) intent).getStringExtra("productName");
+        String productName = intent.getStringExtra("productName");
         String productDescription = intent.getStringExtra("productDescription");
         String productPrice = intent.getStringExtra("productPrice");
         int productImageResId = intent.getIntExtra("productImage", R.drawable.jamur_tiram);
@@ -57,14 +68,11 @@ public class ProductDetailActivity extends AppCompatActivity {
         productPriceTextView.setText(productPrice);
         productImageView.setImageResource(productImageResId);
 
-        // Tombol kembali
         ImageButton backButton = findViewById(R.id.back_dashboard);
         backButton.setOnClickListener(view -> finish());
 
-        // Tombol Beli Sekarang
         Button buyNowButton = findViewById(R.id.buy_now_button);
         buyNowButton.setOnClickListener(view -> {
-            // Memunculkan Popup saat tombol "Buy Now" ditekan
             new Popup(ProductDetailActivity.this);
         });
     }

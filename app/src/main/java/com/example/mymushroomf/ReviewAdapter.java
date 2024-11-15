@@ -36,11 +36,10 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
     public void onBindViewHolder(@NonNull ReviewViewHolder holder, int position) {
         Review review = reviewList.get(position);
 
+        holder.reviewUsername.setText(review.getUsername());
         holder.ratingBar.setRating(review.getRating());
         holder.reviewComment.setText(review.getComment());
 
-        // Load image using Glide or any image loading library
-        Glide.with(context).load(review.getImageUrl()).into(holder.reviewImage);
     }
 
     @Override
@@ -49,15 +48,15 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
     }
 
     public static class ReviewViewHolder extends RecyclerView.ViewHolder {
+        TextView reviewUsername;
         RatingBar ratingBar;
-        ImageView reviewImage;
         TextView reviewComment;
 
         public ReviewViewHolder(View itemView) {
             super(itemView);
+            reviewUsername = itemView.findViewById(R.id.review_username);
             ratingBar = itemView.findViewById(R.id.ratingBar);
             reviewComment = itemView.findViewById(R.id.review_comment);
-            reviewImage = itemView.findViewById(R.id.review_image);
 
         }
     }

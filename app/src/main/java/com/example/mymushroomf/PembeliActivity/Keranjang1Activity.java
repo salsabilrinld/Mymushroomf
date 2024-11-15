@@ -1,4 +1,4 @@
-package com.example.mymushroomf;
+package com.example.mymushroomf.PembeliActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.mymushroomf.R;
 
 public class Keranjang1Activity extends AppCompatActivity {
 

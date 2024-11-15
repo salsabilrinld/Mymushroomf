@@ -15,6 +15,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.mymushroomf.PembeliActivity.Dashboard1Activity;
+
 public class formlogin extends AppCompatActivity { // Menggunakan FormLogin seperti yang diinginkan
 
     private EditText emailEditText;

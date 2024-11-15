@@ -1,4 +1,4 @@
-package com.example.mymushroomf;
+package com.example.mymushroomf.PembeliActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,17 +12,20 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.mymushroomf.R;
+
 public class  PemesananDetailActivity extends AppCompatActivity {
 
     private ImageView ivBack;
     private Button btnChangeAddress;
     private Button btnPlaceOrder;
-    private TextView tvTotalPayment;
+    private TextView tvTotalPayment, tvShippingCost, quantityText, tvProductCost;
     private RadioGroup radioGroupShipping;
     private RadioButton rbRegular, rbNextDay;
 
     private int productPrice = 12000; // Example product price
     private int shippingCost = 7000;  // Default shipping cost (Regular)
+    private int productCost = 12000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +35,10 @@ public class  PemesananDetailActivity extends AppCompatActivity {
         ivBack = findViewById(R.id.iv_back);
         btnChangeAddress = findViewById(R.id.btn_change_address);
         btnPlaceOrder = findViewById(R.id.btn_place_order);
+        tvShippingCost = findViewById(R.id.tv_shipping_cost);
+        tvProductCost = findViewById(R.id.tv_product_cost);
         tvTotalPayment = findViewById(R.id.tv_total_payment);
+        quantityText = findViewById(R.id.quantityText);
         radioGroupShipping = findViewById(R.id.radio_group_shipping);
         rbRegular = findViewById(R.id.rb_regular);
         rbNextDay = findViewById(R.id.rb_next_day);
@@ -41,13 +47,12 @@ public class  PemesananDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String productName = intent.getStringExtra("productName");
         int quantity = intent.getIntExtra("quantity", 1);
-        int totalPrice = intent.getIntExtra("totalPrice", productPrice); // Default ke harga produk jika tidak ada data
+        int totalPrice = intent.getIntExtra("totalPrice", 0); // Default ke harga produk jika tidak ada data
 
-        // Menampilkan nama produk dan total pembayaran
-        tvTotalPayment.setText("Total Pembayaran: Rp. " + totalPrice);
 
-        // Set initial total payment
-        updateTotalPayment();
+        quantityText.setText("Rp. " + totalPrice);
+        tvProductCost.setText("Biaya Produk: Rp. " + totalPrice);
+
 
         // Back button click listener
         ivBack.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +67,7 @@ public class  PemesananDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Open address change activity
-                Intent intent = new Intent(PemesananDetailActivity.this, TambahAlamatActivity.class);
+                Intent intent = new Intent(PemesananDetailActivity.this, AddressListActivity.class);
                 startActivity(intent);
             }
         });
@@ -87,13 +92,14 @@ public class  PemesananDetailActivity extends AppCompatActivity {
                 } else if (checkedId == R.id.rb_next_day) {
                     shippingCost = 14000; // Next Day shipping cost
                 }
-                updateTotalPayment(); // Update total payment whenever shipping method changes
+
+                tvShippingCost.setText("Biaya Pengiriman : Rp. " + shippingCost);
+                int totalPayment = totalPrice + shippingCost;
+                tvTotalPayment.setText("Total Pembayaran: Rp. " + totalPayment);
+
             }
         });
+
     }
 
-    private void updateTotalPayment() {
-        int totalPayment = productPrice + shippingCost;
-        tvTotalPayment.setText("Total Pembayaran: Rp. " + totalPayment);
-    }
 }

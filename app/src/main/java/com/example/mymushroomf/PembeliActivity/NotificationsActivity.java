@@ -1,6 +1,5 @@
-package com.example.mymushroomf;
+package com.example.mymushroomf.PembeliActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageButton;
 
@@ -11,6 +10,10 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.mymushroomf.Notifications;
+import com.example.mymushroomf.NotificationsAdapter;
+import com.example.mymushroomf.R;
 
 import java.util.ArrayList;
 import java.util.List;
