@@ -19,6 +19,8 @@
             android:exported="false" />
         <activity android:name=".NotificationsActivity"
             android:exported="false" />
+        <activity android:name=".Keranjang1Activity"
+            android:exported="false"/>
         <activity
             android:name=".TransactionDetailActivity"
             android:exported="false" />
@@ -81,6 +83,12 @@
         <activity
             android:name=".TransactionListActivity"
             android:exported="false" />
+        <activity android:name=".PemesananDetailActivity"
+            android:exported="false"/>
+        <activity android:name=".TambahAlamatActivity"
+            android:exported="false"/>
+
+
     </application>
 
 </manifest>

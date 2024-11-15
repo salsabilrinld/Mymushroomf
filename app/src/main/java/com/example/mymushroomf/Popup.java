@@ -2,14 +2,7 @@ package com.example.mymushroomf;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.view.Window;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import android.app.Dialog;
-import android.content.Context;
+import android.content.Intent;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -50,8 +43,15 @@ public class Popup {
 
         // Handle Buy Now action
         buyNowButton.setOnClickListener(v -> {
-            // Handle purchase or add to cart logic here
-            dialog.dismiss(); // Close the dialog after action
+            // Navigasi ke PemesananDetailActivity
+            Intent intent = new Intent(context, PemesananDetailActivity.class);
+            // Pass data ke PemesananDetailActivity
+            intent.putExtra("productName", "Jamur Tiram");
+            intent.putExtra("quantity", quantity);
+            intent.putExtra("totalPrice", quantity * pricePerItem);
+            context.startActivity(intent);
+
+            dialog.dismiss(); // Menutup dialog setelah aksi
         });
 
         // Show the dialog

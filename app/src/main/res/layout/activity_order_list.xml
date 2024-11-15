@@ -31,15 +31,15 @@
                 android:queryHint="Search Products or store"
                 android:background="@drawable/tabung_miring"
                 android:padding="8dp"
-                android:iconifiedByDefault="false" />
+                android:iconifiedByDefault="false"/>
 
             <ImageView
                 android:id="@+id/cart_icon"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="34dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="8dp"
-                android:src="@drawable/ic_bag"
-                android:contentDescription="Cart Icon" />
+                android:contentDescription="Cart Icon"
+                android:src="@drawable/ic_bag" />
         </LinearLayout>
 
         <HorizontalScrollView
@@ -98,7 +98,6 @@
         </HorizontalScrollView>
     </LinearLayout>
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_vieworder"
         android:layout_width="match_parent"
@@ -108,7 +107,6 @@
         app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"

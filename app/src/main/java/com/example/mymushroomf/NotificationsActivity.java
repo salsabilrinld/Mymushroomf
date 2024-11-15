@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotificationsActivity extends AppCompatActivity {
+public class  NotificationsActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private NotificationsAdapter notificationsAdapter;
     private List<Notifications> notificationsList;

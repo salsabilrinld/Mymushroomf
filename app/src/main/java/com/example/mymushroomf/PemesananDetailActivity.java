@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class PemesananDetailActivity extends AppCompatActivity {
+public class  PemesananDetailActivity extends AppCompatActivity {
 
     private ImageView ivBack;
     private Button btnChangeAddress;
@@ -37,7 +37,16 @@ public class PemesananDetailActivity extends AppCompatActivity {
         rbRegular = findViewById(R.id.rb_regular);
         rbNextDay = findViewById(R.id.rb_next_day);
 
-        // Set the initial total payment
+        // Mendapatkan data yang dikirim dari Popup
+        Intent intent = getIntent();
+        String productName = intent.getStringExtra("productName");
+        int quantity = intent.getIntExtra("quantity", 1);
+        int totalPrice = intent.getIntExtra("totalPrice", productPrice); // Default ke harga produk jika tidak ada data
+
+        // Menampilkan nama produk dan total pembayaran
+        tvTotalPayment.setText("Total Pembayaran: Rp. " + totalPrice);
+
+        // Set initial total payment
         updateTotalPayment();
 
         // Back button click listener
@@ -52,8 +61,9 @@ public class PemesananDetailActivity extends AppCompatActivity {
         btnChangeAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Open address change activity or show a message
-                Toast.makeText(PemesananDetailActivity.this, "Change Address Clicked", Toast.LENGTH_SHORT).show();
+                // Open address change activity
+                Intent intent = new Intent(PemesananDetailActivity.this, TambahAlamatActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -82,7 +92,6 @@ public class PemesananDetailActivity extends AppCompatActivity {
         });
     }
 
-    // Method to calculate and update the total payment
     private void updateTotalPayment() {
         int totalPayment = productPrice + shippingCost;
         tvTotalPayment.setText("Total Pembayaran: Rp. " + totalPayment);

@@ -3,140 +3,63 @@ package com.example.mymushroomf;
 import java.io.Serializable;
 
 public class Order implements Serializable {
-    private String productName, buyerName, productImage, productQuantity, orderId, orderStatus, productInfo, orderCourier, orderResi, orderAddress, orderMethod, orderCostProduct, orderCostDelivery, orderTotal;
+    private String productName, buyerName, productImage, orderStatus, productInfo, orderCourier, orderResi, orderAddress, orderMethod, orderCostProduct, orderCostDelivery;
+    private int productQuantity;
+    private double orderTotal;
 
-    public Order (String productName, String buyerName, String productImage, String productQuantity, String orderStatus, String orderTotal) {
+    // Constructor for initial order data (with quantity and total)
+    public Order(String productName, String buyerName, String productImage, int productQuantity, String orderStatus, double orderTotal) {
         this.productName = productName;
         this.buyerName = buyerName;
-        this.productImage = productImage;
+        this.productImage = productImage; // store image name (resource name)
         this.productQuantity = productQuantity;
         this.orderStatus = orderStatus;
         this.orderTotal = orderTotal;
     }
 
-    public Order(String orderId, String orderStatus, String productInfo, String orderCourier, String orderResi, String orderAddress, String orderMethod, String orderCostProduct, String orderCostDelivery, String orderTotal) {
-        this.orderId = orderId;
-        this.orderStatus = orderStatus;
-        this.productInfo = productInfo;
-        this.orderCourier = orderCourier;
-        this.orderResi = orderResi;
-        this.orderAddress = orderAddress;
-        this.orderMethod = orderMethod;
-        this.orderCostProduct = orderCostProduct;
-        this.orderCostDelivery = orderCostDelivery;
-        this.orderTotal = orderTotal;
+    public Order(String jamurTiram, String salsabilrinld, int jamurTiram1, String s, String selesai, String s1) {
     }
 
-    public String getProductName() {
-        return productName;
+    public Order(String number, String selesai, String jamurTiram, String reguler, String number1, String perumahanBogor, String bca, String s, String s1, String s2) {
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
+    // Getters and Setters
+    public String getProductName() { return productName; }
+    public void setProductName(String productName) { this.productName = productName; }
 
-    public String getBuyerName() {
-        return buyerName;
-    }
+    public String getBuyerName() { return buyerName; }
+    public void setBuyerName(String buyerName) { this.buyerName = buyerName; }
 
-    public void setBuyerName(String buyerName) {
-        this.buyerName = buyerName;
-    }
+    public String getProductImage() { return productImage; } // image name
+    public void setProductImage(String productImage) { this.productImage = productImage; }
 
-    public String getProductImage() {
-        return productImage;
-    }
+    public int getProductQuantity() { return productQuantity; }
+    public void setProductQuantity(int productQuantity) { this.productQuantity = productQuantity; }
 
-    public void setProductImage(String productImage) {
-        this.productImage = productImage;
-    }
+    public String getOrderStatus() { return orderStatus; }
+    public void setOrderStatus(String orderStatus) { this.orderStatus = orderStatus; }
 
-    public String getProductQuantity() {
-        return productQuantity;
-    }
+    public String getProductInfo() { return productInfo; }
+    public void setProductInfo(String productInfo) { this.productInfo = productInfo; }
 
-    public void setProductQuantity(String productQuantity) {
-        this.productQuantity = productQuantity;
-    }
+    public String getOrderCourier() { return orderCourier; }
+    public void setOrderCourier(String orderCourier) { this.orderCourier = orderCourier; }
 
-    public String getOrderId() {
-        return orderId;
-    }
+    public String getOrderResi() { return orderResi; }
+    public void setOrderResi(String orderResi) { this.orderResi = orderResi; }
 
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
-    }
+    public String getOrderAddress() { return orderAddress; }
+    public void setOrderAddress(String orderAddress) { this.orderAddress = orderAddress; }
 
-    public String getOrderStatus() {
-        return orderStatus;
-    }
+    public String getOrderMethod() { return orderMethod; }
+    public void setOrderMethod(String orderMethod) { this.orderMethod = orderMethod; }
 
-    public void setOrderStatus(String orderStatus) {
-        this.orderStatus = orderStatus;
-    }
+    public String getOrderCostProduct() { return orderCostProduct; }
+    public void setOrderCostProduct(String orderCostProduct) { this.orderCostProduct = orderCostProduct; }
 
-    public String getProductInfo() {
-        return productInfo;
-    }
+    public String getOrderCostDelivery() { return orderCostDelivery; }
+    public void setOrderCostDelivery(String orderCostDelivery) { this.orderCostDelivery = orderCostDelivery; }
 
-    public void setProductInfo(String productInfo) {
-        this.productInfo = productInfo;
-    }
-
-    public String getOrderCourier() {
-        return orderCourier;
-    }
-
-    public void setOrderCourier(String orderCourier) {
-        this.orderCourier = orderCourier;
-    }
-
-    public String getOrderResi() {
-        return orderResi;
-    }
-
-    public void setOrderResi(String orderResi) {
-        this.orderResi = orderResi;
-    }
-
-    public String getOrderAddress() {
-        return orderAddress;
-    }
-
-    public void setOrderAddress(String orderAddress) {
-        this.orderAddress = orderAddress;
-    }
-
-    public String getOrderMethod() {
-        return orderMethod;
-    }
-
-    public void setOrderMethod(String orderMethod) {
-        this.orderMethod = orderMethod;
-    }
-
-    public String getOrderCostProduct() {
-        return orderCostProduct;
-    }
-
-    public void setOrderCostProduct(String orderCostProduct) {
-        this.orderCostProduct = orderCostProduct;
-    }
-
-    public String getOrderCostDelivery() {
-        return orderCostDelivery;
-    }
-
-    public void setOrderCostDelivery(String orderCostDelivery) {
-        this.orderCostDelivery = orderCostDelivery;
-    }
-
-    public String getOrderTotal() {
-        return orderTotal;
-    }
-
-    public void setOrderTotal(String orderTotal) {
-        this.orderTotal = orderTotal;
-    }
-
+    public double getOrderTotal() { return orderTotal; }
+    public void setOrderTotal(double orderTotal) { this.orderTotal = orderTotal; }
 }

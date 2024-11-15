@@ -118,7 +118,7 @@ public class Dashboard1Activity extends AppCompatActivity {
         });
 
 
-        }
+    }
 
     private void filterProducts(String query) {
         // Clear the filtered product list before refilling it
