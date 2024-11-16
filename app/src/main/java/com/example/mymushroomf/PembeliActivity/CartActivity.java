@@ -23,7 +23,7 @@ public class CartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_keranjang1); // Your cart layout
 
         // Setup RecyclerView
-        cartRecyclerView = findViewById(R.id.recyclerViewCart);
+        cartRecyclerView = findViewById(R.id.recycler_viewkeranjang);
         cartRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         cartAdapter = new CartAdapter(cartItems);
         cartRecyclerView.setAdapter(cartAdapter);
