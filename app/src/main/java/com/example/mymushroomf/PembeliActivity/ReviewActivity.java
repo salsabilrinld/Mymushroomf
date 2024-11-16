@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mymushroomf.R;
-import com.example.mymushroomf.Review;
-import com.example.mymushroomf.ReviewAdapter;
+import com.example.mymushroomf.PembeliModel.Review;
+import com.example.mymushroomf.PembeliAdapter.ReviewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

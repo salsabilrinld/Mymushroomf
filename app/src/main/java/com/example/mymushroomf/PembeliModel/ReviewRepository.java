@@ -1,4 +1,4 @@
-package com.example.mymushroomf;
+package com.example.mymushroomf.PembeliModel;
 
 import java.util.ArrayList;
 import java.util.List;

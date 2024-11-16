@@ -1,4 +1,4 @@
-package com.example.mymushroomf;
+package com.example.mymushroomf.PembeliModel;
 
 public class Produk1 {
     private String name;

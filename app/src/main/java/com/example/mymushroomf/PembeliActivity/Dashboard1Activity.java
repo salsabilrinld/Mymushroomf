@@ -13,8 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mymushroomf.Produk1;
-import com.example.mymushroomf.ProdukAdapterPembeli;
+import com.example.mymushroomf.PembeliModel.Produk1;
+import com.example.mymushroomf.PembeliAdapter.ProdukAdapterPembeli;
 import com.example.mymushroomf.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 

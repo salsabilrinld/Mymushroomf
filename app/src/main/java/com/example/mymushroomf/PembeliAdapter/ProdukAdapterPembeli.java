@@ -1,4 +1,4 @@
-package com.example.mymushroomf;
+package com.example.mymushroomf.PembeliAdapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,12 +8,14 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mymushroomf.PembeliActivity.Popup;
 import com.example.mymushroomf.PembeliActivity.ProductDetailActivity;
+import com.example.mymushroomf.PembeliModel.Produk1;
+import com.example.mymushroomf.R;
 
 import java.util.List;
 
@@ -21,6 +23,7 @@ public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPemb
 
     private List<Produk1> productList;
     private Context context;
+
 
     public ProdukAdapterPembeli(Context context, List<Produk1> productList) {
         this.context = context;
@@ -43,13 +46,14 @@ public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPemb
         holder.productCategory.setText(product.getType());
         holder.productPrice.setText(product.getPrice());
 
-        holder.addButton.setOnClickListener(v ->
-                Toast.makeText(context, "Membeli " + product.getName(), Toast.LENGTH_SHORT).show()
-        );
+        holder.addButton.setOnClickListener(v -> {
+            int price = Integer.parseInt(product.getPrice().replace("Rp.", "").replace(".", "").trim());
+            new Popup(context, product.getName(), product.getImageResId(), price);
+        });
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ProductDetailActivity.class);
-            // Pass necessary data to ProductDetailActivity
+
             intent.putExtra("productName", product.getName());
             intent.putExtra("productPrice", product.getPrice());
             intent.putExtra("productImage", product.getImageResId());
@@ -61,6 +65,8 @@ public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPemb
     public int getItemCount() {
         return productList.size();
     }
+
+
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
         ImageView productImage;

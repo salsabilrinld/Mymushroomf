@@ -4,18 +4,14 @@ package com.example.mymushroomf.PembeliActivity;
 import android.os.Bundle;
 import android.widget.ImageButton;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mymushroomf.R;
-import com.example.mymushroomf.Review;
-import com.example.mymushroomf.ReviewAdapter;
-import com.example.mymushroomf.ReviewRepository;
+import com.example.mymushroomf.PembeliModel.Review;
+import com.example.mymushroomf.PembeliAdapter.ReviewAdapter;
+import com.example.mymushroomf.PembeliModel.ReviewRepository;
 
 import java.util.List;
 

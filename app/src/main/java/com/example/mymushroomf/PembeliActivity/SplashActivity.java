@@ -1,9 +1,12 @@
-package com.example.mymushroomf;
+package com.example.mymushroomf.PembeliActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.mymushroomf.R;
+import com.example.mymushroomf.formlogin;
 
 public class SplashActivity extends AppCompatActivity {
 
