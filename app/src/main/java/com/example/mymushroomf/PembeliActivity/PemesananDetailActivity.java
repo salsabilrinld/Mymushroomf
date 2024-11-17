@@ -2,6 +2,7 @@ package com.example.mymushroomf.PembeliActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -30,7 +31,8 @@ public class  PemesananDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pemesanandetail); // Ensure this matches your XML file name
+        setContentView(R.layout.activity_pemesanandetail);
+        Log.d("DEBUG", "PemesananDetailActivity berhasil dibuka");// Ensure this matches your XML file name
 
         ivBack = findViewById(R.id.iv_back);
         btnChangeAddress = findViewById(R.id.btn_change_address);
@@ -66,8 +68,9 @@ public class  PemesananDetailActivity extends AppCompatActivity {
         btnChangeAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("PemesananDetailActivity", "Ubah Alamat tombol diklik");
                 // Open address change activity
-                Intent intent = new Intent(PemesananDetailActivity.this, AddressListActivity.class);
+                Intent intent = new Intent(PemesananDetailActivity.this, TambahAlamatActivity.class);
                 startActivity(intent);
             }
         });

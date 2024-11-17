@@ -96,6 +96,13 @@
                     android:text="Dibatalkan"
                     android:fontFamily="@font/inter_reguler"
                     android:backgroundTint="@color/orange"/>
+                <Button
+                    android:id="@+id/button_add_transaction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Transaction"
+                    android:layout_margin="16dp"/>
+
             </LinearLayout>
         </HorizontalScrollView>
     </LinearLayout>

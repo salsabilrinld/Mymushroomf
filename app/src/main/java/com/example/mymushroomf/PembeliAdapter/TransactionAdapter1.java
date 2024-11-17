@@ -39,7 +39,6 @@ public class TransactionAdapter1 extends RecyclerView.Adapter<TransactionAdapter
 
     @Override
     public void onBindViewHolder(@NonNull TransactionViewHolder holder, int position) {
-
         Transaction1 transaction = filteredTransactionList.get(position);
 
         holder.productName.setText(transaction.getName());
@@ -57,10 +56,11 @@ public class TransactionAdapter1 extends RecyclerView.Adapter<TransactionAdapter
         return filteredTransactionList.size();
     }
 
+    // Filter method to update the list based on status
     public void filter(String status) {
         filteredTransactionList.clear();
         if (status.equals("semua")) {
-            filteredTransactionList.addAll(allTransactionList);
+            filteredTransactionList.addAll(allTransactionList); // Show all transactions
         } else {
             for (Transaction1 transaction : allTransactionList) {
                 if (transaction.getStatus().equalsIgnoreCase(status)) {
@@ -68,7 +68,17 @@ public class TransactionAdapter1 extends RecyclerView.Adapter<TransactionAdapter
                 }
             }
         }
-        notifyDataSetChanged();
+        notifyDataSetChanged(); // Notify adapter after filtering
+    }
+
+    // Method to add new transaction to the list
+    public void addTransaction(Transaction1 newTransaction) {
+        // Add to the full list and the filtered list
+        allTransactionList.add(newTransaction);
+        filteredTransactionList.add(newTransaction);
+
+        // Notify adapter that a new item has been inserted
+        notifyItemInserted(filteredTransactionList.size() - 1); // Notify the adapter about the new item
     }
 
     public static class TransactionViewHolder extends RecyclerView.ViewHolder {

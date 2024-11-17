@@ -9,7 +9,7 @@ public class Transaction1 {
     private String price;
     private String imageUri;
 
-    public Transaction1(String id, String name, String type, String status, String price, String imageUri) {
+    public Transaction1(String id, String name, String type, String status, String price) {
         this.id = id;
         this.name = name;
         this.type = type;

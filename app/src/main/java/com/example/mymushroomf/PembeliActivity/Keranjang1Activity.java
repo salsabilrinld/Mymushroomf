@@ -2,6 +2,7 @@ package com.example.mymushroomf.PembeliActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -69,25 +70,27 @@ public class Keranjang1Activity extends AppCompatActivity implements CartAdapter
 
         // Handle tombol Beli
         buttonBeli.setOnClickListener(v -> {
+            Log.d("DEBUG", "Tombol Beli diklik");
+
             List<CartItem> selectedItems = getSelectedItems();
 
             if (selectedItems.isEmpty()) {
                 Toast.makeText(this, "Pilih produk terlebih dahulu", Toast.LENGTH_SHORT).show();
             } else {
-                // Debug log untuk memastikan data tidak kosong
-                for (CartItem item : selectedItems) {
-                    System.out.println("Selected Item: " + item.getProduct().getName());
-                }
+                Log.d("DEBUG", "Jumlah item terpilih: " + selectedItems.size());
 
-                // Intent ke PemesananDetailActivity
                 Intent intent = new Intent(Keranjang1Activity.this, PemesananDetailActivity.class);
-                intent.putExtra("selectedItems", (Serializable) selectedItems);
-                startActivity(intent);
 
-                // Debug log untuk memastikan Intent dipanggil
-                System.out.println("Intent ke PemesananDetailActivity dipanggil");
+                try {
+                    intent.putExtra("selectedItems", (Serializable) selectedItems);
+                    startActivity(intent);
+                    Log.d("DEBUG", "Intent ke PemesananDetailActivity dipanggil");
+                } catch (Exception e) {
+                    Log.e("DEBUG", "Error saat memulai PemesananDetailActivity: " + e.getMessage());
+                }
             }
         });
+
 
     }
 
