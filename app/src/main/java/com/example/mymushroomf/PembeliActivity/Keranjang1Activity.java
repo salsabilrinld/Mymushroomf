@@ -3,128 +3,148 @@ package com.example.mymushroomf.PembeliActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mymushroomf.PembeliAdapter.CartAdapter;
+import com.example.mymushroomf.PembeliModel.CartItem;
+import com.example.mymushroomf.PembeliModel.CartManager;
 import com.example.mymushroomf.R;
 
-public class Keranjang1Activity extends AppCompatActivity {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-    private LinearLayout itemLayout;
-    private LinearLayout itemLayout2;
-    private TextView itemName, itemName2;
-    private CheckBox checkBox, checkBox2;
-    private TextView itemQuantity, itemQuantity2;
-    private ImageButton btnIncrease, btnDecrease, btnIncrease2, btnDecrease2;
-    private ImageButton btnDelete, btnDelete2;
+public class Keranjang1Activity extends AppCompatActivity implements CartAdapter.OnCartItemInteractionListener {
+
+    private RecyclerView cartRecyclerView;
+    private CartAdapter cartAdapter;
+    private List<CartItem> cartItems;
+    private TextView totalPriceTextView;
+    private CheckBox checkBoxSelectAll;
+    private Button buttonBeli;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_keranjang1); // Ensure the correct XML layout is used
+        setContentView(R.layout.activity_keranjang1);
 
-        // Initializing views
-        itemLayout = findViewById(R.id.itemLayout);
-        itemLayout2 = findViewById(R.id.itemLayout2);
-        itemName = findViewById(R.id.itemName);
-        itemName2 = findViewById(R.id.itemName2);
-        checkBox = findViewById(R.id.checkBox);
-        checkBox2 = findViewById(R.id.checkBox2);
-        itemQuantity = findViewById(R.id.itemQuantity);
-        itemQuantity2 = findViewById(R.id.itemQuantity2);
-        btnIncrease = findViewById(R.id.btnIncrease);
-        btnDecrease = findViewById(R.id.btnDecrease);
-        btnIncrease2 = findViewById(R.id.btnIncrease2);
-        btnDecrease2 = findViewById(R.id.btnDecrease2);
-        btnDelete = findViewById(R.id.btnDelete);
-        btnDelete2 = findViewById(R.id.btnDelete2);
+        // Inisialisasi views
+        cartRecyclerView = findViewById(R.id.recycler_viewkeranjang);
+        totalPriceTextView = findViewById(R.id.totalPrice);
+        checkBoxSelectAll = findViewById(R.id.checkBoxSelectAll);
+        buttonBeli = findViewById(R.id.btnBuy);
 
-        // Get data from the intent (product name, price, image)
-        Intent intent = getIntent();
-        String productName = intent.getStringExtra("productName");
-        String productPrice = intent.getStringExtra("productPrice");
-        int productImageResId = intent.getIntExtra("productImage", R.drawable.jamur_tiram);
+        // Set up RecyclerView
+        cartRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        String productName2 = intent.getStringExtra("productName2");
-        String productPrice2 = intent.getStringExtra("productPrice2");
-        int productImageResId2 = intent.getIntExtra("productImage2", R.drawable.jamur_tiram);
+        // Load cart items dari CartManager
+        cartItems = CartManager.getInstance(this).getCartItems();
 
-        // Set product information for the first item
-        itemName.setText(productName);
-        itemQuantity.setText("1");
+        // Set adapter untuk RecyclerView
+        cartAdapter = new CartAdapter(cartItems, this, this);
+        cartRecyclerView.setAdapter(cartAdapter);
 
-        // Set product information for the second item
-        itemName2.setText(productName2);
-        itemQuantity2.setText("1");
+        // Setup checkbox "Pilih Semua"
+        checkBoxSelectAll.setOnClickListener(v -> {
+            boolean isChecked = checkBoxSelectAll.isChecked();
+            selectAllItems(isChecked);
+            cartAdapter.notifyDataSetChanged();
+            updateTotalPrice();
+        });
 
-        // Handle click on itemLayout (First product)
-        itemLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Handle the action when the first product layout is clicked
-                String itemNameText = itemName.getText().toString();
-                Toast.makeText(Keranjang1Activity.this, "Clicked on: " + itemNameText, Toast.LENGTH_SHORT).show();
+        // Update total harga
+        updateTotalPrice();
+
+        // Handle back button
+        ImageView backButton = findViewById(R.id.iv_back);
+        backButton.setOnClickListener(v -> onBackPressed());
+
+        // Handle tombol Beli
+        buttonBeli.setOnClickListener(v -> {
+            List<CartItem> selectedItems = getSelectedItems();
+
+            if (selectedItems.isEmpty()) {
+                Toast.makeText(this, "Pilih produk terlebih dahulu", Toast.LENGTH_SHORT).show();
+            } else {
+                // Debug log untuk memastikan data tidak kosong
+                for (CartItem item : selectedItems) {
+                    System.out.println("Selected Item: " + item.getProduct().getName());
+                }
+
+                // Intent ke PemesananDetailActivity
+                Intent intent = new Intent(Keranjang1Activity.this, PemesananDetailActivity.class);
+                intent.putExtra("selectedItems", (Serializable) selectedItems);
+                startActivity(intent);
+
+                // Debug log untuk memastikan Intent dipanggil
+                System.out.println("Intent ke PemesananDetailActivity dipanggil");
             }
         });
 
-        // Handle click on itemLayout2 (Second product)
-        itemLayout2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Handle the action when the second product layout is clicked
-                String itemNameText = itemName2.getText().toString();
-                Toast.makeText(Keranjang1Activity.this, "Clicked on: " + itemNameText, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        // Handle increase/decrease quantity for the first item
-        setQuantityChangeListeners(itemQuantity, btnIncrease, btnDecrease);
-
-        // Handle increase/decrease quantity for the second item
-        setQuantityChangeListeners(itemQuantity2, btnIncrease2, btnDecrease2);
-
-        // Handle delete item for the first item
-        btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                itemLayout.setVisibility(View.GONE); // Hide the item layout
-                Toast.makeText(Keranjang1Activity.this, "Item deleted", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        // Handle delete item for the second item
-        btnDelete2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                itemLayout2.setVisibility(View.GONE); // Hide the item layout
-                Toast.makeText(Keranjang1Activity.this, "Item deleted", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
-    // Helper method to set quantity change listeners for both products
-    private void setQuantityChangeListeners(final TextView quantityView, final ImageButton increaseBtn, final ImageButton decreaseBtn) {
-        increaseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int quantity = Integer.parseInt(quantityView.getText().toString());
-                quantityView.setText(String.valueOf(quantity + 1));
+    // Mendapatkan daftar item yang dipilih
+    private List<CartItem> getSelectedItems() {
+        List<CartItem> selectedItems = new ArrayList<>();
+        for (CartItem item : cartItems) {
+            if (item.isSelected()) {
+                selectedItems.add(item);
             }
-        });
+        }
+        return selectedItems;
+    }
 
-        decreaseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int quantity = Integer.parseInt(quantityView.getText().toString());
-                if (quantity > 1) {
-                    quantityView.setText(String.valueOf(quantity - 1));
+    // Update total harga
+    private void updateTotalPrice() {
+        double total = 0;
+        for (CartItem item : cartItems) {
+            // Hitung hanya item yang dipilih
+            if (item.isSelected()) {
+                total += item.getProduct().getPrice() * item.getQuantity();
+            }
+        }
+        totalPriceTextView.setText("Total: Rp. " + total);
+    }
+
+    // Pilih semua item di keranjang
+    private void selectAllItems(boolean select) {
+        for (CartItem item : cartItems) {
+            item.setSelected(select);
+        }
+    }
+
+    @Override
+    public void onCartUpdated() {
+        updateTotalPrice();
+    }
+
+    // Menambahkan item ke dalam keranjang
+    public void addItemToCart(CartItem cartItem) {
+        boolean itemExists = CartManager.getInstance(this).isProductInCart(cartItem.getProduct());
+
+        // Jika item belum ada di keranjang, tambahkan ke cart
+        if (!itemExists) {
+            CartManager.getInstance(this).addItem(cartItem);
+        } else {
+            // Jika item sudah ada, tambah kuantitasnya
+            for (CartItem item : cartItems) {
+                if (item.getProduct().equals(cartItem.getProduct())) {
+                    item.setQuantity(item.getQuantity() + cartItem.getQuantity());
+                    break;
                 }
             }
-        });
+        }
+
+        // Menyimpan perubahan ke CartManager dan perbarui RecyclerView
+        cartAdapter.notifyDataSetChanged();
+        updateTotalPrice();
     }
 }

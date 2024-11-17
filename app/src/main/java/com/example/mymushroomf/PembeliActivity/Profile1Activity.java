@@ -37,17 +37,18 @@ public class Profile1Activity extends AppCompatActivity {
 
         nameTextView = findViewById(R.id.username);
 
+        // Load the profile data when the activity is created
         loadProfileData();
 
+        // Set up navigation and buttons
         ImageButton ratingButton = findViewById(R.id.button_rating);
         ImageButton transactionButton = findViewById(R.id.button_transaction);
         ImageButton logoutButton = findViewById(R.id.button_logout);
         ImageButton notificationsButton = findViewById(R.id.button_notifications);
         ImageButton keranjangButton = findViewById(R.id.button_keranjang);
         Button editButton = findViewById(R.id.editProfileButton);
+
         logoutButton.setOnClickListener(v -> logoutUser());
-
-
 
         ratingButton.setOnClickListener(view -> {
             Intent ratingIntent = new Intent(Profile1Activity.this, ReviewListActivity.class);
@@ -58,7 +59,6 @@ public class Profile1Activity extends AppCompatActivity {
             Intent transactionIntent = new Intent(Profile1Activity.this, TransactionListActivity1.class);
             startActivity(transactionIntent);
         });
-
 
         editButton.setOnClickListener(view -> {
             Intent editIntent = new Intent(Profile1Activity.this, EditProfile1Activity.class);
@@ -77,23 +77,20 @@ public class Profile1Activity extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.menu_profile);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId() == R.id.menu_store) {
-                    Intent intent = new Intent(Profile1Activity.this, Dashboard1Activity.class);
-                    startActivity(intent);
-                    return true;
-                } else if (item.getItemId() == R.id.menu_transaction) {
-                    Intent intent = new Intent(Profile1Activity.this, TransactionListActivity1.class);
-                    startActivity(intent);
-                    return true;
-                } else if (item.getItemId() == R.id.menu_profile) {
-                    Toast.makeText(Profile1Activity.this, "Profile selected", Toast.LENGTH_SHORT).show();
-                    return true;
-                } else {
-                    return false;
-                }
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.menu_store) {
+                Intent intent = new Intent(Profile1Activity.this, Dashboard1Activity.class);
+                startActivity(intent);
+                return true;
+            } else if (item.getItemId() == R.id.menu_transaction) {
+                Intent intent = new Intent(Profile1Activity.this, TransactionListActivity1.class);
+                startActivity(intent);
+                return true;
+            } else if (item.getItemId() == R.id.menu_profile) {
+                Toast.makeText(Profile1Activity.this, "Profile selected", Toast.LENGTH_SHORT).show();
+                return true;
+            } else {
+                return false;
             }
         });
     }
@@ -110,11 +107,11 @@ public class Profile1Activity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
         String name = sharedPreferences.getString("name", "Default Name");
 
+        // Display the name on the TextView
         nameTextView.setText(name);
     }
 
     private void logoutUser() {
-
         SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove("isLoggedIn");
@@ -122,9 +119,8 @@ public class Profile1Activity extends AppCompatActivity {
 
         Toast.makeText(Profile1Activity.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
 
-
         Intent intent = new Intent(Profile1Activity.this, formlogin.class);
         startActivity(intent);
-        finish(); //
+        finish();
     }
 }

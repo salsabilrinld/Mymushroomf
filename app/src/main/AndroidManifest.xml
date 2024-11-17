@@ -45,7 +45,7 @@
             android:exported="false" /> <!-- android:label="@string/title_activity_order_detail" -->
         <!-- android:theme="@style/Theme.Mymushroomf.NoActionBar" /> -->
         <activity
-            android:name=".ProfileActivity"
+            android:name=".Profile1Activity"
             android:exported="false" />
         <activity
             android:name=".PembeliActivity.Keranjang1Activity"
@@ -57,7 +57,7 @@
             android:name=".AddProductActivity"
             android:exported="false" />
         <activity
-            android:name=".EditProfileActivity"
+            android:name=".EditProfile1Activity"
             android:exported="true" />
         <activity
             android:name=".RegisterActivity"
@@ -79,7 +79,7 @@
             android:name=".PembeliActivity.AddressListActivity"
             android:exported="false" />
         <activity
-            android:name=".DashboardActivity"
+            android:name=".Dashboard1Activity"
             android:exported="false" />
         <activity
             android:name=".PembeliActivity.Dashboard1Activity"
@@ -102,6 +102,7 @@
         <activity
             android:name=".PembeliActivity.TambahAlamatActivity"
             android:exported="false" />
+
     </application>
 
 </manifest>

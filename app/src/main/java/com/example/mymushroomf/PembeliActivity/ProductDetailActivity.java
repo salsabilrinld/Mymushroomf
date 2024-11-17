@@ -1,6 +1,5 @@
 package com.example.mymushroomf.PembeliActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -10,90 +9,96 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mymushroomf.PembeliModel.CartItem;
+import com.example.mymushroomf.PembeliModel.CartManager;
 import com.example.mymushroomf.PembeliModel.Produk1;
 import com.example.mymushroomf.R;
-import com.example.mymushroomf.PembeliModel.Review;
-import com.example.mymushroomf.PembeliAdapter.ReviewAdapter;
-import com.example.mymushroomf.PembeliModel.ReviewRepository;
-
-import java.util.List;
 
 public class ProductDetailActivity extends AppCompatActivity {
 
-    private RecyclerView reviewRecyclerView;
-    private Context context;
-    private ReviewAdapter reviewAdapter;
-    private ReviewRepository reviewRepository;
-    private List<Review> reviewList;
-    private List<Produk1> productList;
-    private TextView productNameTextView;
-    private TextView productDescriptionTextView;
-    private TextView productPriceTextView;
     private ImageView productImageView;
-    private String productId = "product_123";
+    private TextView productNameTextView;
+    private TextView productPriceTextView;
+    private TextView productDescriptionTextView;
+    private Produk1 product; // Objek Produk1 untuk data produk
+    private Button addToCartButton;
+    private Button buyNowButton;
+    private ImageButton backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_productdetail);
+        setContentView(R.layout.activity_productdetail); // Pastikan layoutnya benar
 
-        reviewRecyclerView = findViewById(R.id.reviewRecyclerView);
-        reviewRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        reviewRepository = new ReviewRepository();
-        reviewList = reviewRepository.getReviewsForProduct(productId);
-
-
-        reviewAdapter = new ReviewAdapter(this, reviewList);
-        reviewRecyclerView.setAdapter(reviewAdapter);
-
+        // Initialize views
         productImageView = findViewById(R.id.product_image);
         productNameTextView = findViewById(R.id.product_name);
-        productDescriptionTextView = findViewById(R.id.product_description);
         productPriceTextView = findViewById(R.id.product_price);
+        productDescriptionTextView = findViewById(R.id.product_description);
+        backButton = findViewById(R.id.back_dashboard);
+        buyNowButton = findViewById(R.id.buy_now_button);
+        addToCartButton = findViewById(R.id.add_to_cart_button);
 
-        // Mendapatkan data dari Intent
+        // Ambil Data Produk dari Intent
         Intent intent = getIntent();
-        String productName = intent.getStringExtra("productName");
-        String productDescription = intent.getStringExtra("productDescription");
-        String productPrice = intent.getStringExtra("productPrice");
-        int productImageResId = intent.getIntExtra("productImage", R.drawable.jamur_tiram);
+        String name = intent.getStringExtra("productName");
+        String description = intent.getStringExtra("productDescription");
+        int price = intent.getIntExtra("productPrice", 0);
+        int imageResId = intent.getIntExtra("productImage", 0);
+        String type = intent.getStringExtra("productType"); // Tambahkan type jika diperlukan
 
-        // Mengatur data ke Views
-        productNameTextView.setText(productName);
-        productDescriptionTextView.setText(productDescription);
-        productPriceTextView.setText(productPrice);
-        productImageView.setImageResource(productImageResId);
+        // Pastikan data produk ada
+        if (name != null && description != null && price != 0 && imageResId != 0) {
+            // Buat objek Produk1
+            product = new Produk1(name, description, type != null ? type : "General", price, imageResId);
 
-        ImageButton backButton = findViewById(R.id.back_dashboard);
+            // Set data produk ke UI
+            productNameTextView.setText(product.getName());
+            productDescriptionTextView.setText(product.getDesc());
+            productPriceTextView.setText("Rp. " + product.getPrice());
+            productImageView.setImageResource(product.getImageResId());
+        } else {
+            Toast.makeText(this, "Data produk tidak ditemukan!", Toast.LENGTH_SHORT).show();
+            finish();
+            return; // Jika produk tidak ditemukan, hentikan eksekusi
+        }
+
+        // Tombol Kembali
         backButton.setOnClickListener(view -> finish());
 
-        Button buyNowButton = findViewById(R.id.buy_now_button);
+        // Tombol Beli Sekarang
         buyNowButton.setOnClickListener(view -> {
-            int price = Integer.parseInt(productPrice.replace("Rp.", "").replace(".", "").trim());
-            new Popup(ProductDetailActivity.this, productName, productImageResId, price);
+            // Lakukan pembelian langsung tanpa cek stok
+            new Popup(this, product.getName(), product.getImageResId(), product.getPrice()); // Menampilkan popup
         });
 
-        Produk1 product = new Produk1("Jamur Tiram", "Lorem Ipsum", "Organik", "Rp. 12.000", R.drawable.jamur_tiram);
-
-        Button addToCartButton = findViewById(R.id.add_to_cart_button);
+        // Tombol Tambah ke Keranjang
         addToCartButton.setOnClickListener(view -> {
-            // Check if the product has stock available
-            if (product.getStock() > 0) {
-                // Add to cart
-                CartItem cartItem = new CartItem(product, 1);  // Adding 1 unit to the cart
-                CartActivity cartActivity = (CartActivity) getApplicationContext();
-                cartActivity.addItemToCart(cartItem);
+            // Membuat CartItem menggunakan data produk
+            CartItem cartItem = new CartItem(product, 1); // Tambahkan produk ke keranjang
 
-                // Decrease the product stock
-                product.setStock(product.getStock() - 1);
-            } else {
-                // Show message: Out of stock
-                Toast.makeText(ProductDetailActivity.this, "Out of stock!", Toast.LENGTH_SHORT).show();
-            }
+            // Menambahkan item ke keranjang melalui CartManager
+            CartManager.getInstance(this).addItem(cartItem);
+
+            // Beri notifikasi kepada user
+            Toast.makeText(this, "Produk ditambahkan ke keranjang", Toast.LENGTH_SHORT).show();
+
+            // Navigasi ke halaman Keranjang setelah produk ditambahkan
+            Intent intentToCart = new Intent(this, Keranjang1Activity.class);
+            startActivity(intentToCart);
+        });
+
+    }
+
+    // Fungsi untuk menambah item ke keranjang menggunakan CartManager
+    private void addToCart(CartItem cartItem) {
+        // Tambahkan produk ke keranjang
+        CartManager.getInstance(this).addItem(cartItem);
+
+        // Tampilkan pesan dan pindah ke Activity Keranjang
+        Toast.makeText(this, "Produk berhasil ditambahkan ke keranjang", Toast.LENGTH_SHORT).show();
+        Intent intentToCart = new Intent(this, Keranjang1Activity.class);
+        startActivity(intentToCart);
     }
 }

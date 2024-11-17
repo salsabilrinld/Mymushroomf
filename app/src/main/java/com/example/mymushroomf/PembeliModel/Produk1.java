@@ -1,13 +1,16 @@
 package com.example.mymushroomf.PembeliModel;
 
+import java.util.Objects;
+
 public class Produk1 {
     private String name;
     private String desc;
     private String type;
-    private String price;
-    private int imageResId;
+    private int price;          // Harga produk
+    private int imageResId;     // ID sumber daya gambar produk
 
-    public Produk1(String name, String desc, String type, String price, int imageResId) {
+    // Konstruktor untuk Produk1
+    public Produk1(String name, String desc, String type, int price, int imageResId) {
         this.name = name;
         this.desc = desc;
         this.type = type;
@@ -15,43 +18,44 @@ public class Produk1 {
         this.imageResId = imageResId;
     }
 
+    // Getter untuk nama produk
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
+    // Getter untuk deskripsi produk
     public String getDesc() {
         return desc;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
+    // Getter untuk tipe produk
     public String getType() {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getPrice() {
+    // Getter untuk harga produk
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
+    // Getter untuk ID gambar produk
     public int getImageResId() {
         return imageResId;
     }
 
-    public void setImageResId(int imageResId) {
-        this.imageResId = imageResId;
+    // Override equals dan hashCode untuk memastikan perbandingan produk yang lebih baik
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Produk1 produk1 = (Produk1) o;
+        return price == produk1.price &&
+                Objects.equals(name, produk1.name) &&
+                Objects.equals(desc, produk1.desc);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, desc, price);
     }
 }

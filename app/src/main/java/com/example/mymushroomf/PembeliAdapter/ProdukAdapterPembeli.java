@@ -12,9 +12,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mymushroomf.PembeliActivity.Popup;
 import com.example.mymushroomf.PembeliActivity.ProductDetailActivity;
 import com.example.mymushroomf.PembeliModel.Produk1;
+import com.example.mymushroomf.PembeliActivity.Popup;
 import com.example.mymushroomf.R;
 
 import java.util.List;
@@ -24,7 +24,6 @@ public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPemb
     private List<Produk1> productList;
     private Context context;
 
-
     public ProdukAdapterPembeli(Context context, List<Produk1> productList) {
         this.context = context;
         this.productList = productList;
@@ -33,7 +32,7 @@ public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPemb
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Inflate the layout for each item
+        // Inflate layout for each product item
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.produk1, parent, false);
         return new ProductViewHolder(view);
     }
@@ -44,20 +43,27 @@ public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPemb
         holder.productImage.setImageResource(product.getImageResId());
         holder.productName.setText(product.getName());
         holder.productCategory.setText(product.getType());
-        holder.productPrice.setText(product.getPrice());
+        holder.productPrice.setText("Rp. " + product.getPrice());
 
-        holder.addButton.setOnClickListener(v -> {
-            int price = Integer.parseInt(product.getPrice().replace("Rp.", "").replace(".", "").trim());
-            new Popup(context, product.getName(), product.getImageResId(), price);
-        });
-
-        holder.itemView.setOnClickListener(v -> {
+        // Set OnClickListener for the ImageView to go to Product Detail Activity
+        holder.productImage.setOnClickListener(v -> {
+            // Intent to go to the ProductDetailActivity
             Intent intent = new Intent(context, ProductDetailActivity.class);
 
+            // Send product data through Intent
             intent.putExtra("productName", product.getName());
+            intent.putExtra("productDescription", product.getDesc());
             intent.putExtra("productPrice", product.getPrice());
             intent.putExtra("productImage", product.getImageResId());
+
+            // Start the ProductDetailActivity
             context.startActivity(intent);
+        });
+
+        // Set OnClickListener for the "add to cart" button to show the popup
+        holder.addButton.setOnClickListener(v -> {
+            // Show the product details in a popup when the button is clicked
+            new Popup(context, product.getName(), product.getImageResId(), product.getPrice());
         });
     }
 
@@ -66,7 +72,11 @@ public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPemb
         return productList.size();
     }
 
-
+    // Method to update the product list and refresh the RecyclerView
+    public void updateProductList(List<Produk1> filteredProducts) {
+        this.productList = filteredProducts;  // Update the product list
+        notifyDataSetChanged(); // Notify the adapter to refresh the RecyclerView
+    }
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
         ImageView productImage;
@@ -81,9 +91,7 @@ public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPemb
             productName = itemView.findViewById(R.id.productName);
             productPrice = itemView.findViewById(R.id.productPrice);
             productCategory = itemView.findViewById(R.id.productCategory);
-            addButton = itemView.findViewById(R.id.addToCartButton);
-
-
+            addButton = itemView.findViewById(R.id.addToCartButton);  // The button that triggers the popup
         }
     }
 }

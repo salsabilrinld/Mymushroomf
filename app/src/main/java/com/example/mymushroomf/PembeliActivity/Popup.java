@@ -11,29 +11,32 @@ import android.widget.TextView;
 
 import com.example.mymushroomf.R;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class Popup {
 
-    private int quantity = 1; // Initial quantity
-    private int pricePerItem;// Initial price per item
-    private int totalPrice; // Initial total price
+    private int quantity = 1; // Kuantitas awal
+    private int pricePerItem; // Harga per item
+    private int totalPrice;   // Total harga
 
     private TextView quantityText;
     private TextView priceText;
 
-    // Constructor for Popup class
+    // Konstruktor Popup
     public Popup(Context context, String productName, int imageResId, int pricePerItem) {
         this.pricePerItem = pricePerItem;
         this.totalPrice = pricePerItem * quantity;
-        // Create and set up the dialog
+
+        // Membuat dialog
         Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.popup); // Reference to the popup XML layout
+        dialog.setContentView(R.layout.popup); // Pastikan Anda memiliki layout popup.xml
 
-        // Initialize dialog views
+        // Inisialisasi elemen dalam dialog
         ImageView productImage = dialog.findViewById(R.id.dialog_product_image);
         TextView productNameText = dialog.findViewById(R.id.dialog_product_name);
 
-        // Assign to class-level fields
         priceText = dialog.findViewById(R.id.dialog_product_price);
         quantityText = dialog.findViewById(R.id.quantity_text);
 
@@ -41,13 +44,12 @@ public class Popup {
         ImageButton increaseQuantityButton = dialog.findViewById(R.id.increase_quantity_button);
         Button buyNowButton = dialog.findViewById(R.id.buy_now_button);
 
-        // Set initial data
+        // Atur data awal
         productNameText.setText(productName);
-        priceText.setText("Rp. " + pricePerItem);// Change as needed
-        productImage.setImageResource(imageResId); // Change as needed
-        updatePrice(); // Update price based on quantity
+        productImage.setImageResource(imageResId);
+        updateQuantityAndPrice();
 
-        // Set button click listeners for quantity adjustment
+        // Tombol untuk mengurangi kuantitas
         decreaseQuantityButton.setOnClickListener(v -> {
             if (quantity > 1) {
                 quantity--;
@@ -55,42 +57,42 @@ public class Popup {
             }
         });
 
+        // Tombol untuk menambah kuantitas
         increaseQuantityButton.setOnClickListener(v -> {
             quantity++;
             updateQuantityAndPrice();
         });
 
-        // Handle Buy Now action
+        // Tombol "Buy Now"
         buyNowButton.setOnClickListener(v -> {
-
-            // Navigate to PemesananDetailActivity
+            // Intent ke PemesananDetailActivity
             Intent intent = new Intent(context, PemesananDetailActivity.class);
 
-            // Pass data to PemesananDetailActivity
-            intent.putExtra("productName", "Jamur Tiram");
-            intent.putExtra("quantity", quantity); // Pass updated quantity
-            intent.putExtra("totalPrice", totalPrice); // Pass updated total price
-            context.startActivity(intent);
+            // Kirim data produk ke PemesananDetailActivity
+            intent.putExtra("productName", productName);
+            intent.putExtra("quantity", quantity);
+            intent.putExtra("totalPrice", totalPrice);
 
-            dialog.dismiss(); // Close the dialog after action
+            context.startActivity(intent);
+            dialog.dismiss(); // Tutup dialog
         });
 
-        // Show the dialog
+        // Tampilkan dialog
         dialog.show();
     }
 
+    // Perbarui kuantitas dan total harga
     private void updateQuantityAndPrice() {
         if (quantityText != null && priceText != null) {
-            totalPrice = pricePerItem * quantity; // Calculate the new total price
-            quantityText.setText(String.valueOf(quantity)); // Show the updated price in quantityText
-            priceText.setText("Rp. " + totalPrice);    // Update the product cost
+            totalPrice = pricePerItem * quantity;
+            quantityText.setText(String.valueOf(quantity));
+            priceText.setText(formatCurrency(totalPrice));
         }
     }
 
-    private void updatePrice() {
-        totalPrice = quantity * pricePerItem; // Calculate total price
-        if (priceText != null) {
-            priceText.setText("Rp. " + totalPrice); // Set the price in the UI
-        }
+    // Format harga menjadi mata uang Indonesia (Rp)
+    private String formatCurrency(int amount) {
+        NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+        return format.format(amount).replace("Rp", "Rp. ").replace(",00", "");
     }
 }

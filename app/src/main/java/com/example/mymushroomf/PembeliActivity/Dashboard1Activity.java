@@ -42,55 +42,49 @@ public class Dashboard1Activity extends AppCompatActivity {
         welcomeTextLine1 = findViewById(R.id.welcome_text_line1);
         welcomeTextLine2 = findViewById(R.id.welcome_text_line2);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        // Mendapatkan nama pengguna dari SharedPreferences
         String name = sharedPreferences.getString("name", "User");
         welcomeTextLine1.setText("Hey, " + name + "!");
         welcomeTextLine2.setText("Let's go shopping!");
 
         // Handle Bottom Navigation Selection
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                if (item.getItemId() == R.id.menu_store) {
-                    // Store menu item clicked
-                    Toast.makeText(Dashboard1Activity.this, "Store selected", Toast.LENGTH_SHORT).show();
-                    return true;
-                } else if (item.getItemId() == R.id.menu_transaction) {
-                    // Transaction menu item clicked
-                    startActivity(new Intent(Dashboard1Activity.this, TransactionListActivity1.class));
-                    return true;
-                } else if (item.getItemId() == R.id.menu_profile) {
-                    // Profile menu item clicked
-                    startActivity(new Intent(Dashboard1Activity.this, Profile1Activity.class));
-                    return true;
-                }
-                return false; // Default return when no item matches
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.menu_store) {
+                // Store menu item clicked
+                Toast.makeText(Dashboard1Activity.this, "Store selected", Toast.LENGTH_SHORT).show();
+                return true;
+            } else if (item.getItemId() == R.id.menu_transaction) {
+                // Transaction menu item clicked
+                startActivity(new Intent(Dashboard1Activity.this, TransactionListActivity1.class));
+                return true;
+            } else if (item.getItemId() == R.id.menu_profile) {
+                // Profile menu item clicked
+                startActivity(new Intent(Dashboard1Activity.this, Profile1Activity.class));
+                return true;
             }
+            return false; // Default return when no item matches
         });
 
-        TextView welcomeTextLine1 = findViewById(R.id.welcome_text_line1);
-        TextView welcomeTextLine2 = findViewById(R.id.welcome_text_line2);
+        // Initialize SearchView and Buttons
         searchView = findViewById(R.id.searchEditText);
         ImageButton notificationsButton = findViewById(R.id.notifications_button);
         ImageButton keranjangButton = findViewById(R.id.keranjang_button);
 
+        // Setup RecyclerView
         recyclerView = findViewById(R.id.recycler_viewproduct);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
+        // Initialize product list
         productList = new ArrayList<>();
         filteredProductList = new ArrayList<>(productList);
-        productList.add(new Produk1("Jamur Tiram", null,"Organic", "Rp. 9.500", R.drawable.jamur_tiram));
-        productList.add(new Produk1("Jamur Kuping", null, "Organic", "Rp. 12.000", R.drawable.jamur_kuping));
-        productList.add(new Produk1("Jamur Kancing", null, "Organic", "Rp. 7.000", R.drawable.jamur_kancing));
-        productList.add(new Produk1("Jamur Tiram", null,"Organic", "Rp. 9.500", R.drawable.jamur_tiram));
-        productList.add(new Produk1("Jamur Kuping", null,"Organic", "Rp. 12.000", R.drawable.jamur_kuping));
-        productList.add(new Produk1("Jamur Kancing", null,"Organic", "Rp. 7.000", R.drawable.jamur_kancing));
-        productList.add(new Produk1("Jamur Tiram", null,"Organic", "Rp. 9.500", R.drawable.jamur_tiram));
-        productList.add(new Produk1("Jamur Kuping", null,"Organic", "Rp. 12.000", R.drawable.jamur_kuping));
-        productList.add(new Produk1("Jamur Kancing", null,"Organic", "Rp. 7.000", R.drawable.jamur_kancing));
 
+        // Adding sample products
+        productList.add(new Produk1("Jamur Tiram", "Deskripsi Jamur Tiram", "Organic", 9500, R.drawable.jamur_tiram));
+        productList.add(new Produk1("Jamur Kuping", "Deskripsi Jamur Kuping", "Organic", 12000, R.drawable.jamur_kuping));
+        productList.add(new Produk1("Jamur Kancing", "Deskripsi Jamur Kancing", "Nonorganik", 7000, R.drawable.jamur_kancing));
 
+        // Initialize the adapter
         produkAdapterPembeli = new ProdukAdapterPembeli(this, productList);
         recyclerView.setAdapter(produkAdapterPembeli);
 
@@ -98,17 +92,20 @@ public class Dashboard1Activity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                // Call filterProducts to filter products based on user query
                 filterProducts(query);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                // Call filterProducts to filter products as user types
                 filterProducts(newText);
                 return true;
             }
         });
 
+        // Handling notifications and cart buttons
         notificationsButton.setOnClickListener(view -> {
             Intent notifIntent = new Intent(Dashboard1Activity.this, NotificationsActivity.class);
             startActivity(notifIntent);
@@ -118,8 +115,6 @@ public class Dashboard1Activity extends AppCompatActivity {
             Intent keranjangIntent = new Intent(Dashboard1Activity.this, Keranjang1Activity.class);
             startActivity(keranjangIntent);
         });
-
-
     }
 
     private void filterProducts(String query) {
@@ -139,7 +134,6 @@ public class Dashboard1Activity extends AppCompatActivity {
         }
 
         // Notify adapter that the dataset has changed
-        produkAdapterPembeli.notifyDataSetChanged();
+        produkAdapterPembeli.updateProductList(filteredProductList);
     }
-
 }
