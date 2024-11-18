@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -12,23 +13,21 @@
         android:fullBackupContent="@xml/backup_rules"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/Theme.Mymushroomf"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
             android:name=".PembeliActivity.ReviewListActivity"
             android:exported="false" />
-        <activity
-            android:name=".OrderListActivity"
-            android:exported="false" />
+
         <activity
             android:name=".PembeliActivity.NotificationsActivity"
             android:exported="false" />
         <activity
             android:name=".PembeliActivity.Keranjang1Activity"
             android:exported="false" />
-        <activity
-            android:name=".TransactionDetailActivity"
-            android:exported="false" />
+
         <activity
             android:name=".PembeliActivity.ReviewActivity"
             android:exported="false" />
@@ -36,28 +35,18 @@
             android:name=".SettingsActivity1"
             android:exported="true"
             android:label="@string/title_activity_settings1" />
-        <activity android:name=".MyProductsActivity" />
-        <activity
-            android:name=".RatingActivity"
-            android:exported="false" />
         <activity
             android:name=".OrderDetailActivity"
             android:exported="false" /> <!-- android:label="@string/title_activity_order_detail" -->
         <!-- android:theme="@style/Theme.Mymushroomf.NoActionBar" /> -->
         <activity
-            android:name=".Profile1Activity"
-            android:exported="false" />
-        <activity
-            android:name=".PembeliActivity.Keranjang1Activity"
+            android:name=".PembeliActivity.Profile1Activity"
             android:exported="false" />
         <activity
             android:name=".PembeliActivity.ProductDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".AddProductActivity"
-            android:exported="false" />
-        <activity
-            android:name=".EditProfile1Activity"
+            android:name=".PembeliActivity.EditProfile1Activity"
             android:exported="true" />
         <activity
             android:name=".RegisterActivity"
@@ -79,23 +68,13 @@
             android:name=".PembeliActivity.AddressListActivity"
             android:exported="false" />
         <activity
-            android:name=".Dashboard1Activity"
-            android:exported="false" />
-        <activity
             android:name=".PembeliActivity.Dashboard1Activity"
             android:exported="false" />
-        <activity
-            android:name=".PembeliActivity.Profile1Activity"
-            android:exported="false" />
+
         <activity
             android:name=".PembeliActivity.TransactionListActivity1"
             android:exported="false" />
-        <activity
-            android:name=".PembeliActivity.EditProfile1Activity"
-            android:exported="false" />
-        <activity
-            android:name=".TransactionListActivity"
-            android:exported="false" />
+
         <activity
             android:name=".PembeliActivity.PemesananDetailActivity"
             android:exported="false" />

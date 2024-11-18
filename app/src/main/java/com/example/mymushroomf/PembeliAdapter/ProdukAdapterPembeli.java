@@ -8,11 +8,15 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mymushroomf.PembeliActivity.Keranjang1Activity;
 import com.example.mymushroomf.PembeliActivity.ProductDetailActivity;
+import com.example.mymushroomf.PembeliModel.CartItem;
+import com.example.mymushroomf.PembeliModel.CartManager;
 import com.example.mymushroomf.PembeliModel.Produk1;
 import com.example.mymushroomf.PembeliActivity.Popup;
 import com.example.mymushroomf.R;
@@ -63,7 +67,15 @@ public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPemb
         // Set OnClickListener for the "add to cart" button to show the popup
         holder.addButton.setOnClickListener(v -> {
             // Show the product details in a popup when the button is clicked
-            new Popup(context, product.getName(), product.getImageResId(), product.getPrice());
+//            new Popup(context, product.getName(), product.getImageResId(), product.getPrice());
+            CartItem cartItem = new CartItem(product, 1); // Tambahkan produk ke keranjang
+
+            // Menambahkan item ke keranjang melalui CartManager
+            CartManager.getInstance(context).addItem(cartItem);
+
+            // Beri notifikasi kepada user
+            Toast.makeText(context, "Produk ditambahkan ke keranjang", Toast.LENGTH_SHORT).show();
+
         });
     }
 

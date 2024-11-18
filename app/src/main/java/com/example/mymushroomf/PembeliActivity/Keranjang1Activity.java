@@ -1,8 +1,33 @@
 package com.example.mymushroomf.PembeliActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.mymushroomf.PembeliAdapter.CartAdapter;
+import com.example.mymushroomf.PembeliModel.CartItem;
+import com.example.mymushroomf.PembeliModel.CartManager;
+import com.example.mymushroomf.R;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -19,7 +44,6 @@ import com.example.mymushroomf.PembeliModel.CartItem;
 import com.example.mymushroomf.PembeliModel.CartManager;
 import com.example.mymushroomf.R;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +61,7 @@ public class Keranjang1Activity extends AppCompatActivity implements CartAdapter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_keranjang1);
 
-        // Inisialisasi views
+        // Initialize views
         cartRecyclerView = findViewById(R.id.recycler_viewkeranjang);
         totalPriceTextView = findViewById(R.id.totalPrice);
         checkBoxSelectAll = findViewById(R.id.checkBoxSelectAll);
@@ -46,14 +70,14 @@ public class Keranjang1Activity extends AppCompatActivity implements CartAdapter
         // Set up RecyclerView
         cartRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Load cart items dari CartManager
+        // Load cart items from CartManager
         cartItems = CartManager.getInstance(this).getCartItems();
 
-        // Set adapter untuk RecyclerView
+        // Set adapter for RecyclerView
         cartAdapter = new CartAdapter(cartItems, this, this);
         cartRecyclerView.setAdapter(cartAdapter);
 
-        // Setup checkbox "Pilih Semua"
+        // Setup "Select All" checkbox
         checkBoxSelectAll.setOnClickListener(v -> {
             boolean isChecked = checkBoxSelectAll.isChecked();
             selectAllItems(isChecked);
@@ -61,40 +85,42 @@ public class Keranjang1Activity extends AppCompatActivity implements CartAdapter
             updateTotalPrice();
         });
 
-        // Update total harga
+        // Update total price
         updateTotalPrice();
 
         // Handle back button
         ImageView backButton = findViewById(R.id.iv_back);
         backButton.setOnClickListener(v -> onBackPressed());
 
-        // Handle tombol Beli
+        // Handle Buy button click
         buttonBeli.setOnClickListener(v -> {
-            Log.d("DEBUG", "Tombol Beli diklik");
-
             List<CartItem> selectedItems = getSelectedItems();
 
             if (selectedItems.isEmpty()) {
                 Toast.makeText(this, "Pilih produk terlebih dahulu", Toast.LENGTH_SHORT).show();
             } else {
-                Log.d("DEBUG", "Jumlah item terpilih: " + selectedItems.size());
-
                 Intent intent = new Intent(Keranjang1Activity.this, PemesananDetailActivity.class);
+                intent.putParcelableArrayListExtra("cartData", new ArrayList<>(selectedItems)); // Send selected items to next activity
 
-                try {
-                    intent.putExtra("selectedItems", (Serializable) selectedItems);
-                    startActivity(intent);
-                    Log.d("DEBUG", "Intent ke PemesananDetailActivity dipanggil");
-                } catch (Exception e) {
-                    Log.e("DEBUG", "Error saat memulai PemesananDetailActivity: " + e.getMessage());
-                }
+                int totalPrice = calculateTotalPrice(selectedItems);
+                intent.putExtra("totalPrice", totalPrice);
+
+                startActivity(intent);
             }
         });
 
-
     }
 
-    // Mendapatkan daftar item yang dipilih
+    private int calculateTotalPrice(List<CartItem> selectedItems) {
+        int total = 0;
+        for (CartItem item : selectedItems) {
+            total += item.getProduct().getPrice() * item.getQuantity(); // Calculate total based on selected items
+        }
+        return total;
+    }
+
+
+    // Get selected items from the cart
     private List<CartItem> getSelectedItems() {
         List<CartItem> selectedItems = new ArrayList<>();
         for (CartItem item : cartItems) {
@@ -105,19 +131,18 @@ public class Keranjang1Activity extends AppCompatActivity implements CartAdapter
         return selectedItems;
     }
 
-    // Update total harga
+    // Update total price based on selected items
     private void updateTotalPrice() {
         double total = 0;
         for (CartItem item : cartItems) {
-            // Hitung hanya item yang dipilih
-            if (item.isSelected()) {
+            if (item.isSelected()) { // Only count selected items
                 total += item.getProduct().getPrice() * item.getQuantity();
             }
         }
         totalPriceTextView.setText("Total: Rp. " + total);
     }
 
-    // Pilih semua item di keranjang
+    // Select or deselect all items in the cart
     private void selectAllItems(boolean select) {
         for (CartItem item : cartItems) {
             item.setSelected(select);
@@ -126,28 +151,32 @@ public class Keranjang1Activity extends AppCompatActivity implements CartAdapter
 
     @Override
     public void onCartUpdated() {
-        updateTotalPrice();
+        updateTotalPrice(); // Update total price when the cart is updated
     }
 
-    // Menambahkan item ke dalam keranjang
-    public void addItemToCart(CartItem cartItem) {
-        boolean itemExists = CartManager.getInstance(this).isProductInCart(cartItem.getProduct());
+    // Save cart items to SharedPreferences (if necessary)
+    private void saveCartItemsToStorage(List<CartItem> cartItems) {
+        SharedPreferences sharedPreferences = getSharedPreferences("KeranjangPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        // Jika item belum ada di keranjang, tambahkan ke cart
-        if (!itemExists) {
-            CartManager.getInstance(this).addItem(cartItem);
-        } else {
-            // Jika item sudah ada, tambah kuantitasnya
-            for (CartItem item : cartItems) {
-                if (item.getProduct().equals(cartItem.getProduct())) {
-                    item.setQuantity(item.getQuantity() + cartItem.getQuantity());
-                    break;
-                }
-            }
+        // Convert List<CartItem> to JSON string
+        Gson gson = new Gson();
+        String json = gson.toJson(cartItems);
+
+        editor.putString("cartItems", json);
+        editor.apply();
+    }
+
+    // Load cart items from SharedPreferences (if necessary)
+    private List<CartItem> getCartItemsFromStorage() {
+        SharedPreferences sharedPreferences = getSharedPreferences("KeranjangPrefs", MODE_PRIVATE);
+        String json = sharedPreferences.getString("cartItems", null);
+
+        if (json != null) {
+            Gson gson = new Gson();
+            return gson.fromJson(json, new TypeToken<List<CartItem>>(){}.getType());
         }
 
-        // Menyimpan perubahan ke CartManager dan perbarui RecyclerView
-        cartAdapter.notifyDataSetChanged();
-        updateTotalPrice();
+        return new ArrayList<>();
     }
 }

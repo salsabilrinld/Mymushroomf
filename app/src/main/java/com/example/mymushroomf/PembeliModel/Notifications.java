@@ -1,4 +1,4 @@
-package com.example.mymushroomf;
+package com.example.mymushroomf.PembeliModel;
 
 public class Notifications {
     private String title;

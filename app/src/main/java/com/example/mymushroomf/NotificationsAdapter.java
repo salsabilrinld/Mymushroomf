@@ -8,13 +8,26 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mymushroomf.PembeliModel.Notifications;
+
 import java.util.List;
 
-public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdapter.NotificationsViewHolder> {
-    private List<Notifications> notificationsList;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
-    public NotificationsAdapter(List<Notifications> notificationsList) {
-        this.notificationsList = notificationsList;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+
+public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdapter.NotificationsViewHolder> {
+
+    private ArrayList<Notifications> notifications;
+
+    public NotificationsAdapter(ArrayList<Notifications> notifications) {
+        this.notifications = notifications;
     }
 
     @NonNull
@@ -26,28 +39,26 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
 
     @Override
     public void onBindViewHolder(@NonNull NotificationsViewHolder holder, int position) {
-        Notifications notifications = notificationsList.get(position);
-        holder.titleTextView.setText(notifications.getTitle());
-        holder.messageTextView.setText(notifications.getMessage());
-        holder.timestampTextView.setText(notifications.getTimestamp());
+        Notifications notificationsItem = notifications.get(position);
+
+        holder.tvTitle.setText(notificationsItem.getTitle());
+        holder.tvMessage.setText(notificationsItem.getMessage());
+        holder.tvTimestamp.setText(notificationsItem.getTimestamp());
     }
 
     @Override
     public int getItemCount() {
-        return notificationsList.size();
+        return notifications.size();
     }
 
     public static class NotificationsViewHolder extends RecyclerView.ViewHolder {
-        TextView titleTextView;
-        TextView messageTextView;
-        TextView timestampTextView;
+        TextView tvTitle, tvMessage, tvTimestamp;
 
-        public NotificationsViewHolder(View itemView) {
+        public NotificationsViewHolder(@NonNull View itemView) {
             super(itemView);
-            titleTextView = itemView.findViewById(R.id.notifications_title);
-            messageTextView = itemView.findViewById(R.id.notifications_message);
-            timestampTextView = itemView.findViewById(R.id.notifications_timestamp);
+            tvTitle = itemView.findViewById(R.id.notifications_title);
+            tvMessage = itemView.findViewById(R.id.notifications_message);
+            tvTimestamp = itemView.findViewById(R.id.notifications_timestamp);
         }
     }
 }
-

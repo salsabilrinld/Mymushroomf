@@ -16,6 +16,16 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.mymushroomf.PembeliActivity.Dashboard1Activity;
+import com.example.mymushroomf.PembeliModel.Users;
+import com.example.mymushroomf.PembeliService.UserService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class formlogin extends AppCompatActivity { // Menggunakan FormLogin seperti yang diinginkan
 
@@ -61,7 +71,46 @@ public class formlogin extends AppCompatActivity { // Menggunakan FormLogin sepe
         if (email.isEmpty() || password.isEmpty()) {
             Toast.makeText(formlogin.this, "Email dan Password harus diisi", Toast.LENGTH_SHORT).show();
             return;
+//        } else {
+//            Gson gson = new GsonBuilder()
+//                    .setLenient()
+//                    .create();
+//
+//            Retrofit retrofit = new Retrofit.Builder()
+//                    .baseUrl("https://192.168.101.85/mushroom4/public/api/")
+//                    .addConverterFactory(GsonConverterFactory.create(gson))
+//                    .build();
+//
+//            UserService service = retrofit.create(UserService.class);
+//            Call<Users> call = service.signin(email, password);
+//
+//            call.enqueue(new Callback<Users>() {
+//                @Override
+//                public void onResponse(Call<Users> call, Response<Users> response) {
+//                    if (response.isSuccessful() && response.body() != null) {
+//                        Users data = response.body();
+//
+//                        // Login berhasil, arahkan ke MainActivity
+//                        Intent intent = new Intent(formlogin.this, Dashboard1Activity.class);
+//                        intent.putExtra("email", data.getEmail());
+//                        startActivity(intent);
+//                        finish();
+//                    } else {
+//                        // Respons gagal atau pengguna tidak ditemukan
+//                        Toast.makeText(getApplicationContext(), "Pengguna tidak terdaftar atau data tidak valid", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<Users> call, Throwable t) {
+//                    // Log kesalahan dan tampilkan pesan error kepada pengguna
+//                    Log.e("LoginError", "Login failed: " + t.getMessage());
+//                    Toast.makeText(getApplicationContext(), "Gagal terhubung ke server, coba lagi nanti.", Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//        }
         }
+
 
         // Mengambil data dari SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
@@ -95,5 +144,6 @@ public class formlogin extends AppCompatActivity { // Menggunakan FormLogin sepe
         } else {
             Toast.makeText(this, "Login gagal, cek email dan password", Toast.LENGTH_SHORT).show();
         }
+
     }
 }

@@ -8,12 +8,18 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.mymushroomf.PembeliModel.CartItem;
+import com.example.mymushroomf.PembeliModel.Notifications;
+import com.example.mymushroomf.PembeliModel.NotificationsStorage;
 import com.example.mymushroomf.R;
+
+import java.util.ArrayList;
 
 public class  PemesananDetailActivity extends AppCompatActivity {
 
@@ -23,6 +29,8 @@ public class  PemesananDetailActivity extends AppCompatActivity {
     private TextView tvTotalPayment, tvShippingCost, quantityText, tvProductCost;
     private RadioGroup radioGroupShipping;
     private RadioButton rbRegular, rbNextDay;
+    private ArrayList<CartItem> cartItems;
+    private CartItem popupItem;
 
     private int productPrice = 12000; // Example product price
     private int shippingCost = 7000;  // Default shipping cost (Regular)
@@ -45,10 +53,25 @@ public class  PemesananDetailActivity extends AppCompatActivity {
         rbRegular = findViewById(R.id.rb_regular);
         rbNextDay = findViewById(R.id.rb_next_day);
 
+        RelativeLayout containerProducts = findViewById(R.id.container_product);
+        cartItems = getIntent().getParcelableArrayListExtra("cartData");
+
+        if (getIntent().hasExtra("popupData")) {
+            popupItem = getIntent().getParcelableExtra("popupData");
+        }
+
+        if (cartItems != null && !cartItems.isEmpty()) {
+            displayCartItems();
+        } else if (popupItem != null) {
+            displayPopupItem();
+        } else {
+        }
+
+
         // Mendapatkan data yang dikirim dari Popup
         Intent intent = getIntent();
-        String productName = intent.getStringExtra("productName");
-        int quantity = intent.getIntExtra("quantity", 1);
+//        String productName = intent.getStringExtra("productName");
+//        int quantity = intent.getIntExtra("quantity", 1);
         int totalPrice = intent.getIntExtra("totalPrice", 0); // Default ke harga produk jika tidak ada data
 
 
@@ -79,9 +102,18 @@ public class  PemesananDetailActivity extends AppCompatActivity {
         btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Handle placing the order
-                Toast.makeText(PemesananDetailActivity.this, "Order Placed Successfully", Toast.LENGTH_SHORT).show();
-                // Optionally, navigate to another activity or close this one
+                // Handle order placement
+                Toast.makeText(PemesananDetailActivity.this, "Pesanan Berhasil Dibuat", Toast.LENGTH_SHORT).show();
+
+                // Save notification
+                String title = "Pesanan";
+                String message = "Pesanan Anda berhasil dibuat!";
+                String timestamp = java.text.DateFormat.getDateTimeInstance().format(new java.util.Date());
+
+                Notifications notificationsList = new Notifications(title, message, timestamp);
+                NotificationsStorage.saveNotifications(PemesananDetailActivity.this, notificationsList);
+
+                // Optionally navigate to another activity or finish this one
                 finish();
             }
         });
@@ -104,5 +136,50 @@ public class  PemesananDetailActivity extends AppCompatActivity {
         });
 
     }
+
+    private void displayCartItems() {
+        RelativeLayout containerProducts = findViewById(R.id.container_product);
+
+        int previousViewId = 0;
+        for (CartItem item : cartItems) {
+            TextView productView = new TextView(this);
+            productView.setId(View.generateViewId());
+            productView.setText(item.getProduct().getName() + " - Qty: " + item.getQuantity() +
+                    " - Price: Rp. " + (item.getProduct().getPrice() * item.getQuantity()));
+            productView.setTextSize(16);
+
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT
+            );
+
+            if (previousViewId != 0) {
+                params.addRule(RelativeLayout.BELOW, previousViewId);
+            }
+
+            productView.setLayoutParams(params);
+            containerProducts.addView(productView);
+
+            previousViewId = productView.getId();
+        }
+    }
+    private void displayPopupItem() {
+        RelativeLayout containerProducts = findViewById(R.id.container_product);
+
+        TextView productView = new TextView(this);
+        productView.setId(View.generateViewId());
+        productView.setText(popupItem.getProduct().getName() + " - Qty: " + popupItem.getQuantity() +
+                " - Price: Rp. " + (popupItem.getProduct().getPrice() * popupItem.getQuantity()));
+        productView.setTextSize(16);
+
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT
+        );
+
+        productView.setLayoutParams(params);
+        containerProducts.addView(productView);
+    }
+
 
 }

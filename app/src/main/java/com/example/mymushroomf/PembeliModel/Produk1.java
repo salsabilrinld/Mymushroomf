@@ -1,15 +1,18 @@
 package com.example.mymushroomf.PembeliModel;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import java.util.Objects;
 
-public class Produk1 {
+
+public class Produk1 implements Parcelable {
     private String name;
     private String desc;
     private String type;
-    private int price;          // Harga produk
-    private int imageResId;     // ID sumber daya gambar produk
+    private int price;
+    private int imageResId;  // Assuming the image is a String URL or path
 
-    // Konstruktor untuk Produk1
+    // Constructor
     public Produk1(String name, String desc, String type, int price, int imageResId) {
         this.name = name;
         this.desc = desc;
@@ -18,30 +21,64 @@ public class Produk1 {
         this.imageResId = imageResId;
     }
 
-    // Getter untuk nama produk
+    // Parcelable constructor
+    protected Produk1(Parcel in) {
+        name = in.readString();
+        desc = in.readString();
+        type = in.readString();
+        price = in.readInt();
+        imageResId = in.readInt();
+    }
+
+    // Creator object to create an instance of Produk1 from a Parcel
+    public static final Creator<Produk1> CREATOR = new Creator<Produk1>() {
+        @Override
+        public Produk1 createFromParcel(Parcel in) {
+            return new Produk1(in);
+        }
+
+        @Override
+        public Produk1[] newArray(int size) {
+            return new Produk1[size];
+        }
+    };
+
+    // Getter methods for all fields
     public String getName() {
         return name;
     }
 
-    // Getter untuk deskripsi produk
     public String getDesc() {
         return desc;
     }
 
-    // Getter untuk tipe produk
     public String getType() {
         return type;
     }
 
-    // Getter untuk harga produk
     public int getPrice() {
         return price;
     }
 
-    // Getter untuk ID gambar produk
     public int getImageResId() {
         return imageResId;
     }
+
+    // Method to write the object data to Parcel
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(desc);
+        dest.writeString(type);
+        dest.writeInt(price);
+        dest.writeInt(imageResId);  // Write image path/URL as String
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
 
     // Override equals dan hashCode untuk memastikan perbandingan produk yang lebih baik
     @Override

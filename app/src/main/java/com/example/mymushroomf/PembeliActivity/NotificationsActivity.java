@@ -11,8 +11,9 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mymushroomf.Notifications;
+import com.example.mymushroomf.PembeliModel.Notifications;
 import com.example.mymushroomf.NotificationsAdapter;
+import com.example.mymushroomf.PembeliModel.NotificationsStorage;
 import com.example.mymushroomf.R;
 
 import java.util.ArrayList;
@@ -38,9 +39,10 @@ public class  NotificationsActivity extends AppCompatActivity {
                 recyclerView = findViewById(R.id.recyler_viewnotifications);
                 recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        ArrayList<Notifications> notificationsList = NotificationsStorage.getNotifications(this);
                 // Inisialisasi list notifikasi
-                notificationsList = new ArrayList<>();
-                loadNotifications();
+//                notificationsList = new ArrayList<>();
+//                loadNotifications();
 
                 // Inisialisasi adapter dan set ke RecyclerView
                 notificationsAdapter = new NotificationsAdapter(notificationsList);
