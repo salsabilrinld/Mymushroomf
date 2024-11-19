@@ -100,7 +100,7 @@ public class Keranjang1Activity extends AppCompatActivity implements CartAdapter
                 Toast.makeText(this, "Pilih produk terlebih dahulu", Toast.LENGTH_SHORT).show();
             } else {
                 Intent intent = new Intent(Keranjang1Activity.this, PemesananDetailActivity.class);
-                intent.putParcelableArrayListExtra("cartData", new ArrayList<>(selectedItems)); // Send selected items to next activity
+
 
                 int totalPrice = calculateTotalPrice(selectedItems);
                 intent.putExtra("totalPrice", totalPrice);

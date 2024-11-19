@@ -65,8 +65,9 @@
             android:name=".formlogin"
             android:exported="false" />
         <activity
-            android:name=".PembeliActivity.AddressListActivity"
-            android:exported="false" />
+            android:name="com.example.mymushroomf.PembeliActivity.AddressListActivity"
+            android:exported="true" />
+
         <activity
             android:name=".PembeliActivity.Dashboard1Activity"
             android:exported="false" />

@@ -1,16 +1,19 @@
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<androidx.cardview.widget.CardView android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="8dp"
     app:cardCornerRadius="8dp"
-    app:cardElevation="4dp">
+    app:cardElevation="0dp"
+    android:id="@+id/card_view"
+
+    xmlns:android="http://schemas.android.com/apk/res/android"> <!-- Pastikan background transparan -->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:background="@android:color/transparent">
 
         <TextView
             android:id="@+id/addressType"
@@ -20,6 +23,7 @@
             android:fontFamily="@font/inter_bold"
             android:textSize="14sp"
             android:textStyle="bold" />
+
         <TextView
             android:id="@+id/addressName"
             android:layout_width="wrap_content"
@@ -58,7 +62,7 @@
             android:textColor="@color/black"
             android:layout_marginTop="8dp"
             android:layout_gravity="center"
-            />
+            android:onClick="onEditButtonClick" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -13,11 +13,14 @@
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
-        <ImageView
+        <!-- ImageButton with correct ID for Back button -->
+        <ImageButton
+            android:id="@+id/btnback"
             android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/back_arrow"
-            android:contentDescription="Back" />
+            android:layout_height="26dp"
+            android:contentDescription="Back"
+            android:src="@drawable/ic_arrow_left"
+            android:background="?android:attr/selectableItemBackgroundBorderless" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -65,5 +68,4 @@
         android:text="Pilih Alamat"
         android:fontFamily="@font/inter_bold"
         android:backgroundTint="@color/orange" />
-
 </RelativeLayout>

@@ -91,12 +91,18 @@ public class  PemesananDetailActivity extends AppCompatActivity {
         btnChangeAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("PemesananDetailActivity", "Ubah Alamat tombol diklik");
-                // Open address change activity
-                Intent intent = new Intent(PemesananDetailActivity.this, TambahAlamatActivity.class);
-                startActivity(intent);
+                Log.d("PemesananDetailActivity", "Tombol Ubah Alamat Diklik");
+                try {
+                    Intent intent = new Intent(PemesananDetailActivity.this, AddressListActivity.class);
+                    startActivity(intent);
+                    Log.d("PemesananDetailActivity", "Berhasil memulai AddressListActivity");
+                } catch (Exception e) {
+                    Log.e("PemesananDetailActivity", "Error membuka AddressListActivity", e);
+                }
             }
         });
+
+
 
         // Place Order button click listener
         btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
