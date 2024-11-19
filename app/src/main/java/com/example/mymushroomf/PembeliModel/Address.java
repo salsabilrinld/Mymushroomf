@@ -1,6 +1,8 @@
 package com.example.mymushroomf.PembeliModel;
 
-public class Address {
+import java.io.Serializable;
+
+public class Address implements Serializable {
     private String name;
     private String phoneNumber;
     private String addressLine;

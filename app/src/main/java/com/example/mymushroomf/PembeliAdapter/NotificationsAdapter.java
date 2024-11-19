@@ -1,5 +1,6 @@
-package com.example.mymushroomf;
+package com.example.mymushroomf.PembeliAdapter;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,16 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mymushroomf.PembeliModel.Notifications;
-
-import java.util.List;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+import com.example.mymushroomf.R;
 
 import java.util.ArrayList;
 
@@ -44,6 +36,18 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         holder.tvTitle.setText(notificationsItem.getTitle());
         holder.tvMessage.setText(notificationsItem.getMessage());
         holder.tvTimestamp.setText(notificationsItem.getTimestamp());
+
+        if (notificationsItem.isRead()) {
+            holder.itemView.setBackgroundColor(Color.WHITE); // Mark as read
+        } else {
+            holder.itemView.setBackgroundColor(Color.LTGRAY); // Unread
+        }
+
+        // Handle click to mark as read
+        holder.itemView.setOnClickListener(view -> {
+            notificationsItem.setRead(true); // Mark the notification as read
+            notifyItemChanged(position); // Refresh the item
+        });
     }
 
     @Override

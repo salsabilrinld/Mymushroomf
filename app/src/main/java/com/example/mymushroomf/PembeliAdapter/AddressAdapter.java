@@ -7,22 +7,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.mymushroomf.PembeliModel.Address;
 import com.example.mymushroomf.R;
+
 import java.util.List;
 
 public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHolder> {
 
     private Context context;
     private List<Address> addressList;
-    private int selectedPosition = -1; // Menyimpan posisi item yang dipilih
+    private int selectedPosition = -1;
+    private OnAddressSelectedListener listener; // Listener to handle address selection
 
-    public AddressAdapter(Context context, List<Address> addressList) {
+    // Constructor with listener
+    public AddressAdapter(Context context, List<Address> addressList, OnAddressSelectedListener listener) {
         this.context = context;
         this.addressList = addressList;
+        this.listener = listener;  // Initialize the listener
     }
 
     @NonNull
@@ -39,19 +45,26 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
         holder.phoneTextView.setText(address.getPhoneNumber());
         holder.addressTextView.setText(address.getAddress());
 
-        // Mengubah warna item yang dipilih
+        // Change the color of the selected item
         if (position == selectedPosition) {
-            holder.cardView.setCardBackgroundColor(Color.parseColor("#80D58D43")); // Warna orange transparan
+            holder.cardView.setCardBackgroundColor(Color.parseColor("#80D58D43")); // Transparent orange color
         } else {
-            holder.cardView.setCardBackgroundColor(Color.WHITE); // Warna default
+            holder.cardView.setCardBackgroundColor(Color.WHITE); // Default color
         }
 
-        // Menangani klik item
+        // Handle item click to select address
         holder.cardView.setOnClickListener(v -> {
             int clickedPosition = holder.getAdapterPosition(); // Get the current position
             if (clickedPosition != RecyclerView.NO_POSITION) {
                 selectedPosition = clickedPosition;  // Update selected position
                 notifyDataSetChanged();  // Update RecyclerView to reflect changes
+
+                // Notify listener that address is selected
+                if (listener != null) {
+                    listener.onAddressSelected(clickedPosition);
+                }
+
+                // Show a toast message with the selected address
                 Toast.makeText(context, "Alamat yang dipilih: " + address.getName(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -73,5 +86,10 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
             addressTextView = itemView.findViewById(R.id.addressLine);
             cardView = itemView.findViewById(R.id.card_view);
         }
+    }
+
+    // Define the listener interface
+    public interface OnAddressSelectedListener {
+        void onAddressSelected(int position);
     }
 }

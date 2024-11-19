@@ -49,19 +49,24 @@
             android:padding="16dp"
             android:layout_marginTop="8dp">
 
+
             <TextView
+                android:id="@+id/tv_address_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Rumah"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tv_address_name_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Indira S (0878-8202-5909)"
                 android:textStyle="bold" />
 
+
             <TextView
+                android:id="@+id/tv_address_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Perumahan Bogor, Bogor Utara - Kota Bogor - Jawa Barat, ID 16151"

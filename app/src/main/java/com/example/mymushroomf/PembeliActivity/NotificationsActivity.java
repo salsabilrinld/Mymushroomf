@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mymushroomf.PembeliModel.Notifications;
-import com.example.mymushroomf.NotificationsAdapter;
+import com.example.mymushroomf.PembeliAdapter.NotificationsAdapter;
 import com.example.mymushroomf.PembeliModel.NotificationsStorage;
 import com.example.mymushroomf.R;
 
