@@ -101,7 +101,6 @@ public class Keranjang1Activity extends AppCompatActivity implements CartAdapter
             } else {
                 Intent intent = new Intent(Keranjang1Activity.this, PemesananDetailActivity.class);
 
-
                 int totalPrice = calculateTotalPrice(selectedItems);
                 intent.putExtra("totalPrice", totalPrice);
 

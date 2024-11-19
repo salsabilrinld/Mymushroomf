@@ -19,7 +19,9 @@ import com.example.mymushroomf.PembeliModel.Notifications;
 import com.example.mymushroomf.PembeliModel.NotificationsStorage;
 import com.example.mymushroomf.R;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class  PemesananDetailActivity extends AppCompatActivity {
 
@@ -40,7 +42,7 @@ public class  PemesananDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pemesanandetail);
-        Log.d("DEBUG", "PemesananDetailActivity berhasil dibuka");// Ensure this matches your XML file name
+        Log.d("DEBUG", "PemesananDetailActivity berhasil dibuka");
 
         ivBack = findViewById(R.id.iv_back);
         btnChangeAddress = findViewById(R.id.btn_change_address);
@@ -54,93 +56,60 @@ public class  PemesananDetailActivity extends AppCompatActivity {
         rbNextDay = findViewById(R.id.rb_next_day);
 
         RelativeLayout containerProducts = findViewById(R.id.container_product);
-        cartItems = getIntent().getParcelableArrayListExtra("cartData");
 
-        if (getIntent().hasExtra("popupData")) {
-            popupItem = getIntent().getParcelableExtra("popupData");
-        }
+        // Retrieve `Serializable` data
+        Intent intent = getIntent();
+        cartItems = (ArrayList<CartItem>) intent.getSerializableExtra("cartData");
+        popupItem = (CartItem) intent.getSerializableExtra("popupData");
 
         if (cartItems != null && !cartItems.isEmpty()) {
             displayCartItems();
         } else if (popupItem != null) {
             displayPopupItem();
-        } else {
         }
 
-
-        // Mendapatkan data yang dikirim dari Popup
-        Intent intent = getIntent();
-//        String productName = intent.getStringExtra("productName");
-//        int quantity = intent.getIntExtra("quantity", 1);
-        int totalPrice = intent.getIntExtra("totalPrice", 0); // Default ke harga produk jika tidak ada data
-
-
-        quantityText.setText("Rp. " + totalPrice);
-        tvProductCost.setText("Biaya Produk: Rp. " + totalPrice);
-
+        // Get total price from intent
+        int totalPrice = intent.getIntExtra("totalPrice", productCost);
+        quantityText.setText(formatCurrency(totalPrice));
+        tvProductCost.setText("Biaya Produk: " + formatCurrency(totalPrice));
 
         // Back button click listener
-        ivBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish(); // Close the activity
-            }
-        });
+        ivBack.setOnClickListener(v -> finish());
 
         // Change Address button click listener
-        btnChangeAddress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("PemesananDetailActivity", "Tombol Ubah Alamat Diklik");
-                try {
-                    Intent intent = new Intent(PemesananDetailActivity.this, AddressListActivity.class);
-                    startActivity(intent);
-                    Log.d("PemesananDetailActivity", "Berhasil memulai AddressListActivity");
-                } catch (Exception e) {
-                    Log.e("PemesananDetailActivity", "Error membuka AddressListActivity", e);
-                }
-            }
+        btnChangeAddress.setOnClickListener(v -> {
+            Log.d("PemesananDetailActivity", "Ubah Alamat tombol diklik");
+            Intent changeAddressIntent = new Intent(PemesananDetailActivity.this, TambahAlamatActivity.class);
+            startActivity(changeAddressIntent);
         });
-
-
 
         // Place Order button click listener
-        btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Handle order placement
-                Toast.makeText(PemesananDetailActivity.this, "Pesanan Berhasil Dibuat", Toast.LENGTH_SHORT).show();
+        btnPlaceOrder.setOnClickListener(v -> {
+            Toast.makeText(PemesananDetailActivity.this, "Pesanan Berhasil Dibuat", Toast.LENGTH_SHORT).show();
 
-                // Save notification
-                String title = "Pesanan";
-                String message = "Pesanan Anda berhasil dibuat!";
-                String timestamp = java.text.DateFormat.getDateTimeInstance().format(new java.util.Date());
+            // Save notification
+            String title = "Pesanan";
+            String message = "Pesanan Anda berhasil dibuat!";
+            String timestamp = java.text.DateFormat.getDateTimeInstance().format(new java.util.Date());
 
-                Notifications notificationsList = new Notifications(title, message, timestamp);
-                NotificationsStorage.saveNotifications(PemesananDetailActivity.this, notificationsList);
+            Notifications notificationsList = new Notifications(title, message, timestamp);
+            NotificationsStorage.saveNotifications(PemesananDetailActivity.this, notificationsList);
 
-                // Optionally navigate to another activity or finish this one
-                finish();
-            }
+            finish();
         });
 
-        // RadioGroup for Shipping Method
-        radioGroupShipping.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.rb_regular) {
-                    shippingCost = 7000; // Regular shipping cost
-                } else if (checkedId == R.id.rb_next_day) {
-                    shippingCost = 14000; // Next Day shipping cost
-                }
-
-                tvShippingCost.setText("Biaya Pengiriman : Rp. " + shippingCost);
-                int totalPayment = totalPrice + shippingCost;
-                tvTotalPayment.setText("Total Pembayaran: Rp. " + totalPayment);
-
+        // Shipping Method RadioGroup
+        radioGroupShipping.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.rb_regular) {
+                shippingCost = 7000;
+            } else if (checkedId == R.id.rb_next_day) {
+                shippingCost = 14000;
             }
-        });
 
+            tvShippingCost.setText("Biaya Pengiriman : " + formatCurrency(shippingCost));
+            int totalPayment = totalPrice + shippingCost;
+            tvTotalPayment.setText("Total Pembayaran: " + formatCurrency(totalPayment));
+        });
     }
 
     private void displayCartItems() {
@@ -169,6 +138,7 @@ public class  PemesananDetailActivity extends AppCompatActivity {
             previousViewId = productView.getId();
         }
     }
+
     private void displayPopupItem() {
         RelativeLayout containerProducts = findViewById(R.id.container_product);
 
@@ -187,5 +157,8 @@ public class  PemesananDetailActivity extends AppCompatActivity {
         containerProducts.addView(productView);
     }
 
-
+    private String formatCurrency(int amount) {
+        NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+        return format.format(amount).replace("Rp", "Rp. ").replace(",00", "");
+    }
 }

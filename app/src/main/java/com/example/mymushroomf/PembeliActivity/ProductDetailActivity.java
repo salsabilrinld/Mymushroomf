@@ -15,6 +15,9 @@ import com.example.mymushroomf.PembeliModel.CartManager;
 import com.example.mymushroomf.PembeliModel.Produk1;
 import com.example.mymushroomf.R;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class ProductDetailActivity extends AppCompatActivity {
 
     private ImageView productImageView;
@@ -51,12 +54,12 @@ public class ProductDetailActivity extends AppCompatActivity {
         // Pastikan data produk ada
         if (name != null && description != null && price != 0 && imageResId != 0) {
             // Buat objek Produk1
-            product = new Produk1(name, description, type != null ? type : "General", price, imageResId);
+            product = new Produk1("id", name, description, type != null ? type : "General", "stock", price, imageResId);
 
             // Set data produk ke UI
             productNameTextView.setText(product.getName());
             productDescriptionTextView.setText(product.getDesc());
-            productPriceTextView.setText("Rp. " + product.getPrice());
+            productPriceTextView.setText(formatCurrency(product.getPrice()));
             productImageView.setImageResource(product.getImageResId());
         } else {
             Toast.makeText(this, "Data produk tidak ditemukan!", Toast.LENGTH_SHORT).show();
@@ -100,5 +103,10 @@ public class ProductDetailActivity extends AppCompatActivity {
         Toast.makeText(this, "Produk berhasil ditambahkan ke keranjang", Toast.LENGTH_SHORT).show();
         Intent intentToCart = new Intent(this, Keranjang1Activity.class);
         startActivity(intentToCart);
+    }
+
+    private String formatCurrency(int amount) {
+        NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+        return format.format(amount).replace("Rp", "Rp. ").replace(",00", "");
     }
 }

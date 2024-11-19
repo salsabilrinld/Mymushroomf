@@ -36,10 +36,6 @@
             android:exported="true"
             android:label="@string/title_activity_settings1" />
         <activity
-            android:name=".OrderDetailActivity"
-            android:exported="false" /> <!-- android:label="@string/title_activity_order_detail" -->
-        <!-- android:theme="@style/Theme.Mymushroomf.NoActionBar" /> -->
-        <activity
             android:name=".PembeliActivity.Profile1Activity"
             android:exported="false" />
         <activity
@@ -73,11 +69,13 @@
             android:exported="false" />
 
         <activity
-            android:name=".PembeliActivity.TransactionListActivity1"
+            android:name=".PembeliActivity.OrderDetailActivity"
             android:exported="false" />
 
         <activity
             android:name=".PembeliActivity.PemesananDetailActivity"
+            android:exported="false" />
+        <activity android:name=".PembeliActivity.OrderHistoryActivity"
             android:exported="false" />
         <activity
             android:name=".PembeliActivity.TambahAlamatActivity"

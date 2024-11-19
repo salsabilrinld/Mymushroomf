@@ -21,7 +21,9 @@ import com.example.mymushroomf.PembeliModel.Produk1;
 import com.example.mymushroomf.PembeliActivity.Popup;
 import com.example.mymushroomf.R;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPembeli.ProductViewHolder> {
 
@@ -46,8 +48,8 @@ public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPemb
         Produk1 product = productList.get(position);
         holder.productImage.setImageResource(product.getImageResId());
         holder.productName.setText(product.getName());
-        holder.productCategory.setText(product.getType());
-        holder.productPrice.setText("Rp. " + product.getPrice());
+        holder.productCategory.setText(product.getCategory());
+        holder.productPrice.setText(formatCurrency(product.getPrice()));
 
         // Set OnClickListener for the ImageView to go to Product Detail Activity
         holder.productImage.setOnClickListener(v -> {
@@ -105,5 +107,10 @@ public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPemb
             productCategory = itemView.findViewById(R.id.productCategory);
             addButton = itemView.findViewById(R.id.addToCartButton);  // The button that triggers the popup
         }
+    }
+
+    private String formatCurrency(int amount) {
+        NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+        return format.format(amount).replace("Rp", "Rp. ").replace(",00", "");
     }
 }

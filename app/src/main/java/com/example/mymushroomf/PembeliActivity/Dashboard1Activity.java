@@ -3,7 +3,6 @@ package com.example.mymushroomf.PembeliActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -56,7 +55,7 @@ public class Dashboard1Activity extends AppCompatActivity {
                 return true;
             } else if (item.getItemId() == R.id.menu_transaction) {
                 // Transaction menu item clicked
-                startActivity(new Intent(Dashboard1Activity.this, TransactionListActivity1.class));
+                startActivity(new Intent(Dashboard1Activity.this, OrderHistoryActivity.class));
                 return true;
             } else if (item.getItemId() == R.id.menu_profile) {
                 // Profile menu item clicked
@@ -80,9 +79,9 @@ public class Dashboard1Activity extends AppCompatActivity {
         filteredProductList = new ArrayList<>(productList);
 
         // Adding sample products
-        productList.add(new Produk1("Jamur Tiram", "Deskripsi Jamur Tiram", "Organic", 9500, R.drawable.jamur_tiram));
-        productList.add(new Produk1("Jamur Kuping", "Deskripsi Jamur Kuping", "Organic", 12000, R.drawable.jamur_kuping));
-        productList.add(new Produk1("Jamur Kancing", "Deskripsi Jamur Kancing", "Nonorganik", 7000, R.drawable.jamur_kancing));
+        productList.add(new Produk1("1","Jamur Tiram", "Deskripsi Jamur Tiram", "Organic", "1 kg", 12000, R.drawable.jamur_tiram));
+        productList.add(new Produk1("2","Jamur Kuping", "Deskripsi Jamur Kuping", "Organic", "2 kg", 9000, R.drawable.jamur_kuping));
+        productList.add(new Produk1("3","Jamur Kancing", "Deskripsi Jamur Kancing", "Nonorganik", "50 kg", 10000, R.drawable.jamur_kancing));
 
         // Initialize the adapter
         produkAdapterPembeli = new ProdukAdapterPembeli(this, productList);

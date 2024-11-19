@@ -18,7 +18,7 @@
 
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -32,7 +32,7 @@
                 android:layout_marginEnd="8dp" />
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="horizontal">
@@ -44,12 +44,6 @@
                         android:paddingRight="23dp"
                         android:paddingLeft="0dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="TukangJamur123"
-                            android:fontFamily="@font/manrope_regular"
-                            android:textSize="10sp"/>
 
                         <TextView
                             android:id="@+id/product_name"
@@ -65,7 +59,7 @@
                             android:id="@+id/product_quantity"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Rp. 12.000"
+                            android:text="1 produk"
                             android:fontFamily="@font/inter_reguler"
                             android:textColor="@android:color/darker_gray"
                             android:textSize="14sp" />
@@ -75,6 +69,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
+                        android:layout_weight="1"
                         android:gravity="right"
                         android:paddingLeft="35dp">
 

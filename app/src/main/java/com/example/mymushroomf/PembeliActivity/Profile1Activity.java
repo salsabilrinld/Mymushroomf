@@ -3,14 +3,12 @@ package com.example.mymushroomf.PembeliActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -56,7 +54,7 @@ public class Profile1Activity extends AppCompatActivity {
         });
 
         transactionButton.setOnClickListener(v -> {
-            Intent transactionIntent = new Intent(Profile1Activity.this, TransactionListActivity1.class);
+            Intent transactionIntent = new Intent(Profile1Activity.this, OrderHistoryActivity.class);
             startActivity(transactionIntent);
         });
 
@@ -83,7 +81,7 @@ public class Profile1Activity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             } else if (item.getItemId() == R.id.menu_transaction) {
-                Intent intent = new Intent(Profile1Activity.this, TransactionListActivity1.class);
+                Intent intent = new Intent(Profile1Activity.this, OrderHistoryActivity.class);
                 startActivity(intent);
                 return true;
             } else if (item.getItemId() == R.id.menu_profile) {

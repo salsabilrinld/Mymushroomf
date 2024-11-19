@@ -71,13 +71,15 @@ public class formlogin extends AppCompatActivity { // Menggunakan FormLogin sepe
         if (email.isEmpty() || password.isEmpty()) {
             Toast.makeText(formlogin.this, "Email dan Password harus diisi", Toast.LENGTH_SHORT).show();
             return;
-//        } else {
+        }
+
+//        else {
 //            Gson gson = new GsonBuilder()
 //                    .setLenient()
 //                    .create();
 //
 //            Retrofit retrofit = new Retrofit.Builder()
-//                    .baseUrl("https://192.168.101.85/mushroom4/public/api/")
+//                    .baseUrl("http://10.5.2.229/mushroom4/public/api/")
 //                    .addConverterFactory(GsonConverterFactory.create(gson))
 //                    .build();
 //
@@ -109,8 +111,6 @@ public class formlogin extends AppCompatActivity { // Menggunakan FormLogin sepe
 //                }
 //            });
 //        }
-        }
-
 
         // Mengambil data dari SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
