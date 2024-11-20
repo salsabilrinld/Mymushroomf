@@ -81,7 +81,7 @@ public class formlogin extends AppCompatActivity { // Menggunakan FormLogin sepe
                     .create();
 
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://127.0.0.1:8000/mushroom4/public/api/")
+                    .baseUrl("http://192.168.1.15/mushroom4/public/api/")
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
 
@@ -96,7 +96,7 @@ public class formlogin extends AppCompatActivity { // Menggunakan FormLogin sepe
 
                         // Login berhasil, arahkan ke MainActivity
                         Intent intent = new Intent(formlogin.this, Dashboard1Activity.class);
-                        intent.putExtra("email", data.getEmail());
+                        intent.putExtra("email", data.getUser().getEmail());
                         startActivity(intent);
                         finish();
                     } else {
@@ -148,7 +148,6 @@ public class formlogin extends AppCompatActivity { // Menggunakan FormLogin sepe
 //        }
         }
 
-
         else {
             Gson gson = new GsonBuilder()
                     .setLenient()
@@ -198,4 +197,4 @@ public class formlogin extends AppCompatActivity { // Menggunakan FormLogin sepe
             });
         }
     }
-}
+//}

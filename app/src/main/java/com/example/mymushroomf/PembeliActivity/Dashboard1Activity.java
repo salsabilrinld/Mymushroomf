@@ -152,6 +152,7 @@ public class Dashboard1Activity extends AppCompatActivity {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
+
                 .baseUrl("https://mushroom.miauwlan.com/api/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
