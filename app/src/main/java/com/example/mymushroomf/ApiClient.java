@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
     private static Retrofit retrofit;
-    private static final String BASE_URL = "http://192.168.1.9/MushRoom/public/api/";
+    private static final String BASE_URL = "https://mushroom.miauwlan.com/api/";
 
     Gson gson = new GsonBuilder()
             .setLenient()

@@ -88,7 +88,7 @@ public class RegisterActivity extends AppCompatActivity {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.9/MushRoom/public/api/")
+                .baseUrl("https://mushroom.miauwlan.com/api/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 

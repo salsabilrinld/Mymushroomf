@@ -5,10 +5,12 @@ import com.example.mymushroomf.RegisterResponse;
 import com.example.mymushroomf.VerifyResponse;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Query;
 
 public interface UserService {
@@ -29,6 +31,11 @@ public interface UserService {
     Call<VerifyResponse> verifyCode(
             @Field("email") String email,
             @Field("verification_code") String verificationCode
+    );
+
+    @PUT("edit-profile")
+    Call<Users> updateProfile(
+            @Body Users.UserData userData
     );
 
 }
