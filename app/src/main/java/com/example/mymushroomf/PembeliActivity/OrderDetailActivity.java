@@ -5,16 +5,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.mymushroomf.PembeliModel.Order;
-import com.example.mymushroomf.PembeliModel.OrderDetail;
-import com.example.mymushroomf.PembeliModel.Produk1;
 import com.example.mymushroomf.R;
-
 import java.io.Serializable;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -27,9 +21,8 @@ public class OrderDetailActivity extends AppCompatActivity {
 
     private List<Order> orderList;
     private String orderId;
-    private TextView productName, tvStatus, tvKurirDetail, tvResiDetail, tvAlamatDetail, tvNamaPemesan, tvNoTelpPemesan, tvMetodePembayaran, tvBiayaProduk, tvBiayaKirim, tvTotalBiaya, tvQuantity, tvTanggalOrder;
+    private TextView tvKurirDetail, tvResiDetail, tvAlamatDetail, tvNamaPemesan, tvNoTelpPemesan, tvNoResiDetail, tvMetodePembayaran, tvBiayaProduk, tvBiayaKirim, tvTotalBiaya;
     private ImageButton backOrderButton;
-    private ImageView productImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +41,8 @@ public class OrderDetailActivity extends AppCompatActivity {
         tvAlamatDetail = findViewById(R.id.tvalamat_detail);
         tvNamaPemesan = findViewById(R.id.tvnama_pemesan);
         tvNoTelpPemesan = findViewById(R.id.tvnomor_pemesan);
+        tvNoResiDetail = findViewById(R.id.tvresi_detail);
         tvMetodePembayaran = findViewById(R.id.tvmetode_pembayaran);
-        tvQuantity = findViewById(R.id.product_quantity);
         tvBiayaProduk = findViewById(R.id.tvbiaya_produk);
         tvBiayaKirim = findViewById(R.id.tvbiaya_kirim);
         tvTotalBiaya = findViewById(R.id.tvtotal_biaya);
@@ -87,10 +80,12 @@ public class OrderDetailActivity extends AppCompatActivity {
         backOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish(); // Go back to previous activity
+                // Example: Go back to previous activity
+                finish();
             }
         });
     }
+
 
     private Order getOrderById(String orderId) {
 

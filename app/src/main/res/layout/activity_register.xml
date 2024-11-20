@@ -60,20 +60,20 @@
             android:padding="12dp" />
 
         <EditText
-            android:id="@+id/locationEditText"
+            android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:fontFamily="@font/inter_reguler"
-            android:hint="Lokasi"
+            android:hint="Password"
             android:padding="12dp" />
 
         <EditText
-            android:id="@+id/passwordEditText"
+            android:id="@+id/repeatPassEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:hint="Password"
+            android:hint="Repeat Password"
             android:fontFamily="@font/inter_reguler"
             android:inputType="textPassword"
             android:padding="12dp" />

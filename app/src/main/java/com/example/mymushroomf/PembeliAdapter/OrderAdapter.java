@@ -52,8 +52,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
         Order order = filteredOrderList.get(position);
 
-        holder.productImage.setImageResource(order.getOrderDetails().get(0).getProduct().getImageResId());
-        holder.productName.setText(order.getOrderDetails().get(0).getProduct().getName());
+//        holder.productImage.setImageResource(order.getOrderDetails().get(0).getProduct().getFile_path());
+        holder.productName.setText(order.getOrderDetails().get(0).getProduct().getProduct_name());
         holder.productQuantity.setText(String.valueOf(order.getOrderDetails().get(0).getQuantity()) + " kg");
         holder.orderStatus.setText(order.getOrderDetails().get(0).getStatus());
         holder.productPrice.setText(holder.formatCurrency(order.getOrderDetails().get(0).getTotalPayment()));

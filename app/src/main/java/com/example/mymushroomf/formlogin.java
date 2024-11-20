@@ -21,6 +21,9 @@ import com.example.mymushroomf.PembeliService.UserService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -71,6 +74,7 @@ public class formlogin extends AppCompatActivity { // Menggunakan FormLogin sepe
         if (email.isEmpty() || password.isEmpty()) {
             Toast.makeText(formlogin.this, "Email dan Password harus diisi", Toast.LENGTH_SHORT).show();
             return;
+
         } else {
             Gson gson = new GsonBuilder()
                     .setLenient()
@@ -142,7 +146,52 @@ public class formlogin extends AppCompatActivity { // Menggunakan FormLogin sepe
 //        } else {
 //            Toast.makeText(this, "Login gagal, cek email dan password", Toast.LENGTH_SHORT).show();
 //        }
-//
-//    }
+        }
+
+
+        else {
+            Gson gson = new GsonBuilder()
+                    .setLenient()
+                    .create();
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("http://192.168.1.9/MushRoom/public/api/")
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .build();
+
+            UserService service = retrofit.create(UserService.class);
+            Call<Users> call = service.signin(email, password);
+
+            call.enqueue(new Callback<Users>() {
+                @Override
+                public void onResponse(Call<Users> call, Response<Users> response) {
+                    if (response.isSuccessful() && response.body() != null && "success".equals(response.body().getStatus())) {
+                        Users.UserData userData = response.body().getUser(); // Mengambil objek user
+
+                        // Simpan nama pengguna di SharedPreferences
+                        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("name", userData.getUsername()); // Mendapatkan username dari objek user
+                        editor.apply();
+
+                        // Login berhasil, arahkan ke MainActivity
+                        Intent intent = new Intent(formlogin.this, Dashboard1Activity.class);
+                        intent.putExtra("email", userData.getEmail());
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        // Respons gagal atau pengguna tidak ditemukan
+                        Toast.makeText(getApplicationContext(), "Pengguna tidak terdaftar atau data tidak valid", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Users> call, Throwable t) {
+                    // Log kesalahan dan tampilkan pesan error kepada pengguna
+                    Log.e("LoginError", "Login failed: " + t.getMessage());
+                    Toast.makeText(getApplicationContext(), "Gagal terhubung ke server, coba lagi nanti.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 }

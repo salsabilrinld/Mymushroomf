@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.mymushroomf.R;
 
 import java.text.NumberFormat;
@@ -24,7 +25,7 @@ public class Popup {
     private TextView priceText;
 
     // Konstruktor Popup
-    public Popup(Context context, String productName, int imageResId, int pricePerItem) {
+    public Popup(Context context, String productName, String imageResId, int pricePerItem) {
         this.pricePerItem = pricePerItem;
         this.totalPrice = pricePerItem * quantity;
 
@@ -46,7 +47,11 @@ public class Popup {
 
         // Atur data awal
         productNameText.setText(productName);
-        productImage.setImageResource(imageResId);
+        Glide.with(context)
+                .load(imageResId)                           // Memuat dari URL gambar
+//                .placeholder(R.drawable.placeholder_image) // Placeholder saat loading
+//                .error(R.drawable.error_image)             // Gambar error jika gagal memuat
+                .into(productImage);
         updateQuantityAndPrice();
 
         // Tombol untuk mengurangi kuantitas

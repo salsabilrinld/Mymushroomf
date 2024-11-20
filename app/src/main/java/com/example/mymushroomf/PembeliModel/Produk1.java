@@ -1,49 +1,54 @@
 package com.example.mymushroomf.PembeliModel;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 
 public class Produk1 implements Serializable {
-    private String productId;
-    private String name;
-    private String desc;
+    @SerializedName("id")
+    private int id;
+    @SerializedName("product_name")
+    private String product_name;
+    @SerializedName("description")
+    private String description;
+    @SerializedName("category")
     private String category;
-    private String stock;
+    @SerializedName("stock")
+    private int stock;
+    @SerializedName("price")
     private int price;
-    private int imageResId;  // Assuming the image is a String URL or path
+    @SerializedName("file_path")
+    private String file_path;  // Assuming the image is a String URL or path
 
     // Constructor
-    public Produk1(String productId, String name, String desc, String category, String stock, int price, int imageResId) {
-        this.productId = productId;
-        this.name = name;
-        this.desc = desc;
+    public Produk1(int id, String product_name, String description, String category, int stock, int price, String file_path) {
+        this.id = id;
+        this.product_name = product_name;
+        this.description = description;
         this.category = category;
         this.stock = stock;
         this.price = price;
-        this.imageResId = imageResId;
+        this.file_path = file_path;
     }
 
-    public String getProductId() {
-        return productId;
+    public int getId() {
+        return id;
     }
 
-    public String getName() {
-        return name;
+    public String getProduct_name() {
+        return product_name;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
     public String getCategory() {
         return category;
     }
 
-    public String getStock() {
+    public int getStock() {
         return stock;
     }
 
@@ -51,8 +56,7 @@ public class Produk1 implements Serializable {
         return price;
     }
 
-    public int getImageResId() {
-        return imageResId;
+    public String getFile_path() {
+        return file_path;
     }
-
 }

@@ -138,7 +138,7 @@ public class PemesananDetailActivity extends AppCompatActivity {
         for (CartItem item : cartItems) {
             TextView productView = new TextView(this);
             productView.setId(View.generateViewId());
-            productView.setText(item.getProduct().getName() + " - Qty: " + item.getQuantity() +
+            productView.setText(item.getProduct().getProduct_name() + " - Qty: " + item.getQuantity() +
                     " - Price: " + formatCurrency(item.getProduct().getPrice() * item.getQuantity()));
             productView.setTextSize(16);
 
@@ -162,7 +162,7 @@ public class PemesananDetailActivity extends AppCompatActivity {
         RelativeLayout containerProducts = findViewById(R.id.container_product);
         TextView productView = new TextView(this);
         productView.setId(View.generateViewId());
-        productView.setText(popupItem.getProduct().getName() + " - Qty: " + popupItem.getQuantity() +
+        productView.setText(popupItem.getProduct().getProduct_name() + " - Qty: " + popupItem.getQuantity() +
                 " - Price: " + formatCurrency(popupItem.getProduct().getPrice() * popupItem.getQuantity()));
         productView.setTextSize(16);
 
