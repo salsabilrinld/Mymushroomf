@@ -3,11 +3,11 @@
         <item
             android:id="@+id/menu_store"
             android:icon="@drawable/ic_store"
-            android:title="Store" />
+            android:title="Beranda" />
         <item
             android:id="@+id/menu_transaction"
             android:icon="@drawable/ic_transaction"
-            android:title="Transaction" />
+            android:title="Pesanan" />
         <item
             android:id="@+id/menu_profile"
             android:icon="@drawable/ic_profile"

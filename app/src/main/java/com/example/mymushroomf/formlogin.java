@@ -75,44 +75,6 @@ public class formlogin extends AppCompatActivity { // Menggunakan FormLogin sepe
             Toast.makeText(formlogin.this, "Email dan Password harus diisi", Toast.LENGTH_SHORT).show();
             return;
 
-        } else {
-            Gson gson = new GsonBuilder()
-                    .setLenient()
-                    .create();
-
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://192.168.1.15/mushroom4/public/api/")
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .build();
-
-            UserService service = retrofit.create(UserService.class);
-            Call<Users> call = service.signin(email, password);
-
-            call.enqueue(new Callback<Users>() {
-                @Override
-                public void onResponse(Call<Users> call, Response<Users> response) {
-                    if (response.isSuccessful() && response.body() != null) {
-                        Users data = response.body();
-
-                        // Login berhasil, arahkan ke MainActivity
-                        Intent intent = new Intent(formlogin.this, Dashboard1Activity.class);
-                        intent.putExtra("email", data.getUser().getEmail());
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        // Respons gagal atau pengguna tidak ditemukan
-                        Toast.makeText(getApplicationContext(), "Pengguna tidak terdaftar atau data tidak valid", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Users> call, Throwable t) {
-                    // Log kesalahan dan tampilkan pesan error kepada pengguna
-                    Log.e("LoginError", "Login failed: " + t.getMessage());
-                    Toast.makeText(getApplicationContext(), "Gagal terhubung ke server, coba lagi nanti.", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
 
 //        // Mengambil data dari SharedPreferences
 //        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
@@ -197,4 +159,4 @@ public class formlogin extends AppCompatActivity { // Menggunakan FormLogin sepe
             });
         }
     }
-//}
+}

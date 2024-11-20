@@ -93,7 +93,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Beli"
-            android:backgroundTint="#FFA726"
+            android:backgroundTint="@color/orange"
             android:textColor="#FFFFFF"
             android:elevation="6dp" />
     </LinearLayout>

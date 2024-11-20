@@ -86,7 +86,7 @@
                     android:id="@+id/product_rate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Rate: ★ 5.0"
+                    android:text="Nilai ★ 5.0"
                     android:fontFamily="@font/inter_reguler"
                     android:textSize="14sp"
                     android:layout_marginTop="4dp"
@@ -97,7 +97,7 @@
                     android:id="@+id/product_stock"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Stock: 120"
+                    android:text="Stock 120"
                     android:fontFamily="@font/inter_reguler"
                     android:textSize="14sp"
                     android:layout_marginTop="4dp"
@@ -209,7 +209,7 @@
                     android:layout_weight="1"
                     android:backgroundTint="#B0B0B0"
                     android:fontFamily="@font/inter_bold"
-                    android:text="Add to cart"
+                    android:text="Tambah"
                     android:textColor="@color/white" />
 
                 <Button

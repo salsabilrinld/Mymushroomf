@@ -58,8 +58,8 @@ public class Dashboard1Activity extends AppCompatActivity {
 
         // Mendapatkan nama pengguna dari SharedPreferences
         String name = sharedPreferences.getString("name", "User");
-        welcomeTextLine1.setText("Hey, " + name + "!");
-        welcomeTextLine2.setText("Let's go shopping!");
+        welcomeTextLine1.setText("Halo, " + name + "!");
+        welcomeTextLine2.setText("Selamat Datang!");
 
         // Initialize Bottom Navigation
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
