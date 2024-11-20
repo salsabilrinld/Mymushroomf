@@ -14,12 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.mymushroomf.PembeliActivity.Keranjang1Activity;
 import com.example.mymushroomf.PembeliActivity.ProductDetailActivity;
-import com.example.mymushroomf.PembeliModel.CartItem;
-import com.example.mymushroomf.PembeliModel.CartManager;
 import com.example.mymushroomf.PembeliModel.Produk1;
-import com.example.mymushroomf.PembeliActivity.Popup;
 import com.example.mymushroomf.R;
 
 import java.util.List;
@@ -27,10 +23,8 @@ import java.util.List;
 public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPembeli.ProductViewHolder> {
 
     private List<Produk1> productList;
-    private Context context;
 
-    public ProdukAdapterPembeli(Context context, List<Produk1> productList) {
-        this.context = context;
+    public ProdukAdapterPembeli(List<Produk1> productList) {
         this.productList = productList;
     }
 
@@ -45,32 +39,34 @@ public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPemb
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Produk1 product = productList.get(position);
-        holder.productName.setText(product.getProduct_name()); // Mengambil product_name dari JSON
-        holder.productCategory.setText(product.getCategory()); // Menampilkan kategori
-        holder.productPrice.setText("Rp " + product.getPrice()); // Format harga
 
-        // Memuat gambar produk dari file_path
-        Glide.with(context)
-                .load("http://10.7.23.143/product_images" + product.getFile_path()) // Tambahkan URL base untuk file_path
-//                .placeholder(R.drawable.placeholder_image) // Placeholder jika gambar gagal dimuat
-//                .error(R.drawable.error_image) // Placeholder jika ada error
-                .into(holder.productImage);
+        // Validasi null untuk data produk
+        if (product != null) {
+            holder.productName.setText(product.getProduct_name());
+            holder.productCategory.setText(product.getCategory());
+            holder.productPrice.setText("Rp " + product.getPrice());
 
-        // Aksi klik card untuk membuka detail produk
-        holder.itemView.setOnClickListener(view -> {
-            Intent intent = new Intent(context, ProductDetailActivity.class);
-            intent.putExtra("product_id", product.getId());
-            context.startActivity(intent);
-        });
+            // Memuat gambar produk menggunakan Glide
+            Glide.with(holder.itemView.getContext())
+                    .load("https://mushroom.miauwlan.com/" + product.getFile_path()) // Pastikan base URL benar
+//                    .placeholder(R.drawable.placeholder_image) // Placeholder jika gambar sedang dimuat
+//                    .error(R.drawable.error_image) // Placeholder jika gambar gagal dimuat
+                    .into(holder.productImage);
 
-        // Aksi klik tombol tambah ke keranjang
-        holder.addToCartButton.setOnClickListener(view -> {
-            // Tambahkan logika untuk menambah produk ke keranjang
-            Toast.makeText(context, product.getProduct_name() + " added to cart", Toast.LENGTH_SHORT).show();
-        });
+            // Aksi klik item untuk membuka detail produk
+            holder.itemView.setOnClickListener(view -> {
+                Context context = holder.itemView.getContext();
+                Intent intent = new Intent(context, ProductDetailActivity.class);
+                intent.putExtra("product_id", product.getId());
+                context.startActivity(intent);
+            });
+
+            // Aksi klik tombol tambah ke keranjang
+            holder.addToCartButton.setOnClickListener(view -> {
+                Toast.makeText(holder.itemView.getContext(), product.getProduct_name() + " added to cart", Toast.LENGTH_SHORT).show();
+            });
+        }
     }
-
-
 
     @Override
     public int getItemCount() {
@@ -81,10 +77,10 @@ public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPemb
     public void updateProductList(List<Produk1> newProductList) {
         this.productList.clear();
         this.productList.addAll(newProductList);
-        notifyDataSetChanged(); // Refresh RecyclerView
+        notifyDataSetChanged();
     }
 
-    public class ProductViewHolder extends RecyclerView.ViewHolder {
+    public static class ProductViewHolder extends RecyclerView.ViewHolder {
         ImageView productImage;
         TextView productName, productCategory, productPrice;
         ImageButton addToCartButton;
@@ -98,5 +94,4 @@ public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPemb
             addToCartButton = itemView.findViewById(R.id.add_to_cart_button);
         }
     }
-
 }

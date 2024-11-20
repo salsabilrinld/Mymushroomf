@@ -155,7 +155,7 @@ public class formlogin extends AppCompatActivity { // Menggunakan FormLogin sepe
                     .create();
 
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://192.168.1.9/MushRoom/public/api/")
+                    .baseUrl("https://mushroom.miauwlan.com/api/")
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
 
@@ -172,6 +172,10 @@ public class formlogin extends AppCompatActivity { // Menggunakan FormLogin sepe
                         SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("name", userData.getUsername()); // Mendapatkan username dari objek user
+                        editor.putString("email", userData.getEmail());
+                        editor.putString("phone", userData.getPhone());
+                        editor.putString("password", userData.getPassword());
+                        editor.putString("profile_path", userData.getProfilePath());
                         editor.apply();
 
                         // Login berhasil, arahkan ke MainActivity
