@@ -1,8 +1,9 @@
 package com.example.mymushroomf.PembeliModel;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class OrderDetail {
+public class OrderDetail implements Serializable {
     private Produk1 product;
     private String orderDetailId;
     private String status;
