@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.mymushroomf.PembeliModel.CartItem;
 import com.example.mymushroomf.PembeliModel.CartManager;
 import com.example.mymushroomf.R;
@@ -40,7 +41,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
         CartItem cartItem = cartItems.get(position);
 
-        holder.itemName.setText(cartItem.getProduct().getName());
+        holder.itemName.setText(cartItem.getProduct().getProduct_name());
         holder.itemPrice.setText("Rp. " + cartItem.getProduct().getPrice());
         holder.itemQuantity.setText(String.valueOf(cartItem.getQuantity()));
         holder.checkBox.setChecked(cartItem.isSelected());
@@ -79,9 +80,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             interactionListener.onCartUpdated();
         });
 
-        if (cartItem.getProduct().getImageResId() != 0) {
-            holder.itemImage.setImageResource(cartItem.getProduct().getImageResId());
-        }
+        // Memuat gambar dari URL menggunakan Glide
+        Glide.with(holder.itemView.getContext())
+                .load(cartItem.getProduct().getFile_path())  // Asumsikan ini adalah URL gambar
+//                .placeholder(R.drawable.placeholder_image)      // Gambar sementara saat loading
+//                .error(R.drawable.error_image)                  // Gambar error jika gagal memuat
+                .into(holder.itemImage);
     }
 
     @Override

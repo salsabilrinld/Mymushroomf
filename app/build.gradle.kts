@@ -49,6 +49,8 @@ dependencies {
     implementation(libs.navigation.ui)
     implementation(libs.preference)
     implementation(libs.play.services.maps)
+    implementation(libs.retrofit)
+    implementation(libs.google.gson)
 
     // Untuk testing
     testImplementation(libs.junit)

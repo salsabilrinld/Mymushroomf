@@ -3,48 +3,35 @@ package com.example.mymushroomf.PembeliModel;
 import com.google.gson.annotations.SerializedName;
 
 public class Users {
-    @SerializedName("email")
-    private String email;
-    @SerializedName("password")
-    private String password;
-    private String id;
-    private String username;
+    private String status;
+    private UserData user;
 
-    public Users(String email, String password) {
-        this.email = email;
-        this.password = password;
+    public String getStatus() {
+        return status;
     }
 
-    public String getEmail() {
-        return email;
+    public UserData getUser() {
+        return user;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public static class UserData {
+        @SerializedName("id")
+        private int id;
+        @SerializedName("email")
+        private String email;
+        @SerializedName("username")
+        private String username;
 
-    public String getPassword() {
-        return password;
-    }
+        public int getId() {
+            return id;
+        }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+        public String getEmail() {
+            return email;
+        }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+        public String getUsername() {
+            return username;
+        }
     }
 }
-

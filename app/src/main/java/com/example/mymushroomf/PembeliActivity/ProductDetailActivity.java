@@ -10,13 +10,17 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+import com.example.mymushroomf.ApiClient;
 import com.example.mymushroomf.PembeliModel.CartItem;
 import com.example.mymushroomf.PembeliModel.CartManager;
 import com.example.mymushroomf.PembeliModel.Produk1;
+import com.example.mymushroomf.PembeliService.ProdukService;
 import com.example.mymushroomf.R;
 
-import java.text.NumberFormat;
-import java.util.Locale;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ProductDetailActivity extends AppCompatActivity {
 
@@ -43,37 +47,34 @@ public class ProductDetailActivity extends AppCompatActivity {
         buyNowButton = findViewById(R.id.buy_now_button);
         addToCartButton = findViewById(R.id.add_to_cart_button);
 
-        // Ambil Data Produk dari Intent
-        Intent intent = getIntent();
-        String name = intent.getStringExtra("productName");
-        String description = intent.getStringExtra("productDescription");
-        int price = intent.getIntExtra("productPrice", 0);
-        int imageResId = intent.getIntExtra("productImage", 0);
-        String type = intent.getStringExtra("productType"); // Tambahkan type jika diperlukan
-
-        // Pastikan data produk ada
-        if (name != null && description != null && price != 0 && imageResId != 0) {
-            // Buat objek Produk1
-            product = new Produk1("id", name, description, type != null ? type : "General", "stock", price, imageResId);
-
-            // Set data produk ke UI
-            productNameTextView.setText(product.getName());
-            productDescriptionTextView.setText(product.getDesc());
-            productPriceTextView.setText(formatCurrency(product.getPrice()));
-            productImageView.setImageResource(product.getImageResId());
-        } else {
-            Toast.makeText(this, "Data produk tidak ditemukan!", Toast.LENGTH_SHORT).show();
-            finish();
-            return; // Jika produk tidak ditemukan, hentikan eksekusi
+        // Dapatkan ID produk dari Intent
+        int productId = getIntent().getIntExtra("product_id", -1);
+        if (productId != -1) {
+            fetchProductDetails(productId);
         }
+//        // Pastikan data produk ada
+//        if (name != null && description != null && price != 0 && imageResId != 0) {
+//            // Buat objek Produk1
+//            product = new Produk1("id", name, description, type != null ? type : "General", "stock", price, imageResId);
+//
+//            // Set data produk ke UI
+//            productNameTextView.setText(product.getName());
+//            productDescriptionTextView.setText(product.getDesc());
+//            productPriceTextView.setText("Rp. " + product.getPrice());
+//            productImageView.setImageResource(product.getImageResId());
+//        } else {
+//            Toast.makeText(this, "Data produk tidak ditemukan!", Toast.LENGTH_SHORT).show();
+//            finish();
+//            return; // Jika produk tidak ditemukan, hentikan eksekusi
+//        }
 
         // Tombol Kembali
         backButton.setOnClickListener(view -> finish());
 
         // Tombol Beli Sekarang
         buyNowButton.setOnClickListener(view -> {
-            // Lakukan pembelian langsung tanpa cek stok
-            new Popup(this, product.getName(), product.getImageResId(), product.getPrice()); // Menampilkan popup
+            // Tampilkan popup pembelian dengan nama, gambar URL, dan harga produk
+            new Popup(this, product.getProduct_name(), product.getFile_path(), product.getPrice()); // Pastikan product.getImageUrl() adalah URL gambar
         });
 
         // Tombol Tambah ke Keranjang
@@ -105,8 +106,29 @@ public class ProductDetailActivity extends AppCompatActivity {
         startActivity(intentToCart);
     }
 
-    private String formatCurrency(int amount) {
-        NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
-        return format.format(amount).replace("Rp", "Rp. ").replace(",00", "");
+    private void fetchProductDetails(int productId) {
+        ProdukService apiService = ApiClient.getProdukService();
+        Call<Produk1> call = apiService.getProductDetail(productId);
+
+        call.enqueue(new Callback<Produk1>() {
+            @Override
+            public void onResponse(Call<Produk1> call, Response<Produk1> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Produk1 product = response.body();
+                    productNameTextView.setText(product.getProduct_name());
+                    productPriceTextView.setText("Rp" + product.getPrice());
+                    productDescriptionTextView.setText(product.getDescription());
+
+                    Glide.with(ProductDetailActivity.this)
+                            .load(product.getFile_path())
+                            .into(productImageView);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Produk1> call, Throwable t) {
+                Toast.makeText(ProductDetailActivity.this, "Error loading product details", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

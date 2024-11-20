@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.mymushroomf.PembeliActivity.Keranjang1Activity;
 import com.example.mymushroomf.PembeliActivity.ProductDetailActivity;
 import com.example.mymushroomf.PembeliModel.CartItem;
@@ -21,9 +22,7 @@ import com.example.mymushroomf.PembeliModel.Produk1;
 import com.example.mymushroomf.PembeliActivity.Popup;
 import com.example.mymushroomf.R;
 
-import java.text.NumberFormat;
 import java.util.List;
-import java.util.Locale;
 
 public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPembeli.ProductViewHolder> {
 
@@ -46,71 +45,58 @@ public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPemb
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Produk1 product = productList.get(position);
-        holder.productImage.setImageResource(product.getImageResId());
-        holder.productName.setText(product.getName());
-        holder.productCategory.setText(product.getCategory());
-        holder.productPrice.setText(formatCurrency(product.getPrice()));
+        holder.productName.setText(product.getProduct_name()); // Mengambil product_name dari JSON
+        holder.productCategory.setText(product.getCategory()); // Menampilkan kategori
+        holder.productPrice.setText("Rp " + product.getPrice()); // Format harga
 
-        // Set OnClickListener for the ImageView to go to Product Detail Activity
-        holder.productImage.setOnClickListener(v -> {
-            // Intent to go to the ProductDetailActivity
+        // Memuat gambar produk dari file_path
+        Glide.with(context)
+                .load("http://10.7.23.143/product_images" + product.getFile_path()) // Tambahkan URL base untuk file_path
+//                .placeholder(R.drawable.placeholder_image) // Placeholder jika gambar gagal dimuat
+//                .error(R.drawable.error_image) // Placeholder jika ada error
+                .into(holder.productImage);
+
+        // Aksi klik card untuk membuka detail produk
+        holder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(context, ProductDetailActivity.class);
-
-            // Send product data through Intent
-            intent.putExtra("productName", product.getName());
-            intent.putExtra("productDescription", product.getDesc());
-            intent.putExtra("productPrice", product.getPrice());
-            intent.putExtra("productImage", product.getImageResId());
-
-            // Start the ProductDetailActivity
+            intent.putExtra("product_id", product.getId());
             context.startActivity(intent);
         });
 
-        // Set OnClickListener for the "add to cart" button to show the popup
-        holder.addButton.setOnClickListener(v -> {
-            // Show the product details in a popup when the button is clicked
-//            new Popup(context, product.getName(), product.getImageResId(), product.getPrice());
-            CartItem cartItem = new CartItem(product, 1); // Tambahkan produk ke keranjang
-
-            // Menambahkan item ke keranjang melalui CartManager
-            CartManager.getInstance(context).addItem(cartItem);
-
-            // Beri notifikasi kepada user
-            Toast.makeText(context, "Produk ditambahkan ke keranjang", Toast.LENGTH_SHORT).show();
-
+        // Aksi klik tombol tambah ke keranjang
+        holder.addToCartButton.setOnClickListener(view -> {
+            // Tambahkan logika untuk menambah produk ke keranjang
+            Toast.makeText(context, product.getProduct_name() + " added to cart", Toast.LENGTH_SHORT).show();
         });
     }
+
+
 
     @Override
     public int getItemCount() {
         return productList.size();
     }
 
-    // Method to update the product list and refresh the RecyclerView
-    public void updateProductList(List<Produk1> filteredProducts) {
-        this.productList = filteredProducts;  // Update the product list
-        notifyDataSetChanged(); // Notify the adapter to refresh the RecyclerView
+    // Metode untuk memperbarui data produk dan menyegarkan tampilan
+    public void updateProductList(List<Produk1> newProductList) {
+        this.productList.clear();
+        this.productList.addAll(newProductList);
+        notifyDataSetChanged(); // Refresh RecyclerView
     }
 
-    public static class ProductViewHolder extends RecyclerView.ViewHolder {
+    public class ProductViewHolder extends RecyclerView.ViewHolder {
         ImageView productImage;
-        TextView productName;
-        TextView productCategory;
-        TextView productPrice;
-        ImageButton addButton;
+        TextView productName, productCategory, productPrice;
+        ImageButton addToCartButton;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
-            productImage = itemView.findViewById(R.id.productImage);
-            productName = itemView.findViewById(R.id.productName);
-            productPrice = itemView.findViewById(R.id.productPrice);
-            productCategory = itemView.findViewById(R.id.productCategory);
-            addButton = itemView.findViewById(R.id.addToCartButton);  // The button that triggers the popup
+            productImage = itemView.findViewById(R.id.product_image);
+            productName = itemView.findViewById(R.id.product_name);
+            productCategory = itemView.findViewById(R.id.product_category);
+            productPrice = itemView.findViewById(R.id.product_price);
+            addToCartButton = itemView.findViewById(R.id.add_to_cart_button);
         }
     }
 
-    private String formatCurrency(int amount) {
-        NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
-        return format.format(amount).replace("Rp", "Rp. ").replace(",00", "");
-    }
 }

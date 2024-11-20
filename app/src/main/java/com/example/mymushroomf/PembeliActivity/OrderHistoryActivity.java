@@ -47,18 +47,18 @@ public class OrderHistoryActivity extends AppCompatActivity {
         Date currentDate = new Date();
 
         orderList = new ArrayList<>();
-        orderList.add(new Order("1", Arrays.asList(
-                new OrderDetail("d1", new Produk1("1", "Jamur Tiram", null, "Jamur Mentah", "100 kg", 12000, R.drawable.jamur_tiram),
-                        "Selesai", "JNE", "123", "Bogor", "Indira", "0821", new Date(), 1, 12000, 7000, 19000)
-        )));
-        orderList.add(new Order("2", Arrays.asList(
-                new OrderDetail("d2", new Produk1("2", "Jamur Kancing", null, "Jamur Mentah", "200 kg", 9000, R.drawable.jamur_kancing),
-                        "Selesai", "JNE", "124", "Jakarta", "Budi", "0812", new Date(), 2, 9000, 5000, 24000)
-        )));
-        orderList.add(new Order("2", Arrays.asList(
-                new OrderDetail("d3", new Produk1("3", "Jamur Kuping", null, "Jamur Mentah", "200 kg", 9000, R.drawable.jamur_kancing),
-                        "Dalam Perjalanan", "JNE", "124", "Jakarta", "Budi", "0812", new Date(), 2, 9000, 5000, 24000)
-        )));
+//        orderList.add(new Order("1", Arrays.asList(
+//                new OrderDetail("d1", new Produk1("1", "Jamur Tiram", null, "Jamur Mentah", "100 kg", 12000, R.drawable.jamur_tiram),
+//                        "Selesai", "JNE", "123", "Bogor", "Indira", "0821", new Date(), 1, 12000, 7000, 19000)
+//        )));
+//        orderList.add(new Order("2", Arrays.asList(
+//                new OrderDetail("d2", new Produk1("2", "Jamur Kancing", null, "Jamur Mentah", "200 kg", 9000, R.drawable.jamur_kancing),
+//                        "Selesai", "JNE", "124", "Jakarta", "Budi", "0812", new Date(), 2, 9000, 5000, 24000)
+//        )));
+//        orderList.add(new Order("2", Arrays.asList(
+//                new OrderDetail("d3", new Produk1("3", "Jamur Kuping", null, "Jamur Mentah", "200 kg", 9000, R.drawable.jamur_kancing),
+//                        "Dalam Perjalanan", "JNE", "124", "Jakarta", "Budi", "0812", new Date(), 2, 9000, 5000, 24000)
+//        )));
 
         orderAdapter = new OrderAdapter(this, orderList);
 //            Intent intent = new Intent(OrderHistoryActivity.this, OrderDetailActivity.class);
@@ -133,7 +133,7 @@ public class OrderHistoryActivity extends AppCompatActivity {
         List<Order> filteredList = new ArrayList<>();
         for (Order order : orderList) {
             // Check if the order's product name or order ID matches the query
-            if (order.getOrderDetails().get(0).getProduct().getName().toLowerCase().contains(query.toLowerCase()) ||
+            if (order.getOrderDetails().get(0).getProduct().getProduct_name().toLowerCase().contains(query.toLowerCase()) ||
                     order.getOrderId().toLowerCase().contains(query.toLowerCase())) {
                 filteredList.add(order);
             }
