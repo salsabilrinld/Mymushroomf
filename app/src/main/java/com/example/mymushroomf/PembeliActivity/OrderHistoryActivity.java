@@ -104,7 +104,7 @@ public class OrderHistoryActivity extends AppCompatActivity {
 
         buttonAll.setOnClickListener(v -> orderAdapter.filter("Semua"));
         buttonDelivered.setOnClickListener(v -> orderAdapter.filter("Selesai"));
-        buttonInProgress.setOnClickListener(v -> orderAdapter.filter("Dalam Pengiriman"));
+        buttonInProgress.setOnClickListener(v -> orderAdapter.filter("Dalam Perjalanan"));
         buttonCanceled.setOnClickListener(v -> orderAdapter.filter("Dibatalkan"));
 
         // BottomNavigationView setup

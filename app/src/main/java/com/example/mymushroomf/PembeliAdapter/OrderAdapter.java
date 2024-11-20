@@ -1,13 +1,17 @@
 package com.example.mymushroomf.PembeliAdapter;
 
+import static java.lang.Integer.parseInt;
+
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +21,7 @@ import com.example.mymushroomf.PembeliModel.Order;
 import com.example.mymushroomf.PembeliModel.OrderDetail;
 import com.example.mymushroomf.R;
 
+import java.io.Serializable;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +30,7 @@ import java.util.Locale;
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHolder> {
 
     private List<Order> orderList;
+    private List<OrderDetail> orderDetails;
     private Context context;
     private List<Order> filteredOrderList;
 
@@ -44,7 +50,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
 
     @Override
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
-        Order order = orderList.get(position);
+        Order order = filteredOrderList.get(position);
 
         holder.productImage.setImageResource(order.getOrderDetails().get(0).getProduct().getImageResId());
         holder.productName.setText(order.getOrderDetails().get(0).getProduct().getName());
@@ -53,8 +59,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         holder.productPrice.setText(holder.formatCurrency(order.getOrderDetails().get(0).getTotalPayment()));
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, OrderDetailActivity.class);
-            intent.putExtra("order", order.getOrderId()); //
+          Intent intent = new Intent(context, OrderDetailActivity.class);
+          intent.putExtra("order", order);
             context.startActivity(intent);
         });
     }
@@ -68,12 +74,14 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         filteredOrderList.clear();
 
         if (status.equalsIgnoreCase("Semua")) {
-            filteredOrderList.addAll(orderList); // Tampilkan semua data
+            boolean b = filteredOrderList.addAll(orderList);// Tampilkan semua data
         } else {
             for (Order order : orderList) {
                 for (OrderDetail detail : order.getOrderDetails()) {
+
                     if (detail.getStatus().equalsIgnoreCase(status)) {
                         filteredOrderList.add(order);
+                        Log.d("OrderDetails", "Order Details Size: " + order.getOrderDetails().size());
                         break; // Tambahkan sekali untuk setiap Order
                     }
                 }
