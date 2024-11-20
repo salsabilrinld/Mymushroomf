@@ -5,10 +5,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.mymushroomf.PembeliModel.Order;
+import com.example.mymushroomf.PembeliModel.OrderDetail;
+import com.example.mymushroomf.PembeliModel.Produk1;
 import com.example.mymushroomf.R;
+
 import java.io.Serializable;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -21,8 +27,9 @@ public class OrderDetailActivity extends AppCompatActivity {
 
     private List<Order> orderList;
     private String orderId;
-    private TextView tvKurirDetail, tvResiDetail, tvAlamatDetail, tvNamaPemesan, tvNoTelpPemesan, tvNoResiDetail, tvMetodePembayaran, tvBiayaProduk, tvBiayaKirim, tvTotalBiaya;
+    private TextView productName, tvStatus, tvKurirDetail, tvResiDetail, tvAlamatDetail, tvNamaPemesan, tvNoTelpPemesan, tvMetodePembayaran, tvBiayaProduk, tvBiayaKirim, tvTotalBiaya, tvQuantity, tvTanggalOrder;
     private ImageButton backOrderButton;
+    private ImageView productImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +48,8 @@ public class OrderDetailActivity extends AppCompatActivity {
         tvAlamatDetail = findViewById(R.id.tvalamat_detail);
         tvNamaPemesan = findViewById(R.id.tvnama_pemesan);
         tvNoTelpPemesan = findViewById(R.id.tvnomor_pemesan);
-        tvNoResiDetail = findViewById(R.id.tvresi_detail);
         tvMetodePembayaran = findViewById(R.id.tvmetode_pembayaran);
+        tvQuantity = findViewById(R.id.product_quantity);
         tvBiayaProduk = findViewById(R.id.tvbiaya_produk);
         tvBiayaKirim = findViewById(R.id.tvbiaya_kirim);
         tvTotalBiaya = findViewById(R.id.tvtotal_biaya);
@@ -52,23 +59,25 @@ public class OrderDetailActivity extends AppCompatActivity {
             // Now you have the complete Order object and can use its details
             OrderDetail orderDetail = order.getOrderDetails().get(0);  // Get the first order detail
 
+            String filePath = orderDetail.getProduct().getFile_path();
+            int resId = getResources().getIdentifier(filePath, "drawable", getPackageName());
 
-        productName.setText(orderDetail.getProduct().getName());
-        productImage.setImageResource(orderDetail.getProduct().getImageResId());
-        tvStatus.setText(orderDetail.getStatus());
-        tvQuantity.setText(String.valueOf(orderDetail.getQuantity()) + " kg");
-        tvKurirDetail.setText(orderDetail.getShippingMethod());
-        tvResiDetail.setText(orderDetail.getTrackingNumber());
-        tvAlamatDetail.setText(orderDetail.getAddress());
-        tvNamaPemesan.setText(orderDetail.getRecipientName());
-        tvNoTelpPemesan.setText(orderDetail.getRecipientPhone());
-        tvMetodePembayaran.setText(orderDetail.getPaymentMethod());
-        tvBiayaProduk.setText(formatCurrency(orderDetail.getProductCost()));
-        tvBiayaKirim.setText(formatCurrency(orderDetail.getShippingCost()));
-        tvTotalBiaya.setText(formatCurrency(orderDetail.getTotalPayment()));
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  // Format the date to your desired format
-        String formattedDate = sdf.format(orderDetail.getOrderDate());  // Format the orderDate
-        tvTanggalOrder.setText("Order Date: " + formattedDate);
+            productName.setText(orderDetail.getProduct().getProduct_name());
+            productImage.setImageResource(resId);
+            tvStatus.setText(orderDetail.getStatus());
+            tvQuantity.setText(String.valueOf(orderDetail.getQuantity()) + " kg");
+            tvKurirDetail.setText(orderDetail.getShippingMethod());
+            tvResiDetail.setText(orderDetail.getTrackingNumber());
+            tvAlamatDetail.setText(orderDetail.getAddress());
+            tvNamaPemesan.setText(orderDetail.getRecipientName());
+            tvNoTelpPemesan.setText(orderDetail.getRecipientPhone());
+            tvMetodePembayaran.setText(orderDetail.getPaymentMethod());
+            tvBiayaProduk.setText(formatCurrency(orderDetail.getProductCost()));
+            tvBiayaKirim.setText(formatCurrency(orderDetail.getShippingCost()));
+            tvTotalBiaya.setText(formatCurrency(orderDetail.getTotalPayment()));
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  // Format the date to your desired format
+            String formattedDate = sdf.format(orderDetail.getOrderDate());  // Format the orderDate
+            tvTanggalOrder.setText("Order Date: " + formattedDate);
 
         } else {
             Log.e("OrderDetailActivity", "Order is null");
@@ -80,12 +89,10 @@ public class OrderDetailActivity extends AppCompatActivity {
         backOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Example: Go back to previous activity
-                finish();
+                finish(); // Go back to previous activity
             }
         });
     }
-
 
     private Order getOrderById(String orderId) {
 

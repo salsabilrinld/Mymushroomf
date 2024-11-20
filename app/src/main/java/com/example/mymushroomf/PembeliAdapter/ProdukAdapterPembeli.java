@@ -51,7 +51,7 @@ public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPemb
 
         // Memuat gambar produk dari file_path
         Glide.with(context)
-                .load("http://10.7.23.143/product_images" + product.getFile_path()) // Tambahkan URL base untuk file_path
+                .load("http://192.168.1.15/product_images" + product.getFile_path()) // Tambahkan URL base untuk file_path
 //                .placeholder(R.drawable.placeholder_image) // Placeholder jika gambar gagal dimuat
 //                .error(R.drawable.error_image) // Placeholder jika ada error
                 .into(holder.productImage);

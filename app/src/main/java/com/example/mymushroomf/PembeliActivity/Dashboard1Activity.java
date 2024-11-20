@@ -148,7 +148,7 @@ public class Dashboard1Activity extends AppCompatActivity {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.9/MushRoom/public/api/")
+                .baseUrl("http://192.168.1.15/mushroom4/public/api/products/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
