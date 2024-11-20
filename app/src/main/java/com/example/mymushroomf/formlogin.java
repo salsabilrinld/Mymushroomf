@@ -148,50 +148,53 @@ public class formlogin extends AppCompatActivity { // Menggunakan FormLogin sepe
 //        }
         }
 
+        else {
+            Gson gson = new GsonBuilder()
+                    .setLenient()
+                    .create();
 
-//        else {
-//            Gson gson = new GsonBuilder()
-//                    .setLenient()
-//                    .create();
-//
-//            Retrofit retrofit = new Retrofit.Builder()
-//                    .baseUrl("http://192.168.1.9/MushRoom/public/api/")
-//                    .addConverterFactory(GsonConverterFactory.create(gson))
-//                    .build();
-//
-//            UserService service = retrofit.create(UserService.class);
-//            Call<Users> call = service.signin(email, password);
-//
-//            call.enqueue(new Callback<Users>() {
-//                @Override
-//                public void onResponse(Call<Users> call, Response<Users> response) {
-//                    if (response.isSuccessful() && response.body() != null && "success".equals(response.body().getStatus())) {
-//                        Users.UserData userData = response.body().getUser(); // Mengambil objek user
-//
-//                        // Simpan nama pengguna di SharedPreferences
-//                        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
-//                        SharedPreferences.Editor editor = sharedPreferences.edit();
-//                        editor.putString("name", userData.getUsername()); // Mendapatkan username dari objek user
-//                        editor.apply();
-//
-//                        // Login berhasil, arahkan ke MainActivity
-//                        Intent intent = new Intent(formlogin.this, Dashboard1Activity.class);
-//                        intent.putExtra("email", userData.getEmail());
-//                        startActivity(intent);
-//                        finish();
-//                    } else {
-//                        // Respons gagal atau pengguna tidak ditemukan
-//                        Toast.makeText(getApplicationContext(), "Pengguna tidak terdaftar atau data tidak valid", Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<Users> call, Throwable t) {
-//                    // Log kesalahan dan tampilkan pesan error kepada pengguna
-//                    Log.e("LoginError", "Login failed: " + t.getMessage());
-//                    Toast.makeText(getApplicationContext(), "Gagal terhubung ke server, coba lagi nanti.", Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//        }
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://mushroom.miauwlan.com/api/")
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .build();
+
+            UserService service = retrofit.create(UserService.class);
+            Call<Users> call = service.signin(email, password);
+
+            call.enqueue(new Callback<Users>() {
+                @Override
+                public void onResponse(Call<Users> call, Response<Users> response) {
+                    if (response.isSuccessful() && response.body() != null && "success".equals(response.body().getStatus())) {
+                        Users.UserData userData = response.body().getUser(); // Mengambil objek user
+
+                        // Simpan nama pengguna di SharedPreferences
+                        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("name", userData.getUsername()); // Mendapatkan username dari objek user
+                        editor.putString("email", userData.getEmail());
+                        editor.putString("phone", userData.getPhone());
+                        editor.putString("password", userData.getPassword());
+                        editor.putString("profile_path", userData.getProfilePath());
+                        editor.apply();
+
+                        // Login berhasil, arahkan ke MainActivity
+                        Intent intent = new Intent(formlogin.this, Dashboard1Activity.class);
+                        intent.putExtra("email", userData.getEmail());
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        // Respons gagal atau pengguna tidak ditemukan
+                        Toast.makeText(getApplicationContext(), "Pengguna tidak terdaftar atau data tidak valid", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Users> call, Throwable t) {
+                    // Log kesalahan dan tampilkan pesan error kepada pengguna
+                    Log.e("LoginError", "Login failed: " + t.getMessage());
+                    Toast.makeText(getApplicationContext(), "Gagal terhubung ke server, coba lagi nanti.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 //}

@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mymushroomf.ApiClient;
@@ -87,15 +88,18 @@ public class Dashboard1Activity extends AppCompatActivity {
         // Setup RecyclerView
         recyclerView = findViewById(R.id.recycler_viewproduct);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Initialize product list and filtered product list
         productList = new ArrayList<>();
         filteredProductList = new ArrayList<>(productList);
 
         // Initialize the adapter
-        produkAdapterPembeli = new ProdukAdapterPembeli(this, productList);
-        recyclerView.setAdapter(produkAdapterPembeli);
+//        produkAdapterPembeli = new ProdukAdapterPembeli(this, productList);
+//        recyclerView.setAdapter(produkAdapterPembeli);
 
+        produkAdapterPembeli = new ProdukAdapterPembeli(productList);
+        recyclerView.setAdapter(produkAdapterPembeli);
         // Fetch products from API
         fetchProducts();
 
@@ -148,7 +152,8 @@ public class Dashboard1Activity extends AppCompatActivity {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.15/mushroom4/public/api/products/")
+
+                .baseUrl("https://mushroom.miauwlan.com/api/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
@@ -170,6 +175,7 @@ public class Dashboard1Activity extends AppCompatActivity {
                     Log.e("Dashboard1Activity", "HTTP error: " + response.code());
                     Toast.makeText(Dashboard1Activity.this, "HTTP error: " + response.code(), Toast.LENGTH_SHORT).show();
                 }
+                Log.d("API Response", "Data: " + new Gson().toJson(response.body()));
             }
 
             @Override
@@ -181,6 +187,7 @@ public class Dashboard1Activity extends AppCompatActivity {
                     Log.e("Dashboard1Activity", "Conversion error: " + t.getMessage());
                     Toast.makeText(Dashboard1Activity.this, "Unexpected error occurred", Toast.LENGTH_SHORT).show();
                 }
+                Log.e("API Error", "Error: ", t);
             }
         });
     }
