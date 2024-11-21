@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class OrderDetail implements Serializable {
-    private Produk1 product;
+    private Produk product;
     private String orderDetailId;
     private String status;
     private String shippingMethod;
@@ -19,7 +19,7 @@ public class OrderDetail implements Serializable {
     private int shippingCost;
     private int totalPayment;
 
-    public OrderDetail(String orderDetailId, Produk1 product, String status, String shippingMethod, String trackingNumber,
+    public OrderDetail(String orderDetailId, Produk product, String status, String shippingMethod, String trackingNumber,
                        String address, String recipientName, String recipientPhone, Date orderDate, int quantity,
                        int productCost, int shippingCost, int totalPayment) {
         this.orderDetailId = orderDetailId;
@@ -43,7 +43,7 @@ public class OrderDetail implements Serializable {
         return orderDetailId;
     }
 
-    public Produk1 getProduct() {
+    public Produk getProduct() {
         return product;
     }
 
@@ -103,7 +103,7 @@ public class OrderDetail implements Serializable {
         return totalPayment;
     }
 
-    public void setProduct(Produk1 product) {
+    public void setProduct(Produk product) {
         this.product = product;
     }
 

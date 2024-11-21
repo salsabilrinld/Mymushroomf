@@ -1,49 +1,51 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:background="@color/cokmud"
+    tools:context=".PembeliActivity.ProductDetailActivity">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@color/cokmud" />
 
-    <View
+    <ImageView
+        android:id="@+id/product_image"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="bottom"
-        android:layout_weight="1"
-        android:background="@color/white" />
+        android:layout_height="300dp"
+        android:src="@drawable/jamur_enoki"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent">
+        <ImageButton
+            android:id="@+id/back_dashboard"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_back"
+            android:contentDescription="Back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp"
-        android:layout_gravity="bottom">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/product_image">
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <ImageButton
-                android:id="@+id/back_dashboard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:src="@drawable/back_arrow"
-                android:backgroundTint="@color/cokmud"
-                />
-
-            <ImageView
-                android:id="@+id/product_image"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
-                android:scaleType="centerCrop"
-                android:layout_gravity="center"
-                android:src="@drawable/jamur_tiram"
-                android:contentDescription="@string/jamur_tiram"/>
+            android:orientation="vertical"
+            android:padding="12dp"
+            android:background="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/product_image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
             <TextView
                 android:id="@+id/product_price"
@@ -74,6 +76,7 @@
                 <TextView
                     android:id="@+id/product_details"
                     android:layout_width="wrap_content"
+
                     android:layout_height="wrap_content"
                     android:text="Terjual 1.807"
                     android:fontFamily="@font/inter_reguler"
@@ -97,30 +100,13 @@
                     android:id="@+id/product_stock"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Stock 120"
+                    android:text="Stok 120"
                     android:fontFamily="@font/inter_reguler"
                     android:textSize="14sp"
                     android:layout_marginTop="4dp"
                     android:textColor="@color/black" />
 
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/ulasan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ulasan Pembeli"
-                android:textColor="@color/black"
-                android:fontFamily="@font/inter_bold"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginTop="16dp"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/reviewRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -141,60 +127,23 @@
                 android:fontFamily="@font/inter_reguler"
                 android:layout_marginTop="4dp"
                 android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/ulasan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ulasan Pembeli"
+                android:textColor="@color/black"
+                android:fontFamily="@font/inter_bold"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"/>
 
-            <LinearLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/reviewRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="16dp"
-                android:gravity="center_vertical">
+                android:padding="16dp" />
 
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/ic_profile"
-                    android:contentDescription="@string/profile"/>
-
-                <LinearLayout
-                    android:id="@+id/seller_info"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingRight="35dp">
-
-                    <TextView
-                        android:id="@+id/seller_username"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="TukangJamur123"
-                        android:fontFamily="@font/inter_bold"
-                        android:textStyle="bold"
-                        android:textSize="14sp"
-                        android:layout_marginStart="8dp"
-                        android:textColor="@color/black" />
-
-                    <TextView
-                        android:id="@+id/seller_status"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Aktif 5 menit lalu"
-                        android:fontFamily="@font/inter_reguler"
-                        android:textSize="10sp"
-                        android:layout_marginStart="8dp"
-                        android:textColor="@color/grey" />
-
-                    <TextView
-                        android:id="@+id/seller_location"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Kota Bogor"
-                        android:fontFamily="@font/inter_reguler"
-                        android:textSize="14sp"
-                        android:layout_marginStart="8dp"
-                        android:textColor="@color/black" />
-                </LinearLayout>
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -222,7 +171,6 @@
                     android:fontFamily="@font/inter_bold"
                     android:textColor="@color/white" />
             </LinearLayout>
-
         </LinearLayout>
     </ScrollView>
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

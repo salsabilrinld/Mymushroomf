@@ -2,6 +2,7 @@ package com.example.mymushroomf.PembeliAdapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,16 +16,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.mymushroomf.PembeliActivity.ProductDetailActivity;
-import com.example.mymushroomf.PembeliModel.Produk1;
+import com.example.mymushroomf.PembeliModel.Produk;
 import com.example.mymushroomf.R;
 
 import java.util.List;
 
 public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPembeli.ProductViewHolder> {
 
-    private List<Produk1> productList;
+    private List<Produk> productList;
 
-    public ProdukAdapterPembeli(List<Produk1> productList) {
+    public ProdukAdapterPembeli(List<Produk> productList) {
         this.productList = productList;
     }
 
@@ -38,8 +39,9 @@ public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPemb
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-        Produk1 product = productList.get(position);
+        Produk product = productList.get(position);
 
+        Log.d("Adapter", "Binding product: " + product.getProduct_name());
         // Validasi null untuk data produk
         if (product != null) {
             holder.productName.setText(product.getProduct_name());
@@ -48,7 +50,7 @@ public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPemb
 
             // Memuat gambar produk menggunakan Glide
             Glide.with(holder.itemView.getContext())
-                    .load("https://mushroom.miauwlan.com/" + product.getFile_path()) // Pastikan base URL benar
+                    .load("https://mushroom.miauwlan.com/storage/" + product.getFile_path()) // Pastikan base URL benar
 //                    .placeholder(R.drawable.placeholder_image) // Placeholder jika gambar sedang dimuat
 //                    .error(R.drawable.error_image) // Placeholder jika gambar gagal dimuat
                     .into(holder.productImage);
@@ -74,7 +76,7 @@ public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPemb
     }
 
     // Metode untuk memperbarui data produk dan menyegarkan tampilan
-    public void updateProductList(List<Produk1> newProductList) {
+    public void updateProductList(List<Produk> newProductList) {
         this.productList.clear();
         this.productList.addAll(newProductList);
         notifyDataSetChanged();

@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 
-public class Produk1 implements Serializable {
+public class Produk implements Serializable {
     @SerializedName("id")
     private int id;
     @SerializedName("product_name")
@@ -22,7 +22,7 @@ public class Produk1 implements Serializable {
     private String file_path;  // Assuming the image is a String URL or path
 
     // Constructor
-    public Produk1(int id, String product_name, String description, String category, int stock, int price, String file_path) {
+    public Produk(int id, String product_name, String description, String category, int stock, int price, String file_path) {
         this.id = id;
         this.product_name = product_name;
         this.description = description;

@@ -14,8 +14,8 @@ import com.bumptech.glide.Glide;
 import com.example.mymushroomf.ApiClient;
 import com.example.mymushroomf.PembeliModel.CartItem;
 import com.example.mymushroomf.PembeliModel.CartManager;
-import com.example.mymushroomf.PembeliModel.Produk1;
-import com.example.mymushroomf.PembeliService.ProdukService;
+import com.example.mymushroomf.PembeliModel.Produk;
+import com.example.mymushroomf.services.ProdukService;
 import com.example.mymushroomf.R;
 
 import retrofit2.Call;
@@ -28,7 +28,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     private TextView productNameTextView;
     private TextView productPriceTextView;
     private TextView productDescriptionTextView;
-    private Produk1 product; // Objek Produk1 untuk data produk
+    private Produk product; // Objek Produk1 untuk data produk
     private Button addToCartButton;
     private Button buyNowButton;
     private ImageButton backButton;
@@ -108,13 +108,13 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     private void fetchProductDetails(int productId) {
         ProdukService apiService = ApiClient.getProdukService();
-        Call<Produk1> call = apiService.getProductDetail(productId);
+        Call<Produk> call = apiService.getProductDetail(productId);
 
-        call.enqueue(new Callback<Produk1>() {
+        call.enqueue(new Callback<Produk>() {
             @Override
-            public void onResponse(Call<Produk1> call, Response<Produk1> response) {
+            public void onResponse(Call<Produk> call, Response<Produk> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    Produk1 product = response.body();
+                    Produk product = response.body();
                     productNameTextView.setText(product.getProduct_name());
                     productPriceTextView.setText("Rp" + product.getPrice());
                     productDescriptionTextView.setText(product.getDescription());
@@ -126,7 +126,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Produk1> call, Throwable t) {
+            public void onFailure(Call<Produk> call, Throwable t) {
                 Toast.makeText(ProductDetailActivity.this, "Error loading product details", Toast.LENGTH_SHORT).show();
             }
         });

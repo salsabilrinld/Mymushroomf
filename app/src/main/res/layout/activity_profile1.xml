@@ -93,7 +93,6 @@
                         android:id="@+id/editProfileButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/followInfo"
                         android:layout_alignParentStart="true"
                         android:layout_marginTop="12dp"
                         android:layout_marginEnd="8dp"

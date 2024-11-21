@@ -15,14 +15,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.mymushroomf.PembeliActivity.Dashboard1Activity;
+import com.example.mymushroomf.PembeliActivity.DashboardActivity;
 import com.example.mymushroomf.PembeliModel.Users;
 import com.example.mymushroomf.PembeliService.UserService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -140,7 +137,7 @@ public class formlogin extends AppCompatActivity { // Menggunakan FormLogin sepe
                         editor.apply();
 
                         // Login berhasil, arahkan ke MainActivity
-                        Intent intent = new Intent(formlogin.this, Dashboard1Activity.class);
+                        Intent intent = new Intent(formlogin.this, DashboardActivity.class);
                         intent.putExtra("email", userData.getEmail());
                         startActivity(intent);
                         finish();

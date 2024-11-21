@@ -3,24 +3,18 @@ package com.example.mymushroomf.PembeliActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mymushroomf.PembeliModel.OrderDetail;
-import com.example.mymushroomf.PembeliModel.Produk1;
 import com.example.mymushroomf.R;
 import com.example.mymushroomf.PembeliModel.Order;
 import com.example.mymushroomf.PembeliAdapter.OrderAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -106,7 +100,7 @@ public class OrderHistoryActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.menu_store) {
-                startActivity(new Intent(OrderHistoryActivity.this, Dashboard1Activity.class));
+                startActivity(new Intent(OrderHistoryActivity.this, DashboardActivity.class));
                 return true;
             } else if (itemId == R.id.menu_transaction) {
                 Toast.makeText(OrderHistoryActivity.this, "Transaction selected", Toast.LENGTH_SHORT).show();

@@ -100,7 +100,7 @@ public class CartManager {
     }
 
     // Memeriksa apakah produk sudah ada di keranjang
-    public boolean isProductInCart(Produk1 product) {
+    public boolean isProductInCart(Produk product) {
         for (CartItem item : cartItems) {
             if (item.getProduct().equals(product)) {
                 return true;

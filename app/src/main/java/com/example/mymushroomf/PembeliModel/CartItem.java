@@ -5,19 +5,19 @@ import java.io.Serializable;
 public class CartItem implements Serializable {
     private static final long serialVersionUID = 1L; // Menambahkan serialVersionUID untuk identifikasi versi kelas
 
-    private Produk1 product;
+    private Produk product;
     private int quantity;
     private boolean isSelected;
 
     // Constructor
-    public CartItem(Produk1 product, int quantity) {
+    public CartItem(Produk product, int quantity) {
         this.product = product;
         this.quantity = quantity;
         this.isSelected = false;
     }
 
     // Getter methods for CartItem fields
-    public Produk1 getProduct() {
+    public Produk getProduct() {
         return product;
     }
 
@@ -30,7 +30,7 @@ public class CartItem implements Serializable {
     }
 
     // Setter methods for CartItem fields
-    public void setProduct(Produk1 product) {
+    public void setProduct(Produk product) {
         this.product = product;
     }
 

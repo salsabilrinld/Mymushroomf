@@ -77,7 +77,7 @@ public class Profile1Activity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.menu_profile);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             if (item.getItemId() == R.id.menu_store) {
-                Intent intent = new Intent(Profile1Activity.this, Dashboard1Activity.class);
+                Intent intent = new Intent(Profile1Activity.this, DashboardActivity.class);
                 startActivity(intent);
                 return true;
             } else if (item.getItemId() == R.id.menu_transaction) {

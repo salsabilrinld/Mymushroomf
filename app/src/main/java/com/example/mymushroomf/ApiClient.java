@@ -1,6 +1,6 @@
 package com.example.mymushroomf;
 
-import com.example.mymushroomf.PembeliService.ProdukService;
+import com.example.mymushroomf.services.ProdukService;
 import com.example.mymushroomf.PembeliService.UserService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
