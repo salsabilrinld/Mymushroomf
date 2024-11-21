@@ -39,7 +39,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="end"
-                android:background="@drawable/ic_bell"
+                android:background="@drawable/bell_lagi"
                 android:contentDescription="@string/title_notifications"/>
 
             <ImageButton
@@ -47,7 +47,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="end"
-                android:background="@drawable/ic_keranjang"
+                android:background="@drawable/bags"
                 android:layout_marginLeft="12dp"
                 android:contentDescription="Keranjang"/>
 

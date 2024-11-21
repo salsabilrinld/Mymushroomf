@@ -30,7 +30,6 @@ public class OrderHistoryActivity extends AppCompatActivity {
     private SearchView searchEditText;
     private OrderAdapter orderAdapter;
     private List<Order> orderList;
-    private ImageButton keranjangButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +40,6 @@ public class OrderHistoryActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_viewtransaction);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         searchEditText = findViewById(R.id.searchEditText);
-        keranjangButton = findViewById(R.id.cart_icon);
 
 
         Date currentDate = new Date();
@@ -71,10 +69,6 @@ public class OrderHistoryActivity extends AppCompatActivity {
 //        });
         recyclerView.setAdapter(orderAdapter);
 
-        keranjangButton.setOnClickListener(view -> {
-            Intent keranjangIntent = new Intent(OrderHistoryActivity.this, Keranjang1Activity.class);
-            startActivity(keranjangIntent);
-        });
 
         searchEditText.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

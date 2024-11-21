@@ -21,6 +21,7 @@ import com.example.mymushroomf.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +47,7 @@ import com.example.mymushroomf.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class Keranjang1Activity extends AppCompatActivity implements CartAdapter.OnCartItemInteractionListener {
 
@@ -132,13 +134,13 @@ public class Keranjang1Activity extends AppCompatActivity implements CartAdapter
 
     // Update total price based on selected items
     private void updateTotalPrice() {
-        double total = 0;
+        int total = 0;
         for (CartItem item : cartItems) {
             if (item.isSelected()) { // Only count selected items
                 total += item.getProduct().getPrice() * item.getQuantity();
             }
         }
-        totalPriceTextView.setText("Total: Rp. " + total);
+        totalPriceTextView.setText("Total: " + formatCurrency(total));
     }
 
     // Select or deselect all items in the cart
@@ -177,5 +179,10 @@ public class Keranjang1Activity extends AppCompatActivity implements CartAdapter
         }
 
         return new ArrayList<>();
+    }
+
+    private String formatCurrency(int amount) {
+        NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+        return format.format(amount).replace("Rp", "Rp. ").replace(",00", "");
     }
 }
