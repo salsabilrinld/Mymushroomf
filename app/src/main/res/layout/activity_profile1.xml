@@ -87,36 +87,6 @@
                         android:fontFamily="@font/manrope_bold"
                         android:textStyle="bold" />
 
-                    <LinearLayout
-                        android:id="@+id/followInfo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-
-                        <TextView
-                            android:id="@+id/followersInfo"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_below="@id/username"
-                            android:layout_centerHorizontal="true"
-                            android:text="122 Pengikut"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/followingInfo"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/username"
-                            android:layout_weight="1"
-                            android:layout_centerHorizontal="true"
-                            android:text="67 Mengikuti"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
-
-                    </LinearLayout>
 
 
                     <Button
