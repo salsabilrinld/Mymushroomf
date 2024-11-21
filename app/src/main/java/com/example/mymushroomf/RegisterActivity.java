@@ -104,7 +104,7 @@ public class RegisterActivity extends AppCompatActivity {
                     if ("success".equals(data.getStatus())) {
                         Toast.makeText(RegisterActivity.this, "Pendaftaran berhasil untuk " + data.getUser().getUsername(), Toast.LENGTH_SHORT).show();
 
-                        Intent intent = new Intent(RegisterActivity.this, OTPActivity.class);
+                        Intent intent = new Intent(RegisterActivity.this, formlogin.class);
                         startActivity(intent);
                         finish();
                     } else {

@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.play.services.maps)
     implementation(libs.retrofit)
     implementation(libs.google.gson)
+    implementation(libs.logging.interceptor)
 
     // Untuk testing
     testImplementation(libs.junit)
