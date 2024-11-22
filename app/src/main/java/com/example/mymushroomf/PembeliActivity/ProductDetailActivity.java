@@ -27,6 +27,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     private ImageView productImageView;
     private TextView productNameTextView;
     private TextView productPriceTextView;
+    private TextView productStockTextView;
     private TextView productDescriptionTextView;
     private Produk product; // Objek Produk1 untuk data produk
     private Button addToCartButton;
@@ -42,6 +43,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         productImageView = findViewById(R.id.product_image);
         productNameTextView = findViewById(R.id.product_name);
         productPriceTextView = findViewById(R.id.product_price);
+        productStockTextView = findViewById(R.id.product_stock);
         productDescriptionTextView = findViewById(R.id.product_description);
         backButton = findViewById(R.id.back_dashboard);
         buyNowButton = findViewById(R.id.buy_now_button);
@@ -118,6 +120,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                     productNameTextView.setText(product.getProduct_name());
                     productPriceTextView.setText("Rp" + product.getPrice());
                     productDescriptionTextView.setText(product.getDescription());
+                    productStockTextView.setText("Stock: " + product.getStock());
 
                     Glide.with(ProductDetailActivity.this)
                             .load(product.getFile_path())

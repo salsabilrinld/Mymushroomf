@@ -37,6 +37,7 @@
             android:layout_marginBottom="16dp"
             android:fontFamily="@font/inter_reguler"
             android:hint="Nama"
+            android:textColor="@color/black"
             android:padding="12dp" />
 
         <EditText
@@ -46,6 +47,7 @@
             android:layout_marginBottom="16dp"
             android:fontFamily="@font/inter_reguler"
             android:hint="Email"
+            android:textColor="@color/black"
             android:inputType="textEmailAddress"
             android:padding="12dp" />
 
@@ -55,6 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:hint="No. Telepon"
+            android:textColor="@color/black"
             android:fontFamily="@font/inter_reguler"
             android:inputType="phone"
             android:padding="12dp" />
@@ -63,9 +66,11 @@
             android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:fontFamily="@font/inter_reguler"
+            android:layout_marginBottom="24dp"
             android:hint="Password"
+            android:textColor="@color/black"
+            android:fontFamily="@font/inter_reguler"
+            android:inputType="textPassword"
             android:padding="12dp" />
 
         <EditText
@@ -74,6 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             android:hint="Repeat Password"
+            android:textColor="@color/black"
             android:fontFamily="@font/inter_reguler"
             android:inputType="textPassword"
             android:padding="12dp" />
