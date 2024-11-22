@@ -148,7 +148,6 @@ public class DashboardActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                         productList.clear();
-//                        productList.addAll(response.body());
                         productList = response.body();
                         produkAdapterPembeli.updateProductList(productList);
                     } else {
@@ -175,6 +174,7 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
     }
+
 
 
 }

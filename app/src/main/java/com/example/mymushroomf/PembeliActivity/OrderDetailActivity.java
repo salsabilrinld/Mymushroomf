@@ -90,18 +90,12 @@ public class OrderDetailActivity extends AppCompatActivity {
 
     private Order getOrderById(String orderId) {
 
-//            OrderDetail orderDetail = new OrderDetail("d1", new Produk1("1", "Jamur Tiram", "Deskripsi", "Jamur Mentah", "100 kg", 12000, R.drawable.jamur_tiram),
-//                    "Selesai", " JNE", "123", "Bogor", "Indira", "0821", new Date(), 1, 12000, 7000, 19000);
-//            ArrayList<OrderDetail> orderDetails = new ArrayList<>();
-//            orderDetails.add(orderDetail);
-//
-//            return new Order(orderId, orderDetails);
-        for (Order order : orderList) { // Assuming you have a list of orders
+        for (Order order : orderList) {
             if (order.getOrderId().equals(orderId)) {
                 return order;
             }
         }
-        return null; // Return null if no matching order is found
+        return null;
     }
 
     private String formatCurrency(int amount) {

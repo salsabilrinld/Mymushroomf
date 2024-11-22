@@ -19,7 +19,9 @@ import com.example.mymushroomf.PembeliActivity.ProductDetailActivity;
 import com.example.mymushroomf.PembeliModel.Produk;
 import com.example.mymushroomf.R;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPembeli.ProductViewHolder> {
 
@@ -46,7 +48,7 @@ public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPemb
         if (product != null) {
             holder.productName.setText(product.getProduct_name());
             holder.productCategory.setText(product.getCategory());
-            holder.productPrice.setText("Rp " + product.getPrice());
+            holder.productPrice.setText(formatCurrency(product.getPrice()));
 
             // Memuat gambar produk menggunakan Glide
             Glide.with(holder.itemView.getContext())
@@ -95,5 +97,10 @@ public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPemb
             productPrice = itemView.findViewById(R.id.product_price);
             addToCartButton = itemView.findViewById(R.id.add_to_cart_button);
         }
+    }
+
+    private String formatCurrency(int amount) {
+        NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+        return format.format(amount).replace("Rp", "Rp. ").replace(",00", "");
     }
 }

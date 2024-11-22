@@ -33,9 +33,9 @@ public class PemesananDetailActivity extends AppCompatActivity {
     private TextView tvAddressLabel, tvAddressNamePhone, tvAddressDetails;
 
     private Address selectedAddress;
-    private int shippingCost = 7000; // Default shipping cost (Regular)
-    private int totalPrice = 0; // Total price calculated dynamically
-    private int productCost = 12000; // Example product price
+    private int shippingCost = 7000;
+    private int totalPrice = 0;
+    private int productCost = 12000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

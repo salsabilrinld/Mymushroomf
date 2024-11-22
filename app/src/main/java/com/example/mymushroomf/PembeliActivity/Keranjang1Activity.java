@@ -63,7 +63,6 @@ public class Keranjang1Activity extends AppCompatActivity implements CartAdapter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_keranjang1);
 
-        // Initialize views
         cartRecyclerView = findViewById(R.id.recycler_viewkeranjang);
         totalPriceTextView = findViewById(R.id.totalPrice);
         checkBoxSelectAll = findViewById(R.id.checkBoxSelectAll);
