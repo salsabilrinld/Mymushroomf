@@ -4,7 +4,7 @@
 
     <domain-config cleartextTrafficPermitted="true">
 
-        <domain includeSubdomains="true">https://mushroom.miauwlan.com</domain>
+        <domain includeSubdomains="true">192.168.101.85</domain>
 
 
         <trust-anchors>

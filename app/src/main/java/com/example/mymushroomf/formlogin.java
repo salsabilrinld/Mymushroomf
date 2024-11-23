@@ -29,6 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class formlogin extends AppCompatActivity { // Menggunakan FormLogin seperti yang diinginkan
 
+    private UserService userService;
     private EditText emailEditText;
     private EditText passwordEditText;
     private Button loginButton;
@@ -40,23 +41,23 @@ public class formlogin extends AppCompatActivity { // Menggunakan FormLogin sepe
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_formlogin);
 
-        // Menghubungkan layout dengan kode
+//        userService = ApiClient.getRetrofitInstance(getApplicationContext()).create(UserService.class);
+
         emailEditText = findViewById(R.id.emailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
         loginButton = findViewById(R.id.loginButton);
         createAccountText = findViewById(R.id.createAccountText);
 
-        // Set padding untuk Edge-to-Edge UI
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // Logika untuk tombol login
+
         loginButton.setOnClickListener(v -> loginUser());
 
-        // Logika untuk teks pendaftaran
         createAccountText.setOnClickListener(v -> {
             Intent intent = new Intent(formlogin.this, RegisterActivity.class);
             startActivity(intent);
@@ -67,93 +68,73 @@ public class formlogin extends AppCompatActivity { // Menggunakan FormLogin sepe
         String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
 
-        // Periksa apakah email dan password diisi
         if (email.isEmpty() || password.isEmpty()) {
             Toast.makeText(formlogin.this, "Email dan Password harus diisi", Toast.LENGTH_SHORT).show();
             return;
+        } else {
+            Gson gson = new GsonBuilder().setLenient().create();
+            UserService service = ApiClient.getUserService();
+            Call<Users> call = service.login(email, password);
 
-
-//        // Mengambil data dari SharedPreferences
-//        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
-//        String storedEmail = sharedPreferences.getString("email", null);
-//        String storedPassword = sharedPreferences.getString("password", null);
-//        String storedName = sharedPreferences.getString("name", "");
-//
-//        Log.d("LoginDebug", "Stored Email: " + storedEmail + ", Stored Password: " + storedPassword);
-//        Log.d("LoginDebug", "Input Email: " + email + ", Input Password: " + password);
-//
-//        // Memeriksa apakah email dan password yang dimasukkan sama dengan yang tersimpan
-//        if (email.equals(storedEmail) && password.equals(storedPassword)) {
-//            // Login berhasil
-//            Toast.makeText(this, "Login berhasil", Toast.LENGTH_SHORT).show();
-//
-//            // Simpan status login
-//            SharedPreferences.Editor editor = sharedPreferences.edit();
-//            editor.putBoolean("isLoggedIn", true);
-//            editor.apply();
-//
-//            // Menyimpan nama pengguna untuk digunakan di aktivitas lain
-//            SharedPreferences myPrefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-//            SharedPreferences.Editor myPrefsEditor = myPrefs.edit();
-//            myPrefsEditor.putString("name", storedName);
-//            myPrefsEditor.apply();
-//
-//            // Pindah ke DashboardActivity
-//            Intent intent = new Intent(formlogin.this, Dashboard1Activity.class);
-//            startActivity(intent);
-//            finish(); // Mengakhiri FormLogin
-//        } else {
-//            Toast.makeText(this, "Login gagal, cek email dan password", Toast.LENGTH_SHORT).show();
-//        }
-        }
-
-        else {
-            Gson gson = new GsonBuilder()
-                    .setLenient()
-                    .create();
-
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://mushroom.miauwlan.com/api/")
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .build();
-
-            UserService service = retrofit.create(UserService.class);
-            Call<Users> call = service.signin(email, password);
-
+            // Retrofit enqueue call to handle API request asynchronously
             call.enqueue(new Callback<Users>() {
                 @Override
                 public void onResponse(Call<Users> call, Response<Users> response) {
-                    if (response.isSuccessful() && response.body() != null && "success".equals(response.body().getStatus())) {
-                        Users.UserData userData = response.body().getUser(); // Mengambil objek user
+                    Log.d("Login", "Response: " + response.toString());
+                    Log.d("Login", "Response user: " + response.body().getData());
+                    if (response.isSuccessful() && response.body() != null) {
 
-                        // Simpan nama pengguna di SharedPreferences
-                        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+                        // Log the response body to check its content
+                        Log.d("Login", "Response body: " + new Gson().toJson(response.body()));
+
+                        // Log the status to verify its value
+                        Log.d("Login", "Response status: " + response.body().getStatus());
+
+
+                        Users apiResponse = response.body();
+
+                        // Access data
+                        Users.Data data = apiResponse.getData();
+                        String token = data.getToken();
+                        Users.User user = data.getUser();
+
+
+                        // Save data to SharedPreferences
+                        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("name", userData.getUsername()); // Mendapatkan username dari objek user
-                        editor.putString("email", userData.getEmail());
-                        editor.putString("phone", userData.getPhone());
-                        editor.putString("password", userData.getPassword());
-                        editor.putString("profile_path", userData.getProfilePath());
+
+                        editor.putString("token", token);
+                        editor.putInt("userId", user.getId());
+                        editor.putString("fullname", user.getFullname());
+                        editor.putString("username", user.getUsername());
+                        editor.putString("email", user.getEmail());
+                        editor.putString("phone", user.getPhone());
+                        editor.putString("address", user.getAddress());
+                        editor.putString("profilePath", user.getProfilePath());
+
+                        // Apply changes
                         editor.apply();
 
-                        // Login berhasil, arahkan ke MainActivity
+                        Log.d("PREFS", "Data saved to SharedPreferences");
+
+                        // Now navigate to the Dashboard or other activity
                         Intent intent = new Intent(formlogin.this, DashboardActivity.class);
-                        intent.putExtra("email", userData.getEmail());
                         startActivity(intent);
-                        finish();
+                        finish(); // Optional: Close the login activity
                     } else {
-                        // Respons gagal atau pengguna tidak ditemukan
-                        Toast.makeText(getApplicationContext(), "Pengguna tidak terdaftar atau data tidak valid", Toast.LENGTH_SHORT).show();
+                        Log.e("API_ERROR", "Response unsuccessful");
+                        Toast.makeText(formlogin.this, "Login failed. Please try again.", Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<Users> call, Throwable t) {
-                    // Log kesalahan dan tampilkan pesan error kepada pengguna
-                    Log.e("LoginError", "Login failed: " + t.getMessage());
-                    Toast.makeText(getApplicationContext(), "Gagal terhubung ke server, coba lagi nanti.", Toast.LENGTH_SHORT).show();
+                    Log.e("API_ERROR", "Request failed: " + t.getMessage());
+                    Toast.makeText(formlogin.this, "Network error. Please try again.", Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
+
+
 }

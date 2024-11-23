@@ -15,7 +15,7 @@ import com.example.mymushroomf.ApiClient;
 import com.example.mymushroomf.PembeliModel.CartItem;
 import com.example.mymushroomf.PembeliModel.CartManager;
 import com.example.mymushroomf.PembeliModel.Produk;
-import com.example.mymushroomf.services.ProdukService;
+import com.example.mymushroomf.PembeliService.ProdukService;
 import com.example.mymushroomf.R;
 
 import retrofit2.Call;

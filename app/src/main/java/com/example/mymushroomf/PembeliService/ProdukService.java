@@ -1,4 +1,4 @@
-package com.example.mymushroomf.services;
+package com.example.mymushroomf.PembeliService;
 
 import com.example.mymushroomf.PembeliModel.Produk;
 

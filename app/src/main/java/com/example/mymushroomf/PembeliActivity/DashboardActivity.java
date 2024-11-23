@@ -16,11 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mymushroomf.ApiClient;
 import com.example.mymushroomf.PembeliModel.Produk;
 import com.example.mymushroomf.PembeliAdapter.ProdukAdapterPembeli;
-import com.example.mymushroomf.services.ProdukService;
+import com.example.mymushroomf.PembeliService.ProdukService;
 import com.example.mymushroomf.R;
+import com.example.mymushroomf.formlogin;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,8 +29,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -48,12 +46,21 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard1);
 
-        // Initialize SharedPreferences
-        sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+
+        sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        String token = sharedPreferences.getString("token", null);  // Default to null if no token exists
+
+        if (token == null) {
+            Intent intent = new Intent(DashboardActivity.this, formlogin.class);
+            startActivity(intent);
+            finish(); // Menutup DashboardActivity jika belum login
+        } else {
+        }
+
         welcomeTextLine1 = findViewById(R.id.welcome_text_line1);
         welcomeTextLine2 = findViewById(R.id.welcome_text_line2);
 
-        // Mendapatkan nama pengguna dari SharedPreferences
+
         String name = sharedPreferences.getString("name", "User");
         welcomeTextLine1.setText("Halo " + name + ",");
         welcomeTextLine2.setText("Selamat Datang!");
@@ -110,7 +117,6 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
 
-        // Handling notifications and cart buttons
         notificationsButton.setOnClickListener(view -> {
             Intent notifIntent = new Intent(DashboardActivity.this, NotificationsActivity.class);
             startActivity(notifIntent);

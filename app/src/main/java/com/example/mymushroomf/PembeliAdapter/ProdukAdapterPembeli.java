@@ -52,7 +52,7 @@ public class ProdukAdapterPembeli extends RecyclerView.Adapter<ProdukAdapterPemb
 
             // Memuat gambar produk menggunakan Glide
             Glide.with(holder.itemView.getContext())
-                    .load("https://mushroom.miauwlan.com/storage/" + product.getFile_path()) // Pastikan base URL benar
+                    .load("http://192.168.101.85/storage/" + product.getFile_path()) // Pastikan base URL benar
 //                    .placeholder(R.drawable.placeholder_image) // Placeholder jika gambar sedang dimuat
 //                    .error(R.drawable.error_image) // Placeholder jika gambar gagal dimuat
                     .into(holder.productImage);

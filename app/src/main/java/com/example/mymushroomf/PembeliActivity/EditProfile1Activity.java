@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.mymushroomf.PembeliModel.Users;
 import com.example.mymushroomf.PembeliModel.Users;
 import com.example.mymushroomf.PembeliService.UserService;
 import com.example.mymushroomf.R;
@@ -76,102 +78,70 @@ public class EditProfile1Activity extends AppCompatActivity {
         });
 
         // Update profile information
-//        updateButton.setOnClickListener(view -> {
-//            String updatedName = nameEditText.getText().toString();
-//            String updatedEmail = emailEditText.getText().toString();
-//            String updatedNumber = numberEditText.getText().toString();
-//            String updatedPassword = passwordEditText.getText().toString();
-//
-//            // Ensure all fields are filled before updating
-//            if (!updatedName.isEmpty() && !updatedEmail.isEmpty() && !updatedNumber.isEmpty() && !updatedPassword.isEmpty()) {
-//                // Save updated data to SharedPreferences
-//                SharedPreferences userSharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
-//                SharedPreferences.Editor editor = userSharedPreferences.edit();
-//
-//                editor.putString("name", updatedName);
-//                editor.putString("email", updatedEmail);
-//                editor.putString("phone", updatedNumber);
-//                editor.putString("password", updatedPassword);
-//                editor.apply();  // Save changes asynchronously
-//
-//                // Retrieve the updated data to confirm the changes
-//                String newName = userSharedPreferences.getString("name", "No name");
-//                String newEmail = userSharedPreferences.getString("email", "No email");
-//                String newNumber = userSharedPreferences.getString("phone", "No number");
-//                String newPassword = userSharedPreferences.getString("password", "No password");
-//
-//                // Verify that the data was updated correctly
-//                if (newName.equals(updatedName) && newEmail.equals(updatedEmail) && newNumber.equals(updatedNumber) && newPassword.equals(updatedPassword)) {
-//                    Toast.makeText(EditProfile1Activity.this, "Profile updated", Toast.LENGTH_SHORT).show();
-//
-//                    // Navigate back to ProfileActivity after successful update
-//                    Intent intent = new Intent(EditProfile1Activity.this, Profile1Activity.class);
-//                    startActivity(intent);
-//                    finish();
-//                } else {
-//                    Toast.makeText(EditProfile1Activity.this, "Profile update failed", Toast.LENGTH_SHORT).show();
-//                }
-//            } else {
-//                Toast.makeText(EditProfile1Activity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
         updateButton.setOnClickListener(view -> {
             String updatedName = nameEditText.getText().toString().trim();
             String updatedEmail = emailEditText.getText().toString().trim();
             String updatedNumber = numberEditText.getText().toString().trim();
             String updatedPassword = passwordEditText.getText().toString().trim();
 
-            if (!updatedName.isEmpty() && !updatedEmail.isEmpty()) {
-                // Buat objek UserData
-                Users.UserData userData = new Users.UserData();
-                userData.setUsername(updatedName);
-                userData.setEmail(updatedEmail);
-                userData.setPhone(updatedNumber);
-                userData.setPassword(updatedPassword);
+//            if (!updatedName.isEmpty() && !updatedEmail.isEmpty()) {
+                // Create a UserData object
+                Users.Data userData = new Users.Data();
 
-                // Panggil API untuk update profile
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("https://mushroom.miauwlan.com/api/")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
+                // Create a User object and set the updated values
+                Users.User user = new Users.User();
+                user.setUsername(updatedName);
+                user.setEmail(updatedEmail);
+                user.setPhone(updatedNumber);
+                user.setPassword(updatedPassword);
 
-                UserService apiService = retrofit.create(UserService.class);
-                Call<Users> call = apiService.updateProfile(userData);
+                // Set the user object in userData
+                userData.setUser(user);
 
-                call.enqueue(new Callback<Users>() {
-                    @Override
-                    public void onResponse(Call<Users> call, Response<Users> response) {
-                        if (response.isSuccessful() && response.body() != null) {
-                            Users.UserData updatedUser = response.body().getUser();
-                            Toast.makeText(EditProfile1Activity.this, "Profile updated", Toast.LENGTH_SHORT).show();
+                // Log the updated values
+                Log.d("UserData", "Updated Name: " + userData.getUser().getUsername());
+                Log.d("UserData", "Updated Email: " + userData.getUser().getEmail());
+//            }
 
-                            // Simpan data baru di SharedPreferences
-                            SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString("name", updatedUser.getUsername());
-                            editor.putString("email", updatedUser.getEmail());
-                            editor.putString("phone", updatedUser.getPhone());
-                            editor.putString("password", updatedPassword); // Simpan jika password diubah
-                            editor.apply();
+            // Call API to update profile
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://mushroom.miauwlan.com/api/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
 
-                            // Navigasi kembali ke halaman profile
-                            Intent intent = new Intent(EditProfile1Activity.this, Profile1Activity.class);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            Toast.makeText(EditProfile1Activity.this, "Update failed: " + response.message(), Toast.LENGTH_SHORT).show();
-                        }
+            UserService apiService = retrofit.create(UserService.class);
+            Call<Users> call = apiService.updateProfile(userData);
+
+            call.enqueue(new Callback<Users>() {
+                @Override
+                public void onResponse(Call<Users> call, Response<Users> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        Users.Data updatedUser = response.body().getData();
+                        Toast.makeText(EditProfile1Activity.this, "Profile updated", Toast.LENGTH_SHORT).show();
+
+                        // Save updated data to SharedPreferences
+                        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("name", updatedUser.getUser().getUsername());
+                        editor.putString("email", updatedUser.getUser().getEmail());
+                        editor.putString("phone", updatedUser.getUser().getPhone());
+                        editor.putString("password", updatedPassword); // Save password if changed
+                        editor.apply();
+
+                        // Navigate back to ProfileActivity after successful update
+                        Intent intent = new Intent(EditProfile1Activity.this, Profile1Activity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(EditProfile1Activity.this, "Update failed: " + response.message(), Toast.LENGTH_SHORT).show();
                     }
+                }
 
-                    @Override
-                    public void onFailure(Call<Users> call, Throwable t) {
-                        Toast.makeText(EditProfile1Activity.this, "Request failed: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-            } else {
-                Toast.makeText(EditProfile1Activity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-            }
+                @Override
+                public void onFailure(Call<Users> call, Throwable t) {
+                    Toast.makeText(EditProfile1Activity.this, "Request failed: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
         });
 
         // Cancel editing and close the activity without saving
