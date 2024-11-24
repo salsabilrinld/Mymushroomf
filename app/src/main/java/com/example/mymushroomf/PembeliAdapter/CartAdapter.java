@@ -1,33 +1,52 @@
 package com.example.mymushroomf.PembeliAdapter;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.mymushroomf.PembeliActivity.Keranjang1Activity;
 import com.example.mymushroomf.PembeliModel.CartItem;
 import com.example.mymushroomf.PembeliModel.CartManager;
+import com.example.mymushroomf.PembeliService.CartService;
 import com.example.mymushroomf.R;
+import com.example.mymushroomf.ApiClient;
+import com.google.gson.Gson;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
 
     private List<CartItem> cartItems;
     private Context context;
     private OnCartItemInteractionListener interactionListener;
+    private SharedPreferences sharedPreferences;
+    private Keranjang1Activity activity;
 
-    public CartAdapter(List<CartItem> cartItems, Context context, OnCartItemInteractionListener interactionListener) {
+    public CartAdapter(List<CartItem> cartItems, Context context, OnCartItemInteractionListener interactionListener, SharedPreferences sharedPreferences) {
         this.cartItems = cartItems;
         this.context = context;
         this.interactionListener = interactionListener;
+        this.sharedPreferences = context.getSharedPreferences("CartPrefs", MODE_PRIVATE);
     }
 
     @NonNull
@@ -42,49 +61,44 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         CartItem cartItem = cartItems.get(position);
 
         holder.itemName.setText(cartItem.getProduct().getProduct_name());
-        holder.itemPrice.setText("Rp. " + cartItem.getProduct().getPrice());
         holder.itemQuantity.setText(String.valueOf(cartItem.getQuantity()));
-        holder.checkBox.setChecked(cartItem.isSelected());
 
-        // Mengubah status seleksi ketika checkbox dicentang
+        int totalPrice = cartItem.getProduct().getPrice() * cartItem.getQuantity();
+        holder.itemPrice.setText(formatCurrency(totalPrice));
+        holder.checkBox.setChecked(cartItem.getIsSelected() == 1);
+
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            cartItem.setSelected(isChecked);
-            CartManager.getInstance(context).saveCart();  // Menyimpan perubahan ke SharedPreferences
+            cartItem.setIsSelected(isChecked ? 1 : 0);
+
+            saveSelectionToSharedPreferences(cartItem);
             interactionListener.onCartUpdated();
         });
 
-        // Tombol tambah jumlah produk
         holder.btnIncrease.setOnClickListener(v -> {
             cartItem.setQuantity(cartItem.getQuantity() + 1);
-            CartManager.getInstance(context).saveCart();  // Menyimpan perubahan ke SharedPreferences
-            notifyItemChanged(position);
-            interactionListener.onCartUpdated();
+            Log.d("CartAdapter", "Increased quantity: " + cartItem.getQuantity());
+            updateCartItemQuantity(cartItem, cartItem.getQuantity());
         });
 
-        // Tombol kurangi jumlah produk
         holder.btnDecrease.setOnClickListener(v -> {
             if (cartItem.getQuantity() > 1) {
                 cartItem.setQuantity(cartItem.getQuantity() - 1);
-                CartManager.getInstance(context).saveCart();  // Menyimpan perubahan ke SharedPreferences
-                notifyItemChanged(position);
-                interactionListener.onCartUpdated();
+                updateCartItemQuantity(cartItem, cartItem.getQuantity());
             }
         });
 
-        // Tombol hapus item dari keranjang
         holder.btnDelete.setOnClickListener(v -> {
-            cartItems.remove(position);
-            CartManager.getInstance(context).saveCart();  // Menyimpan perubahan ke SharedPreferences
-            notifyItemRemoved(position);
-            notifyItemRangeChanged(position, cartItems.size());
-            interactionListener.onCartUpdated();
+            new AlertDialog.Builder(context)
+                    .setTitle("Remove Item")
+                    .setMessage("Are you sure you want to remove this item from the cart?")
+                    .setPositiveButton("Yes", (dialog, which) -> removeItemFromCart(cartItem.getId(), position))
+                    .setNegativeButton("No", null)
+                    .show();
         });
 
         // Memuat gambar dari URL menggunakan Glide
         Glide.with(holder.itemView.getContext())
                 .load(cartItem.getProduct().getFile_path())  // Asumsikan ini adalah URL gambar
-//                .placeholder(R.drawable.placeholder_image)      // Gambar sementara saat loading
-//                .error(R.drawable.error_image)                  // Gambar error jika gagal memuat
                 .into(holder.itemImage);
     }
 
@@ -93,12 +107,80 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         return cartItems.size();
     }
 
-    public void updateCartItems(List<CartItem> updatedCartItems) {
-        this.cartItems = updatedCartItems;
+
+    public void updateCartItemQuantity(CartItem cartItem, int newQuantity) {
+        cartItem.setQuantity(newQuantity);
+        notifyDataSetChanged();
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        String token = sharedPreferences.getString("token", "");
+
+
+        CartService cartService = ApiClient.getCartService();
+        Call<CartItem> call = cartService.updateCart("Bearer" + token, cartItem.getId(), cartItem);
+
+        call.enqueue(new Callback<CartItem>() {
+            @Override
+            public void onResponse(Call<CartItem> call, Response<CartItem> response) {
+                Log.d("UpdateQuantity", "Response code: " + response.code());
+                Log.d("UpdateQuantity", "Response body: " + new Gson().toJson(response.body()));
+                Log.d("UpdateQuantity", "Response error body: " + (response.errorBody() != null ? response.errorBody().toString() : "No error body"));
+
+                if (response.isSuccessful()) {
+                    interactionListener.onCartUpdated();  // Notify the activity to update the total price or UI
+                } else {
+                    Toast.makeText(context, "", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CartItem> call, Throwable t) {
+                // Handle failure
+            }
+        });
+    }
+
+
+    public void updateCartItems(List<CartItem> newCartItems) {
+        this.cartItems.clear();
+        this.cartItems = newCartItems;
         notifyDataSetChanged();
     }
 
-    // ViewHolder untuk item keranjang
+    private void removeItemFromCart(int cartItemId, int position) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        String token = sharedPreferences.getString("token", "");
+
+        CartService cartService = ApiClient.getCartService();
+        Call<Void> call = cartService.removeFromCart("Bearer " + token, cartItemId);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    // Remove item from list and notify adapter
+                    cartItems.remove(position);
+                    notifyItemRemoved(position);
+                    Toast.makeText(context, "Item removed from cart", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "Failed to remove item", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(context, "An error occurred: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+    private void saveSelectionToSharedPreferences(CartItem cartItem) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("CartPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(String.valueOf(cartItem.getId()), cartItem.isSelected());
+        editor.apply();
+    }
+
     public static class CartViewHolder extends RecyclerView.ViewHolder {
 
         TextView itemName, itemPrice, itemQuantity;
@@ -121,5 +203,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     // Interface untuk interaksi dengan item keranjang
     public interface OnCartItemInteractionListener {
         void onCartUpdated();
+    }
+
+    private String formatCurrency(int amount) {
+        NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+        return format.format(amount).replace("Rp", "Rp. ").replace(",00", "");
     }
 }

@@ -3,7 +3,7 @@ package com.example.mymushroomf.PembeliActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -14,40 +14,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mymushroomf.ApiClient;
 import com.example.mymushroomf.PembeliAdapter.CartAdapter;
 import com.example.mymushroomf.PembeliModel.CartItem;
-import com.example.mymushroomf.PembeliModel.CartManager;
+import com.example.mymushroomf.PembeliService.CartService;
 import com.example.mymushroomf.R;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.mymushroomf.PembeliAdapter.CartAdapter;
-import com.example.mymushroomf.PembeliModel.CartItem;
-import com.example.mymushroomf.PembeliModel.CartManager;
-import com.example.mymushroomf.R;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Keranjang1Activity extends AppCompatActivity implements CartAdapter.OnCartItemInteractionListener {
 
@@ -68,17 +50,17 @@ public class Keranjang1Activity extends AppCompatActivity implements CartAdapter
         checkBoxSelectAll = findViewById(R.id.checkBoxSelectAll);
         buttonBeli = findViewById(R.id.btnBuy);
 
-        // Set up RecyclerView
+
         cartRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        cartItems = new ArrayList<>();
 
-        // Load cart items from CartManager
-        cartItems = CartManager.getInstance(this).getCartItems();
+        SharedPreferences sharedPreferences = getSharedPreferences("CartPrefs", MODE_PRIVATE);
 
-        // Set adapter for RecyclerView
-        cartAdapter = new CartAdapter(cartItems, this, this);
+        cartAdapter = new CartAdapter(cartItems, this, this, sharedPreferences);
         cartRecyclerView.setAdapter(cartAdapter);
 
-        // Setup "Select All" checkbox
+        fetchCartItems();
+
         checkBoxSelectAll.setOnClickListener(v -> {
             boolean isChecked = checkBoxSelectAll.isChecked();
             selectAllItems(isChecked);
@@ -86,14 +68,11 @@ public class Keranjang1Activity extends AppCompatActivity implements CartAdapter
             updateTotalPrice();
         });
 
-        // Update total price
         updateTotalPrice();
 
-        // Handle back button
         ImageView backButton = findViewById(R.id.iv_back);
         backButton.setOnClickListener(v -> onBackPressed());
 
-        // Handle Buy button click
         buttonBeli.setOnClickListener(v -> {
             List<CartItem> selectedItems = getSelectedItems();
 
@@ -111,6 +90,48 @@ public class Keranjang1Activity extends AppCompatActivity implements CartAdapter
 
     }
 
+
+
+    private void fetchCartItems() {
+
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        String token = sharedPreferences.getString("token", "");
+
+        if (token.isEmpty()) {
+
+            return;
+        }
+
+        CartService cartService = ApiClient.getCartService();
+        Call<List<CartItem>> call = cartService.viewCart("Bearer " + token);
+
+        call.enqueue(new Callback<List<CartItem>>() {
+            @Override
+            public void onResponse(Call<List<CartItem>> call, Response<List<CartItem>> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        cartItems.clear();
+                        cartItems = response.body();
+                        cartAdapter.updateCartItems(cartItems);
+                    } else {
+                        Log.e("DashboardActivity", "Response body is null");
+                        Toast.makeText(Keranjang1Activity.this, "Response body is empty", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(Keranjang1Activity.this, "Failed to load cart", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<CartItem>> call, Throwable t) {
+                Toast.makeText(Keranjang1Activity.this, "Request failed: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+
+
+            }
+        });
+    }
+
+
     private int calculateTotalPrice(List<CartItem> selectedItems) {
         int total = 0;
         for (CartItem item : selectedItems) {
@@ -124,29 +145,34 @@ public class Keranjang1Activity extends AppCompatActivity implements CartAdapter
     private List<CartItem> getSelectedItems() {
         List<CartItem> selectedItems = new ArrayList<>();
         for (CartItem item : cartItems) {
-            if (item.isSelected()) {
+            if (item.getIsSelected() == 1) {
                 selectedItems.add(item);
             }
         }
         return selectedItems;
     }
 
-    // Update total price based on selected items
+
     private void updateTotalPrice() {
         int total = 0;
         for (CartItem item : cartItems) {
-            if (item.isSelected()) { // Only count selected items
+            if (item.getIsSelected() == 1) { // Only count selected items
                 total += item.getProduct().getPrice() * item.getQuantity();
             }
         }
         totalPriceTextView.setText("Total: " + formatCurrency(total));
     }
 
-    // Select or deselect all items in the cart
     private void selectAllItems(boolean select) {
+        SharedPreferences sharedPreferences = getSharedPreferences("CartPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
         for (CartItem item : cartItems) {
-            item.setSelected(select);
+            item.setIsSelected(select ? 1 : 0);
+            // Save selection state for each item
+            editor.putInt("selected_cart_item_" + item.getId(), item.getIsSelected());
         }
+        editor.apply();
     }
 
     @Override
@@ -154,34 +180,12 @@ public class Keranjang1Activity extends AppCompatActivity implements CartAdapter
         updateTotalPrice(); // Update total price when the cart is updated
     }
 
-    // Save cart items to SharedPreferences (if necessary)
-    private void saveCartItemsToStorage(List<CartItem> cartItems) {
-        SharedPreferences sharedPreferences = getSharedPreferences("KeranjangPrefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        // Convert List<CartItem> to JSON string
-        Gson gson = new Gson();
-        String json = gson.toJson(cartItems);
 
-        editor.putString("cartItems", json);
-        editor.apply();
-    }
-
-    // Load cart items from SharedPreferences (if necessary)
-    private List<CartItem> getCartItemsFromStorage() {
-        SharedPreferences sharedPreferences = getSharedPreferences("KeranjangPrefs", MODE_PRIVATE);
-        String json = sharedPreferences.getString("cartItems", null);
-
-        if (json != null) {
-            Gson gson = new Gson();
-            return gson.fromJson(json, new TypeToken<List<CartItem>>(){}.getType());
-        }
-
-        return new ArrayList<>();
-    }
 
     private String formatCurrency(int amount) {
         NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
         return format.format(amount).replace("Rp", "Rp. ").replace(",00", "");
     }
 }
+

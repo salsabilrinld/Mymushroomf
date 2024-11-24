@@ -5,18 +5,23 @@ import java.io.Serializable;
 public class CartItem implements Serializable {
     private static final long serialVersionUID = 1L; // Menambahkan serialVersionUID untuk identifikasi versi kelas
 
+    private int product_id;
+    private int id;
     private Produk product;
     private int quantity;
-    private boolean isSelected;
+    private int isSelected;
+
 
     // Constructor
-    public CartItem(Produk product, int quantity) {
+    public CartItem(int id, Produk product, int quantity) {
+        this.id = id;
         this.product = product;
         this.quantity = quantity;
-        this.isSelected = false;
+        this.isSelected = 0;
+
     }
 
-    // Getter methods for CartItem fields
+
     public Produk getProduct() {
         return product;
     }
@@ -25,11 +30,30 @@ public class CartItem implements Serializable {
         return quantity;
     }
 
-    public boolean isSelected() {
+    public int getId() {
+        return id;
+    }
+
+    public int getIsSelected() {
         return isSelected;
     }
 
-    // Setter methods for CartItem fields
+    public void setIsSelected(int isSelected) {
+        this.isSelected = isSelected;
+    }
+
+    public boolean isSelected() {
+        return isSelected == 1;
+    }
+
+    public void toggleSelection() {
+        isSelected = (isSelected == 0) ? 1 : 0;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void setProduct(Produk product) {
         this.product = product;
     }
@@ -38,7 +62,10 @@ public class CartItem implements Serializable {
         this.quantity = quantity;
     }
 
-    public void setSelected(boolean selected) {
-        isSelected = selected;
+    public CartItem(Produk product) {
+        this.product = product;
+        this.product_id = product.getId();  // Assuming product has an ID
+        this.quantity = 1;  // Default quantity
     }
+
 }

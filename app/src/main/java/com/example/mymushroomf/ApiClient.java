@@ -1,5 +1,6 @@
 package com.example.mymushroomf;
 
+import com.example.mymushroomf.PembeliService.CartService;
 import com.example.mymushroomf.PembeliService.ProdukService;
 import com.example.mymushroomf.PembeliService.UserService;
 import com.google.gson.Gson;
@@ -46,5 +47,9 @@ public class ApiClient {
     // Method untuk mendapatkan UserService
     public static UserService getUserService() {
         return getRetrofitInstance().create(UserService.class);
+    }
+
+    public static CartService getCartService() {
+        return getRetrofitInstance().create(CartService.class);
     }
 }

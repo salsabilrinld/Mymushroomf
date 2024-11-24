@@ -61,8 +61,8 @@ public class DashboardActivity extends AppCompatActivity {
         welcomeTextLine2 = findViewById(R.id.welcome_text_line2);
 
 
-        String name = sharedPreferences.getString("name", "User");
-        welcomeTextLine1.setText("Halo " + name + ",");
+        String fullname = sharedPreferences.getString("fullname", "User");
+        welcomeTextLine1.setText("Halo " + fullname + ",");
         welcomeTextLine2.setText("Selamat Datang!");
 
         // Initialize Bottom Navigation
@@ -99,7 +99,7 @@ public class DashboardActivity extends AppCompatActivity {
         // Fetch products from API
         fetchProducts();
 
-        produkAdapterPembeli = new ProdukAdapterPembeli(productList);
+        produkAdapterPembeli = new ProdukAdapterPembeli(this, productList);
         recyclerView.setAdapter(produkAdapterPembeli);
 
         // Set SearchView listener to filter products based on user input

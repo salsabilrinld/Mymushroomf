@@ -53,8 +53,8 @@ public class EditProfile1Activity extends AppCompatActivity {
         cancelButton = findViewById(R.id.cancel_profile);
 
         // Load existing profile data from SharedPreferences
-        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
-        String savedName = sharedPreferences.getString("name", "");
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        String savedName = sharedPreferences.getString("fullname", "");
         String savedEmail = sharedPreferences.getString("email", "");
         String savedNumber = sharedPreferences.getString("phone", "");
         String savedPassword = sharedPreferences.getString("password", "");
@@ -120,7 +120,7 @@ public class EditProfile1Activity extends AppCompatActivity {
                         Toast.makeText(EditProfile1Activity.this, "Profile updated", Toast.LENGTH_SHORT).show();
 
                         // Save updated data to SharedPreferences
-                        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+                        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("name", updatedUser.getUser().getUsername());
                         editor.putString("email", updatedUser.getUser().getEmail());

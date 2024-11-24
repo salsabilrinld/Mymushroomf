@@ -1,6 +1,7 @@
 package com.example.mymushroomf.PembeliActivity;
 
-import android.content.Intent;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -13,8 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.example.mymushroomf.ApiClient;
 import com.example.mymushroomf.PembeliModel.CartItem;
-import com.example.mymushroomf.PembeliModel.CartManager;
 import com.example.mymushroomf.PembeliModel.Produk;
+import com.example.mymushroomf.PembeliService.CartService;
 import com.example.mymushroomf.PembeliService.ProdukService;
 import com.example.mymushroomf.R;
 
@@ -33,6 +34,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     private Button addToCartButton;
     private Button buyNowButton;
     private ImageButton backButton;
+    private CartItem cartItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,31 +83,44 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         // Tombol Tambah ke Keranjang
         addToCartButton.setOnClickListener(view -> {
-            // Membuat CartItem menggunakan data produk
-            CartItem cartItem = new CartItem(product, 1); // Tambahkan produk ke keranjang
-
-            // Menambahkan item ke keranjang melalui CartManager
-            CartManager.getInstance(this).addItem(cartItem);
-
-            // Beri notifikasi kepada user
-            Toast.makeText(this, "Produk ditambahkan ke keranjang", Toast.LENGTH_SHORT).show();
-
-            // Navigasi ke halaman Keranjang setelah produk ditambahkan
-            Intent intentToCart = new Intent(this, Keranjang1Activity.class);
-            startActivity(intentToCart);
+            addToCart(cartItem.getProduct());
         });
 
     }
 
-    // Fungsi untuk menambah item ke keranjang menggunakan CartManager
-    private void addToCart(CartItem cartItem) {
-        // Tambahkan produk ke keranjang
-        CartManager.getInstance(this).addItem(cartItem);
+    private void addToCart(Produk product) {
+        SharedPreferences sharedPreferences = ProductDetailActivity.this.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        String token = sharedPreferences.getString("token", "");
 
-        // Tampilkan pesan dan pindah ke Activity Keranjang
-        Toast.makeText(this, "Produk berhasil ditambahkan ke keranjang", Toast.LENGTH_SHORT).show();
-        Intent intentToCart = new Intent(this, Keranjang1Activity.class);
-        startActivity(intentToCart);
+        if (token.isEmpty()) {
+            Toast.makeText(ProductDetailActivity.this, "User not authenticated. Please log in.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        CartItem cartItem = new CartItem(product.getId(), product,1);
+        CartService cartService = ApiClient.getCartService();
+
+        Call<CartItem> call = cartService.addToCart("Bearer " + token, cartItem);
+
+        call.enqueue(new Callback<CartItem>() {
+            @Override
+            public void onResponse(Call<CartItem> call, Response<CartItem> response) {
+                if (response.isSuccessful()) {
+                    CartItem addedCartItem = response.body();
+                    // Handle successful response
+                    Toast.makeText(ProductDetailActivity.this, "Product added to cart", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Handle failure
+                    Toast.makeText(ProductDetailActivity.this, "Failed to add product to cart", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CartItem> call, Throwable t) {
+                Toast.makeText(ProductDetailActivity.this, "Request failed: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private void fetchProductDetails(int productId) {
