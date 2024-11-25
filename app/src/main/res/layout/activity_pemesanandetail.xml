@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp">
 
     <LinearLayout
@@ -131,39 +132,6 @@
             </LinearLayout>
         </RelativeLayout>
 
-        <!-- Shipping Method Section -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Metode Pengiriman"
-            android:textStyle="bold" />
-
-        <RadioGroup
-            android:id="@+id/radio_group_shipping"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp">
-
-            <RadioButton
-                android:id="@+id/rb_regular"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="Regular\nRp. 7.000"
-                android:gravity="center"/>
-
-            <RadioButton
-                android:id="@+id/rb_next_day"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="Next Day\nRp. 14.000"
-                android:gravity="center"/>
-        </RadioGroup>
-
-        <!-- Payment Method Section -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -171,11 +139,28 @@
             android:text="Metode Pembayaran"
             android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Transfer Bank - Bank BNI" />
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+               <ImageView
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:src="@drawable/logo_bca"/>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
         <!-- Price Summary -->
         <TextView
@@ -189,14 +174,14 @@
             android:id="@+id/tv_shipping_cost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Biaya Pengiriman: Rp. 0" />
+            android:text="Biaya Layanan: Rp. 5.000" />
 
         <TextView
             android:id="@+id/tv_total_payment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Total Pembayaran: Rp. 19.000"
+            android:text="Total Pembayaran: Rp. 17.000"
             android:textStyle="bold"/>
 
         <!-- Place Order Button -->
