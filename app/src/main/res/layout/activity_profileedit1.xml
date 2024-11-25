@@ -1,0 +1,201 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <!-- Scrollable Content Section -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <!-- Header Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@color/cokmud"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ubah Profile"
+                    android:textSize="24sp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/manrope_bold"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Profile Picture Section -->
+            <ImageView
+                android:id="@+id/profileImage"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="-50dp"
+                android:src="@drawable/profile_orange"
+                android:scaleType="centerInside"
+                android:elevation="4dp"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="Profile Picture" />
+
+            <Button
+                android:id="@+id/change_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Ubah Gambar"
+                android:textSize="14sp"
+                android:textColor="@color/orange"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/white"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/manrope_bold"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <!-- Form Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="35dp">
+
+                <!-- Username Field -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Username"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/manrope_regular"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/change_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Isa"
+                    android:background="@drawable/rounded_edit_text_background"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/manrope_regular" />
+
+                <!-- Email Field -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Email"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/manrope_regular"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/change_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="isa@gmail.com"
+                    android:background="@drawable/rounded_edit_text_background"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/manrope_regular"
+                    android:inputType="textEmailAddress" />
+
+                <!-- Phone Number Field -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nomor Telepon"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/manrope_regular"
+                    android:layout_marginTop="16dp"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/change_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="087882025909"
+                    android:background="@drawable/rounded_edit_text_background"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/manrope_regular"
+                    android:inputType="phone" />
+
+                <!-- Password Field -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Password"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/manrope_regular"
+                    android:layout_marginTop="16dp"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/change_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="********"
+                    android:background="@drawable/rounded_edit_text_background"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/manrope_regular"
+                    android:inputType="textPassword" />
+
+                <!-- Button Section -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="16dp">
+
+                    <Button
+                        android:id="@+id/cancel_profile"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Batalkan"
+                        android:backgroundTint="@color/grey"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/manrope_bold"
+                        android:textStyle="bold"
+                        android:layout_marginRight="5dp" />
+
+                    <Button
+                        android:id="@+id/update_profile"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Perbarui"
+                        android:backgroundTint="@color/orange"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/manrope_bold"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="5dp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom Navigation View -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        app:itemIconTint="@color/orange"
+        app:itemTextColor="@color/orange"
+        app:menu="@menu/bottom_navigation_menu"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp" />
+
+</LinearLayout>

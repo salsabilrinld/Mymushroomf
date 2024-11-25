@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,8 +15,21 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class formlogin extends AppCompatActivity { // Menggunakan formlogin seperti yang diinginkan
+import com.example.mymushroomf.PembeliActivity.DashboardActivity;
+import com.example.mymushroomf.PembeliModel.Users;
+import com.example.mymushroomf.PembeliService.UserService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+public class formlogin extends AppCompatActivity { // Menggunakan FormLogin seperti yang diinginkan
+
+    private UserService userService;
     private EditText emailEditText;
     private EditText passwordEditText;
     private Button loginButton;
@@ -29,25 +41,24 @@ public class formlogin extends AppCompatActivity { // Menggunakan formlogin sepe
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_formlogin);
 
-        // Menghubungkan layout dengan kode
+//        userService = ApiClient.getRetrofitInstance(getApplicationContext()).create(UserService.class);
+
         emailEditText = findViewById(R.id.emailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
         loginButton = findViewById(R.id.loginButton);
         createAccountText = findViewById(R.id.createAccountText);
 
-        // Set padding untuk Edge-to-Edge UI
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // Logika untuk tombol login
+
         loginButton.setOnClickListener(v -> loginUser());
 
-        // Logika untuk teks pendaftaran
         createAccountText.setOnClickListener(v -> {
-            // Arahkan ke aktivitas pendaftaran
             Intent intent = new Intent(formlogin.this, RegisterActivity.class);
             startActivity(intent);
         });
@@ -57,41 +68,73 @@ public class formlogin extends AppCompatActivity { // Menggunakan formlogin sepe
         String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
 
-
-        // Periksa apakah email dan password diisi
         if (email.isEmpty() || password.isEmpty()) {
             Toast.makeText(formlogin.this, "Email dan Password harus diisi", Toast.LENGTH_SHORT).show();
             return;
-        }
-
-        // Mengambil data dari SharedPreferences
-        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
-        String storedEmail = sharedPreferences.getString("email", null);
-        String storedPassword = sharedPreferences.getString("password", null);
-        String storedName = sharedPreferences.getString("name", ""); // Ambil nama pengguna
-
-
-        Log.d("LoginDebug", "Stored Email: " + storedEmail + ", Stored Password: " + storedPassword);
-        Log.d("LoginDebug", "Input Email: " + email + ", Input Password: " + password);
-
-
-        // Memeriksa apakah email dan password yang dimasukkan sama dengan yang tersimpan
-        if (email.equals(storedEmail) && password.equals(storedPassword)) {
-            // Login berhasil
-            Toast.makeText(this, "Login berhasil", Toast.LENGTH_SHORT).show();
-
-            // Simpan nama pengguna untuk digunakan di DashboardActivity
-            SharedPreferences myPrefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-            SharedPreferences.Editor editor = myPrefs.edit();
-            editor.putString("name", storedName); // Menyimpan nama pengguna
-            editor.apply();
-
-            // Pindah ke DashboardActivity
-            Intent intent = new Intent(formlogin.this, DashboardActivity.class);
-            startActivity(intent);
-            finish(); // Mengakhiri formlogin
         } else {
-            Toast.makeText(this, "Login gagal, cek email dan password", Toast.LENGTH_SHORT).show();
+            Gson gson = new GsonBuilder().setLenient().create();
+            UserService service = ApiClient.getUserService();
+            Call<Users> call = service.login(email, password);
+
+            // Retrofit enqueue call to handle API request asynchronously
+            call.enqueue(new Callback<Users>() {
+                @Override
+                public void onResponse(Call<Users> call, Response<Users> response) {
+                    Log.d("Login", "Response: " + response.toString());
+                    Log.d("Login", "Response user: " + response.body().getData());
+                    if (response.isSuccessful() && response.body() != null) {
+
+                        // Log the response body to check its content
+                        Log.d("Login", "Response body: " + new Gson().toJson(response.body()));
+
+                        // Log the status to verify its value
+                        Log.d("Login", "Response status: " + response.body().getStatus());
+
+
+                        Users apiResponse = response.body();
+
+                        // Access data
+                        Users.Data data = apiResponse.getData();
+                        String token = data.getToken();
+                        Users.User user = data.getUser();
+
+
+                        // Save data to SharedPreferences
+                        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                        editor.putString("token", token);
+                        editor.putInt("userId", user.getId());
+                        editor.putString("fullname", user.getFullname());
+                        editor.putString("username", user.getUsername());
+                        editor.putString("email", user.getEmail());
+                        editor.putString("phone", user.getPhone());
+                        editor.putString("address", user.getAddress());
+                        editor.putString("profilePath", user.getProfilePath());
+
+                        // Apply changes
+                        editor.apply();
+
+                        Log.d("PREFS", "Data saved to SharedPreferences");
+
+                        // Now navigate to the Dashboard or other activity
+                        Intent intent = new Intent(formlogin.this, DashboardActivity.class);
+                        startActivity(intent);
+                        finish(); // Optional: Close the login activity
+                    } else {
+                        Log.e("API_ERROR", "Response unsuccessful");
+                        Toast.makeText(formlogin.this, "Login failed. Please try again.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Users> call, Throwable t) {
+                    Log.e("API_ERROR", "Request failed: " + t.getMessage());
+                    Toast.makeText(formlogin.this, "Network error. Please try again.", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
+
+
 }

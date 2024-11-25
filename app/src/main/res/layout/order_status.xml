@@ -1,0 +1,59 @@
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    android:padding="8dp">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Status Pemesanan"
+        android:textSize="16dp"
+        android:fontFamily="@font/manrope_bold"
+        android:textColor="@color/black"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="right">
+
+    <TextView
+        android:id="@+id/tvstatus_order"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_status"
+        android:padding="10dp"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="4dp"
+        android:text="Selesai"
+        android:gravity="center"
+        android:fontFamily="@font/manrope_regular"
+        android:textColor="@color/orange" />
+
+    <TextView
+        android:id="@+id/tvtanggal_kirim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:padding="12dp"
+        android:text="11 Oktober 2024, 11:53 WIB"
+        android:fontFamily="@font/manrope_regular"
+        android:textColor="@color/black"
+        android:textSize="12sp" />
+
+    </LinearLayout>
+</LinearLayout>
+</androidx.cardview.widget.CardView>

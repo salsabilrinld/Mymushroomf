@@ -2,12 +2,14 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="cokmud">#E9CD9D</color>
+    <color name="cokmud">#FFF0D4</color>
     <color name="lightblue">#CBDCEB</color>
-    <color name="orange">#D58D43</color>
+    <color name="orange">#4D2703</color>
     <color name="semiorange">#59D58D43</color>
     <color name="grey">#B7B7B7</color>
     <color name="card_selected">#D58D43</color>
     <color name="card_default">#FFFFFFFF</color>
     <color name="lightgrey">#F5F5F7</color>
+    <color name="blue">#0D00A5</color>
+    <color name ="cokmud_trans">#5EE9CD9D</color>
 </resources>

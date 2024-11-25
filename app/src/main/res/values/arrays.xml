@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="fungi_types">
+        <item>Filter</item>
+        <item>All</item>
+        <item>Organik</item>
+        <item>Nonorganik</item>
+        <item>Inorganik</item>
+    </string-array>
+
+    <string-array name="sort_options">
+        <item>Sort</item>
+        <item>Price: Low to High</item>
+        <item>Price: High to Low</item>
+        <item>Name: A to Z</item>
+        <item>Name: Z to A</item>
+    </string-array>
+
+    <string-array name="reply_entries">
+        <item>Reply</item>
+        <item>Reply to all</item>
+    </string-array>
+
+    <string-array name="reply_values">
+        <item>reply</item>
+        <item>reply_all</item>
+    </string-array>
+</resources>

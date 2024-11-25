@@ -1,43 +1,16 @@
-<!-- review_item.xml -->
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<LinearLayout android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp">
-
-    <ImageView
-        android:id="@+id/reviewImage"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="8dp"
-        android:scaleType="centerCrop"
-        android:contentDescription="@string/review_image" />
-
-    <TextView
-        android:id="@+id/reviewComment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/inter_reguler"
-        android:textColor="@color/black"
-        android:textSize="14sp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:padding="16dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
         <ImageView
-            android:id="@+id/imageProfile"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/profile_pic"
             android:layout_marginEnd="16dp"
-            android:src="@drawable/ic_profile"
-            android:scaleType="centerCrop"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Profile Picture"/>
+            android:contentDescription="Profile Image" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -46,28 +19,46 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/usernameTextView"
+                android:id="@+id/review_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Username"
-                android:textSize="16sp"
-                android:fontFamily="@font/inter_bold"
                 android:textStyle="bold"
-                android:textColor="@android:color/black"/>
+                android:textSize="16sp" />
 
-            <RatingBar
-                android:id="@+id/ratingBar"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:numStars="5"
-                android:stepSize="0.5"
-                android:rating="4.0"
-                style="?android:attr/ratingBarStyleSmall"
-                android:layout_marginTop="4dp"/>
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp">
 
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:numStars="5"
+                    android:stepSize="0.5"
+                    android:rating="4.0"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_marginTop="4dp"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/review_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit..."
+                android:textSize="14sp"
+                android:layout_marginTop="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="24 October 2024"
+                android:textSize="12sp"
+                android:textColor="@android:color/darker_gray"
+                android:layout_marginTop="4dp" />
         </LinearLayout>
 
     </LinearLayout>
-
-
-</LinearLayout>

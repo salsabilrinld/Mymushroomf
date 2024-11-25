@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".AddressListActivity">
+    tools:context=".PembeliActivity.AddressListActivity">
 
     <LinearLayout
         android:id="@+id/titleLayout"
@@ -13,11 +13,14 @@
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
-        <ImageView
+        <!-- ImageButton with correct ID for Back button -->
+        <ImageButton
+            android:id="@+id/btnback"
             android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/back_arrow"
-            android:contentDescription="Back" />
+            android:layout_height="26dp"
+            android:contentDescription="Back"
+            android:src="@drawable/ic_arrow_left"
+            android:background="?android:attr/selectableItemBackgroundBorderless" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -25,11 +28,13 @@
             android:text="Daftar Alamat"
             android:textSize="18sp"
             android:textStyle="bold"
+            android:textColor="@color/black"
             android:fontFamily="@font/inter_bold"
             android:layout_marginStart="8dp"
             android:layout_weight="1" />
 
         <TextView
+            android:id="@+id/add_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Tambah"
@@ -45,10 +50,11 @@
         android:layout_below="@id/titleLayout"
         android:layout_marginTop="16dp"
         android:iconifiedByDefault="false"
-        android:queryHint="Cari Alamat" />
+        android:queryHint="Cari Alamat"
+        android:background="@drawable/tabung_miring"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/recycler_viewaddress"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_below="@id/searchView"
@@ -63,5 +69,4 @@
         android:text="Pilih Alamat"
         android:fontFamily="@font/inter_bold"
         android:backgroundTint="@color/orange" />
-
 </RelativeLayout>
